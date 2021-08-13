@@ -1,0 +1,18 @@
+@font-face {
+  font-family: "Averta";
+  src: url("../../assets/fonts/Averta.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Averta-ExtraBold";
+  src: url("../../assets/fonts/Averta-ExtraBold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Averta-Bold";
+  src: url("../../assets/fonts/Averta-Bold.otf") format("opentype");
+}
+@font-face {
+  font-family: "Averta-Semibold";
+  src: url("../../assets/fonts/Averta-Semibold.otf") format("opentype");
+}

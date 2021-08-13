@@ -1,0 +1,20 @@
+export const colors = {
+  white: '#FFFFFF',
+  whisperWhite: '#FBFBFD',
+  darkGrey: '#25272B',
+  slateGrey: '#5F6368',
+  slateGrey2: '#787C81',
+  gray1: '#bcc1c5',
+  green: '#23e094',
+  green2: '#23e095',
+  lightGreen: '#b4fadd',
+  blue: '#4D7AFF',
+  mysticGrey: '#EDF0F5',
+  royalBlue: '#456DE6',
+  crimsonRed: '#D31045',
+  orange: '#ff554f',
+  redWarn: '#ff7d78',
+  snow: '#fbfbfd',
+  black: '#000000',
+  whisperWhiteDark: '#f6f6f6'
+};
