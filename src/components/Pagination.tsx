@@ -126,7 +126,7 @@ export const Pagination = (props: PaginationProps) => {
             } else if (type === 'page') {
               children = renderPageNumber(page, selected);
             }
-            return <li key={index}>{children}</li>;
+            return <li key={ 'pg'+index}>{children}</li>;
           })}
         </ul>
       </Grid>

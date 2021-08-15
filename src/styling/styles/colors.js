@@ -11,6 +11,7 @@ export const colors = {
   blue: '#4D7AFF',
   mysticGrey: '#EDF0F5',
   royalBlue: '#456DE6',
+  royalBlueHover: 'rgba(69, 109, 230,0.04)',
   crimsonRed: '#D31045',
   orange: '#ff554f',
   redWarn: '#ff7d78',

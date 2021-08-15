@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useHistory } from 'react-router-dom';
 import { makeStyles, Typography } from '@material-ui/core';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { createRitual, updateRitual } from '../../store/actions/actions';
@@ -25,7 +25,7 @@ interface ParamTypes {
 }
 const RootDiv = styled.div`
   margin: 0 0%;
-  max-width: 726px;
+  width: 750px;
 `;
 
 const ButtonDiv = styled.div`
@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Averta-Semibold',
     fontWeight: 500
   },
+  description: { marginBottom: theme.spacing(6) },
   linkButton: {
     margin: theme.spacing(1)
   },
@@ -59,6 +60,9 @@ const useStyles = makeStyles((theme) => ({
   },
   subHeader: {
     marginBottom: theme.spacing(8)
+  },
+  updateDescription: {
+    marginBottom: theme.spacing(16)
   }
 }));
 
@@ -71,8 +75,9 @@ const AddRitual = (props: Props) => {
   const location = useLocation<any>();
   const dispatch = useDispatch();
   const classes = useStyles();
+  const history = useHistory();
   const ritual = useSelector((state: RootStateOrAny) => state.rituals);
-
+  console.log('=======ritual', ritual);
   useEffect(() => {
     if (id) {
       setTriggers(location.state.trigger);
@@ -107,32 +112,23 @@ const AddRitual = (props: Props) => {
         <Typography
           variant='body2'
           gutterBottom
-          className={classes.subHeader}
+          className={classes.updateDescription}
           align='center'
         >
           Update this ritual to make it work better for your team.
         </Typography>
       ) : (
         <>
-          <Typography variant='body2' gutterBottom align='center'>
+          <Typography
+            variant='body2'
+            gutterBottom
+            align='center'
+            className={classes.description}
+          >
             Create a new ritual by entering a trigger and an action. These can
             be viewed by the rest of the organisation, inspiring them to create
             ones of their own. Science also shows that recording and sharing
             commitments will help to make them stick.
-          </Typography>
-
-          <Typography
-            variant='body2'
-            gutterBottom
-            className={classes.subHeader}
-            align='center'
-          >
-            <Link>
-              <Typography variant='h4' className={classes.link}>
-                Click Here
-              </Typography>
-            </Link>{' '}
-            to spark ideas about triggers and action suitable for your team
           </Typography>
         </>
       )}
@@ -195,15 +191,15 @@ const AddRitual = (props: Props) => {
             variant='contained'
             disabled={actions === '' || triggers === ''}
           >
-            {id ? 'Update' : `Commit`}
+            {ritual?.loading ? <Loader /> : id ? 'Update' : `Commit`}
           </Button>
         </ButtonDiv>
         <ButtonDiv>
-          <Link className={classes.linkButton}>
+          <Button className={classes.linkButton} onClick={history.goBack}>
             <Typography variant='h4' className={classes.link}>
               Cancel
             </Typography>
-          </Link>
+          </Button>
         </ButtonDiv>
       </Card>
     </RootDiv>

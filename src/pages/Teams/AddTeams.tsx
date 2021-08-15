@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { makeStyles, Typography } from '@material-ui/core';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 
@@ -62,7 +62,9 @@ const useStyles = makeStyles((theme) => ({
     float: 'left',
     minWidth: 'fit-content',
     marginRight: theme.spacing(3)
-  }
+  },
+  description: { marginBottom: theme.spacing(6) },
+  withLink: { display: 'flex', justifyContent: 'center' },
 }));
 const AddTeams = (props: Props) => {
   const [open, setOpen] = useState(false);
@@ -71,8 +73,9 @@ const AddTeams = (props: Props) => {
   const [confirmLeaderEmail, setConfirmLeaderEmail] = useState('');
   const [action, setAction] = useState('');
   const [trigger, setTrigger] = useState('');
+  const history = useHistory();
 
-  const team = useSelector((state: RootStateOrAny) => state.teams.createTeam);
+  const team = useSelector((state: RootStateOrAny) => state.teams);
 
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -107,22 +110,18 @@ const AddTeams = (props: Props) => {
       <Typography variant='h1' component='h1' gutterBottom align='center'>
         Add a new team
       </Typography>
-      <Typography variant='body2' gutterBottom align='center'>
+      <Typography variant='body2' gutterBottom align='center'className={classes.description}>
         This is where you can record the rituals for your team. These can be
         viewed by the rest of the organisation, inspiring them to create ones of
         their own. Science also shows that recording and sharing commitments
         will help to make them stick.
       </Typography>
-      <Typography variant='body2' gutterBottom align='center'>
+      <Typography variant='body2' gutterBottom align='center'className={classes.description}>
         When you save the first ritual, you'll receive an email with a unique
         link to this page so that you can view and update these rituals. You can
         share this link with your team.
       </Typography>
-      <Typography variant='body2' gutterBottom align='center'>
-        Click here to spark ideas about triggers and actions suitable for your
-        team.
-      </Typography>
-
+  
       <Card className={classes.card}>
         <Typography variant='h2' component='h1' gutterBottom align='center'>
           Team information
@@ -215,11 +214,11 @@ const AddTeams = (props: Props) => {
           </Button>
         </ButtonDiv>
         <ButtonDiv>
-          <Link className={classes.linkButton}>
+          <Button className={classes.linkButton} onClick={history.goBack}>
             <Typography variant='h4' className={classes.link}>
               Cancel
             </Typography>
-          </Link>
+          </Button>
         </ButtonDiv>
       </Card>
     </RootDiv>

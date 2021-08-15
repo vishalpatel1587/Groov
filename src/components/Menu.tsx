@@ -31,7 +31,7 @@ export const SelectMenu = (props: Props) => {
   return (
     <Select value={props.value} onChange={props.onChange} input={<Input />}>
       {props.items.map(({ label, value }: any) => (
-        <MenuItem value={value} key={value}>
+        <MenuItem value={value} key={'menu' + value}>
           {label}
         </MenuItem>
       ))}

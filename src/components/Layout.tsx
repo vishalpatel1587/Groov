@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Header from './header';
+import Footer from './Footer';
 
 const RootDiv = styled.div`
   background-color: #fbfbfd;
@@ -24,6 +25,7 @@ const Layout = (props: Props) => {
       <RootMain>
         <main>{props.children}</main>
       </RootMain>
+      <Footer />
     </RootDiv>
   );
 };

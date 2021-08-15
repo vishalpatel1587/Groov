@@ -16,6 +16,7 @@ export const defaultTextInputStyle = (theme:Theme) => ({
   inner: {
     borderRadius: '0 !important'
   }
+
 });
 
 const useDefaultTextInputStyles = makeStyles(defaultTextInputStyle);
