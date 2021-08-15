@@ -174,14 +174,17 @@ const Rituals = (props: Props) => {
   return (
     <RootDiv>
       <Typography variant='h1' component='h1' gutterBottom align='center'>
-        Rituals
+        Marketing and sales
       </Typography>
       <Typography variant='body2' gutterBottom align='center'>
-        A simple way to bake wellbeing into your workplace is to create rituals
-        for team wellbeing.The idea is to link a wellbeing action, like group
-        deep breathing, to something in your work day (a trigger), such as a
-        regular meeting. In this way, wellbeing becomes an automatic part of
-        every day.
+        This is where you can record the rituals for your team. These can be
+        viewed by the rest of the organisation, inspiring them to create ones of
+        their own. Science also shows that recording and sharing commitments
+        will help to make them stick.
+      </Typography>
+      <Typography variant='body2' gutterBottom align='center'>
+        Click here to spark ideas about triggers and actions suitable for your
+        team.
       </Typography>
 
       <ButtonDiv>

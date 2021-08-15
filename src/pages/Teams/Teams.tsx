@@ -203,9 +203,20 @@ const Teams = (props: Props) => {
         {company.name || '!WrongCompanyId!'}
       </Typography>
       <Typography variant='body2' gutterBottom align='center'>
+        A simple way to bake wellbeing into your workplace is to create rituals
+        for team wellbeing. The idea is to link a wellbeing action, like group
+        deep breathing, to something in your work day (a trigger), such as a
+        regular meeting. In this way, wellbeing becomes an automatic part of
+        every day. Click here to spark ideas about triggers and actions suitable
+        for your team.
+      </Typography>
+      <Typography variant='body2' gutterBottom align='center'>
         Teams at your company are creating and sharing their rituals. Science
         shows that recording and sharing these commitments will help make them
         stick.
+      </Typography>
+      <Typography variant='body2' gutterBottom align='center'>
+        Click below to create some for your team.
       </Typography>
       <ButtonDiv>
         <Button
@@ -248,11 +259,15 @@ const Teams = (props: Props) => {
           className={classes.cardHeader}
         >
           <Typography variant='h2' component='h5' gutterBottom>
-            Teams
+            Teams and rituals
           </Typography>
         </Grid>
-
-        {teams.data.teams.length > 0 ? (
+        <Box p={10}>
+          <Typography variant='body1' component='h2' align='center'>
+            Watch this space
+          </Typography>
+        </Box>
+        {/* {teams.data.teams.length > 0 ? (
           <>
             <Grid container>
               <Grid container item xs={3} className={classes.listHeading}>
@@ -301,7 +316,7 @@ const Teams = (props: Props) => {
               </Box>
             )}
           </>
-        )}
+        )} */}
       </Card>
       <Typography
         variant='body2'
@@ -309,7 +324,7 @@ const Teams = (props: Props) => {
         align='center'
         className={classes.footer}
       >
-        If you have any complications, please get in touch with our
+        If you need any help, please get in touch with our
         <Link>
           <Typography variant='h4' className={classes.link}>
             support team.

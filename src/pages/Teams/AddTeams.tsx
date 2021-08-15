@@ -4,12 +4,20 @@ import { useParams } from 'react-router-dom';
 import { makeStyles, Typography } from '@material-ui/core';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 
-import {Loader,Link,Card,Button,Input,ModalComponent,ToasterUtils} from '../../components';
+import {
+  Loader,
+  Link,
+  Card,
+  Button,
+  Input,
+  ModalComponent,
+  ToasterUtils
+} from '../../components';
 import { colors } from '../../styling/styles/colors';
 import { createTeam } from '../../store/actions/actions';
 import { validateEmail, validateName } from '../../utils/validation';
 
-interface Props { }
+interface Props {}
 
 interface ParamTypes {
   companyId: string;
@@ -100,15 +108,24 @@ const AddTeams = (props: Props) => {
         Add a new team
       </Typography>
       <Typography variant='body2' gutterBottom align='center'>
-        Your team is a place for you and your team to look at commited rituals.
-        After creating a team you will recieve and email with unique link to
-        your 'Team page'. Only your team can commited rituals containing
-        triggers and actions.
+        This is where you can record the rituals for your team. These can be
+        viewed by the rest of the organisation, inspiring them to create ones of
+        their own. Science also shows that recording and sharing commitments
+        will help to make them stick.
+      </Typography>
+      <Typography variant='body2' gutterBottom align='center'>
+        When you save the first ritual, you'll receive an email with a unique
+        link to this page so that you can view and update these rituals. You can
+        share this link with your team.
+      </Typography>
+      <Typography variant='body2' gutterBottom align='center'>
+        Click here to spark ideas about triggers and actions suitable for your
+        team.
       </Typography>
 
       <Card className={classes.card}>
         <Typography variant='h2' component='h1' gutterBottom align='center'>
-          Fill your team name and create first ritual.
+          Team information
         </Typography>
         <Input
           fullWidth={true}
@@ -126,7 +143,7 @@ const AddTeams = (props: Props) => {
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setLeaderEmail(e.target.value)
           }
-          placeholder='Leader email'
+          placeholder='Your email'
         />
         <Input
           fullWidth={true}
@@ -135,12 +152,12 @@ const AddTeams = (props: Props) => {
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setConfirmLeaderEmail(e.target.value)
           }
-          placeholder='Confirm leader email'
+          placeholder='Confirm your email'
         />
         <br />
         <br />
         <Typography variant='h2' component='h1' gutterBottom align='center'>
-          Commit first ritual
+          The first team ritual
         </Typography>
         <InputDiv>
           <Typography
@@ -148,7 +165,7 @@ const AddTeams = (props: Props) => {
             component='h1'
             className={classes.inputRowText}
           >
-            The team aggres that
+            Trigger:
           </Typography>
           <Input
             fullWidth={true}
@@ -163,7 +180,7 @@ const AddTeams = (props: Props) => {
         </InputDiv>
         <InputDiv>
           <Typography variant='h3' className={classes.inputRowText}>
-            we will
+            Action:
           </Typography>
           <Input
             fullWidth={true}
@@ -177,11 +194,6 @@ const AddTeams = (props: Props) => {
             multiline={true}
             rows={2}
           />
-        </InputDiv>
-        <InputDiv>
-          <Typography variant='h3'>
-            to make wellbeing ritual automatic part of our day.
-          </Typography>
         </InputDiv>
         {open && (
           <ModalComponent
@@ -199,7 +211,7 @@ const AddTeams = (props: Props) => {
             onClick={handleSubmit}
             variant='contained'
           >
-            {team.loading ? <Loader /> : `Save`}
+            {team.loading ? <Loader /> : `Commit`}
           </Button>
         </ButtonDiv>
         <ButtonDiv>

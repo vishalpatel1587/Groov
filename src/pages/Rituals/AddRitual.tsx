@@ -5,9 +5,16 @@ import { makeStyles, Typography } from '@material-ui/core';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { createRitual, updateRitual } from '../../store/actions/actions';
 
-import { Link, Loader, Card, Button, Input,ModalComponent,ToasterUtils } from '../../components';
+import {
+  Link,
+  Loader,
+  Card,
+  Button,
+  Input,
+  ModalComponent,
+  ToasterUtils
+} from '../../components';
 import { colors } from '../../styling/styles/colors';
-
 
 interface Props {}
 
@@ -103,14 +110,17 @@ const AddRitual = (props: Props) => {
           className={classes.subHeader}
           align='center'
         >
-          You can update existing ritual to fit better your team needs.
+          Update this ritual to make it work better for your team.
         </Typography>
       ) : (
         <>
           <Typography variant='body2' gutterBottom align='center'>
-            By filling the trigger and action you will create team ritual.
-            Ritual will be save on your team page.
+            Create a new ritual by entering a trigger and an action. These can
+            be viewed by the rest of the organisation, inspiring them to create
+            ones of their own. Science also shows that recording and sharing
+            commitments will help to make them stick.
           </Typography>
+
           <Typography
             variant='body2'
             gutterBottom
@@ -133,7 +143,7 @@ const AddRitual = (props: Props) => {
             component='h1'
             className={classes.inputRowText}
           >
-            The team aggres that
+            Trigger:
           </Typography>
           <Input
             fullWidth={true}
@@ -152,7 +162,7 @@ const AddRitual = (props: Props) => {
             component='h1'
             className={classes.inputRowText}
           >
-            we will
+            Action:
           </Typography>
           <Input
             fullWidth={true}
@@ -166,11 +176,6 @@ const AddRitual = (props: Props) => {
             multiline={true}
             maxRows={3}
           />
-        </InputDiv>
-        <InputDiv>
-          <Typography variant='h3' component='h1'>
-            to make wellbeing ritual automatic part of our day.
-          </Typography>
         </InputDiv>
         {open && (
           <ModalComponent
@@ -190,17 +195,7 @@ const AddRitual = (props: Props) => {
             variant='contained'
             disabled={actions === '' || triggers === ''}
           >
-            {id ? (
-              ritual.update.loading ? (
-                <Loader />
-              ) : (
-                `Update`
-              )
-            ) : ritual.create.loading ? (
-              <Loader />
-            ) : (
-              `Commit`
-            )}
+            {id ? 'Update' : `Commit`}
           </Button>
         </ButtonDiv>
         <ButtonDiv>
