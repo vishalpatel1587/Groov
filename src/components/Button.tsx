@@ -1,34 +1,39 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import MaterialButton from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
 import { colors } from '../styling/styles/colors';
+
+interface ButtonProps {
+  className?: string;
+  disabled?: boolean;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  children: React.ReactNode;
+  variant?: 'outlined' | 'contained';
+}
 
 const CustomButton = withStyles((theme) => ({
   root: {
-    color: 'white',
     padding: theme.spacing(3, 12),
-    background: theme.palette.primary.main,
     borderRadius: theme.spacing(8),
     textTransform: 'none',
-    fontWeight: 'bold',
-    '&:hover': {
-      background: theme.palette.primary.main
-    }
+    fontWeight: 'bold'
   }
-
 }))(MaterialButton);
 
-const Button = (props: any) => {
+const Button: React.FC<ButtonProps> = ({ className, disabled, children,variant,onClick }) => {
   return (
     <CustomButton
-      className={props.className}
-      {...props}
+      className={className}
+      disableElevation
+      color='primary'
       style={{
-        backgroundColor: props.disabled ? colors.gray1 : '',
-        color: props.disabled ? colors.white : ''
+        backgroundColor: disabled ? colors.gray1 : '',
+        color: disabled ? colors.white : ''
       }}
+      variant={variant}
+      onClick={onClick}
     >
-      {props.children}
+      {children}
     </CustomButton>
   );
 };

@@ -1,5 +1,6 @@
-import { useSnackbar, VariantType, WithSnackbarProps } from 'notistack';
 import React from 'react';
+import { useSnackbar, VariantType, WithSnackbarProps } from 'notistack';
+
 import { Toaster } from './Toaster';
 import { ConfirmActionToaster } from './ConfirmActionToaster';
 

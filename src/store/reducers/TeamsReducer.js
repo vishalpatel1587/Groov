@@ -4,8 +4,7 @@ import {
   GET_TEAMS_BY_COMPANY_ID_FAILURE,
   CREATE_TEAM_BEGIN,
   CREATE_TEAM_SUCCESS,
-  CREATE_TEAM_FAILURE,
-
+  CREATE_TEAM_FAILURE
 } from '../actions/actions';
 
 const initialState = {
@@ -25,7 +24,6 @@ const TeamsReducer = (state = initialState, action) => {
     case GET_TEAMS_BY_COMPANY_ID_FAILURE:
       return { ...state, data: { error: action.payload, loading: false } };
 
-
     // CREATE TEAM
     case CREATE_TEAM_BEGIN:
       return { ...state, createTeam: { loading: true } };
@@ -39,7 +37,6 @@ const TeamsReducer = (state = initialState, action) => {
         ...state,
         createTeam: { error: action.payload, loading: false }
       };
-
 
     default:
       return state;

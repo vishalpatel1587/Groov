@@ -1,29 +1,34 @@
-import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
-import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { colors } from '../../styling/styles/colors';
-import { Button } from '../../components/Button';
-import { Link } from '../../components/Link';
-import ModalComponent from '../../components/Modal';
 import { useHistory, useParams } from 'react-router-dom';
-import { Card } from '../../components/Card';
-import { Pagination } from '../../components/Pagination';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+
+import {
+  Loader,
+  Link,
+  Card,
+  Button,
+  Pagination,
+  ModalComponent,
+  SelectMenu
+} from '../../components';
+import { colors } from '../../styling/styles/colors';
 import {
   getCompanyById,
   getTeamsByCompanyId
 } from '../../store/actions/actions';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import SelectMenu from '../../components/Menu';
-import Loader from '../../components/Loader';
 
 interface Props {}
+
 interface ParamTypes {
   companyId: string;
 }
 
 const RootDiv = styled.div`
   margin: 0 20%;
+  padding-bottom: 30px;
 `;
 
 const ButtonDiv = styled.div`
@@ -36,7 +41,7 @@ const ButtonDiv = styled.div`
 const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(10),
-    marginRight: '5vh'
+    marginRight: theme.spacing(10)
   },
   link: {
     color: colors.royalBlue,
@@ -55,13 +60,10 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3)
   },
   listContainer: {
-    paddingLeft: theme.spacing(4),
-    paddingRight: theme.spacing(4),
-    paddingTop: 18,
-    borderRadius: 12,
-    paddingBottom: 18,
+    padding: theme.spacing(4, 6, 4, 4),
+    marginTop: theme.spacing(2),
+    borderRadius: theme.spacing(3),
     backgroundColor: colors.whisperWhite,
-    marginTop: 8,
     '&:hover': { backgroundColor: colors.whisperWhiteDark, cursor: 'pointer' }
   },
   listRightWrapper: {
@@ -74,22 +76,16 @@ const useStyles = makeStyles((theme) => ({
   listTitle: {
     fontFamily: 'Averta',
     fontWeight: 'normal',
-    color: colors.darkGrey,
-    marginLeft: theme.spacing(4)
+    color: colors.darkGrey
   },
   listHeading: {
     display: 'flex',
     alignItems: 'center',
-    paddingLeft: theme.spacing(4),
-    paddingRight: theme.spacing(4)
+    padding: theme.spacing(0, 4)
   },
   listTitleName: { paddingRight: theme.spacing(6) },
   listItemBorder: {
-    width: '100%',
-    borderBottom: '2px solid',
-    borderBottomColor: colors.mysticGrey,
-    paddingBottom: theme.spacing(2),
-    marginBottom: theme.spacing(2)
+    width: '100%'
   },
   cardHeader: { marginBottom: theme.spacing(4) },
   selectMenu: {
@@ -104,8 +100,15 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold'
   },
   footer: {
-    marginTop: theme.spacing(6),
-    marginBottom: theme.spacing(6)
+    margin: theme.spacing(6, 0)
+  },
+  ritualsContainer: {
+    '&>:not(:last-child)': {
+      borderBottom: '2px solid',
+      borderBottomColor: colors.mysticGrey,
+      paddingBottom: theme.spacing(3),
+      marginBottom: theme.spacing(3)
+    }
   }
 }));
 const pageLimit = 5;
@@ -156,15 +159,15 @@ const Teams = (props: Props) => {
         item
         xs={12}
         className={classes.listContainer}
-        onClick={() => history.push(`/company/${companyId}/${id}/rituals`)}
+        onClick={() => history.push(`/${companyId}/${id}/rituals`)}
       >
         <Grid item xs={3}>
           <Typography variant='h3' className={classes.listTitleName}>
             {name}
           </Typography>
         </Grid>
-        <Grid container item xs={9}>
-          {rituals.map(({ id, trigger, action, teamId }: any) => (
+        <Grid container item xs={9} className={classes.ritualsContainer}>
+          {rituals.map(({ id, trigger, action }: any) => (
             <Box
               display='flex'
               flexDirection='row'
@@ -207,7 +210,8 @@ const Teams = (props: Props) => {
       <ButtonDiv>
         <Button
           className={classes.button}
-          onClick={() => history.push(`/company/${companyId}/teams/add`)}
+          onClick={() => history.push(`/${companyId}/teams/add`)}
+          variant='contained'
         >
           Add a new team
         </Button>
@@ -233,7 +237,7 @@ const Teams = (props: Props) => {
           message="Do this if you haven't yet created your team and recorded your team's rituals."
           secondMessage="If you've already created your team, view or update your team's rituals via the unique link that would've been emailed to you."
           buttonTitle='Close'
-          onButtonClick={() => setOpen(false)}
+          onClose={() => setOpen(false)}
         />
       )}
       <Card>

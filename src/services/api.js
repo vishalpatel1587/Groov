@@ -19,7 +19,6 @@ export const TeamsByCompanyIdApi = async ({limit,offset,orderBy,companyId}) => {
 };
 
 export const CreateTeamApi = async (data) => {
-  console.log('creat team,api',data)
   const config = {
     url: `/team`,
     method: 'POST',

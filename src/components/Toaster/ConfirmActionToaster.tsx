@@ -1,23 +1,23 @@
 import React from 'react';
-import {Grid} from '@material-ui/core';
+import { VariantType } from 'notistack';
+import { Grid } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
-import {makeStyles, Theme} from '@material-ui/core/styles';
-import {colors} from '../../styling/styles/colors';
-import {VariantType} from 'notistack';
-import {ToasterUtils} from './ToasterUtils';
-import {CloseToasterButton} from './CloseToasterButton';
-import {Button} from '../Button';
-import {toasterStyles} from './toasterStyles';
+import { Button } from '../Button';
+import { ToasterUtils } from './ToasterUtils';
+import { toasterStyles } from './toasterStyles';
+import { colors } from '../../styling/styles/colors';
+import { CloseToasterButton } from './CloseToasterButton';
 
 const useStyles = makeStyles((theme: Theme) => ({
   ...toasterStyles,
   snackbar: {
     ...toasterStyles.snackbar,
-    width: 480,
+    width: 480
   },
   description: {
     ...toasterStyles.description,
-    color: colors.slateGrey,
+    color: colors.slateGrey
   },
   confirmButton: {
     background: colors.orange,
@@ -27,9 +27,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: 18,
     marginRight: 16,
     '&:hover': {
-      background: colors.redWarn,
-    },
-  },
+      background: colors.redWarn
+    }
+  }
 }));
 
 interface Props {
@@ -43,8 +43,14 @@ interface Props {
 
 export const ConfirmActionToaster = React.forwardRef(
   (
-    {variant, onConfirm, title = 'Are you certain?', message = 'Please confirm', confirmButtonText = 'Confirm'}: Props,
-    ref: any,
+    {
+      variant,
+      onConfirm,
+      title = 'Are you certain?',
+      message = 'Please confirm',
+      confirmButtonText = 'Confirm'
+    }: Props,
+    ref: any
   ) => {
     const classes = useStyles();
 
@@ -54,11 +60,9 @@ export const ConfirmActionToaster = React.forwardRef(
 
     return (
       <div ref={ref}>
-        <Grid container  className={classes.snackbar}>
-          <Grid item className={classes.iconGrid} justify="center">
-            
-          </Grid>
-          <Grid item style={{width: '45%'}}>
+        <Grid container className={classes.snackbar}>
+          <Grid item className={classes.iconGrid} justify='center'></Grid>
+          <Grid item style={{ width: '45%' }}>
             <div className={classes.title}>{title}</div>
             <div className={classes.description}>{message}</div>
           </Grid>
@@ -68,7 +72,8 @@ export const ConfirmActionToaster = React.forwardRef(
               onClick={() => {
                 closeToaster();
                 onConfirm();
-              }}>
+              }}
+            >
               {confirmButtonText}
             </Button>
             <CloseToasterButton onClick={closeToaster} />
@@ -76,5 +81,5 @@ export const ConfirmActionToaster = React.forwardRef(
         </Grid>
       </div>
     );
-  },
+  }
 );

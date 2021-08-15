@@ -1,4 +1,5 @@
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { colors } from '../styling/styles/colors';
 
 interface Props {
   color?: string;
@@ -6,14 +7,14 @@ interface Props {
   thickness?: number;
 }
 
-const Loader = (props: Props) => {
+export const Loader = (props: Props) => {
   return (
     <CircularProgress
-      style={{ color: props.color ? props.color : '#fff' }}
+      style={{ color: props.color ? props.color : colors.white }}
       size={props.size ? props.size : 25}
       thickness={props.thickness ? props.thickness : 5}
     />
   );
 };
 
-export default Loader;
+

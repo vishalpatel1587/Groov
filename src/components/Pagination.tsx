@@ -1,9 +1,8 @@
-import React from 'react';
-import { Typography, Grid, Button, Hidden } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { usePagination } from '@material-ui/lab/Pagination';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import { Typography, Grid, Button, Hidden } from '@material-ui/core';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 import { colors } from '../styling/styles/colors';
 
@@ -14,14 +13,14 @@ const useStyles = makeStyles((theme) => ({
   container: {
     padding: 40,
     [theme.breakpoints.down('sm')]: {
-      paddingLeft: 0,
-      paddingRight: 0
+      paddingLeft: theme.spacing(0),
+      paddingRight: theme.spacing(0)
     }
   },
   ul: {
     listStyle: 'none',
-    padding: 0,
-    margin: 0,
+    padding: theme.spacing(0),
+    margin: theme.spacing(0),
     display: 'flex',
     justifyContent: 'center'
   },

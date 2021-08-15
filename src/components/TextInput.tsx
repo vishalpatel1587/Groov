@@ -9,8 +9,8 @@ export const defaultTextInputStyle = (theme:Theme) => ({
   inputRoot: {
     borderRadius: theme.spacing(8),
     borderColor: colors.mysticGrey,
-    paddingLeft: theme.spacing(6),
-    paddingRight: theme.spacing(6),
+    paddingLeft: theme.spacing(4),
+    paddingRight: theme.spacing(4),
     backgroundColor: 'white'
   },
   inner: {

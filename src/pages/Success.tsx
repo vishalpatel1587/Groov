@@ -1,8 +1,9 @@
 import { makeStyles, Typography } from '@material-ui/core';
 import { Button } from '../components/Button';
-import { colors } from '../styling/styles/colors';
 import { Link } from '../components/Link';
 import logo from '../assets/mentemia_logo.png';
+import { colors } from '../styling/styles/colors';
+
 interface Props {}
 
 const useStyles = makeStyles((theme) => ({
@@ -15,8 +16,8 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     width: theme.spacing(50),
-    marginTop: 20,
-    marginBottom: 40
+    marginTop: theme.spacing(5),
+    marginBottom: theme.spacing(10)
   },
   link: {
     color: colors.royalBlue,

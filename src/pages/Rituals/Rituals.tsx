@@ -1,21 +1,29 @@
-import styled from 'styled-components';
-import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
-import { Button } from '../../components/Button';
-import { useHistory, useParams } from 'react-router-dom';
-import { colors } from '../../styling/styles/colors';
-import { Card } from '../../components/Card';
-import GetAppIcon from '@material-ui/icons/GetApp';
-import { Link } from '../../components/Link';
-import { Link as NavLink } from 'react-router-dom';
-import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
-import DeleteIcon from '@material-ui/icons/Delete';
-import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import { useEffect, useState } from 'react';
-import ModalComponent from '../../components/Modal';
+import styled from 'styled-components';
+import {
+  Box,
+  Grid,
+  IconButton,
+  makeStyles,
+  Typography
+} from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { Link as NavLink } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { deleteRitual, getRituals } from '../../store/actions/actions';
-import SelectMenu from '../../components/Menu';
-import Loader from '../../components/Loader';
+
+import {
+  Loader,
+  Card,
+  Link,
+  Button,
+  SelectMenu,
+  ModalComponent
+} from '../../components';
+import { colors } from '../../styling/styles/colors';
 
 interface ParamTypes {
   companyId: string;
@@ -37,7 +45,7 @@ const ButtonDiv = styled.div`
 const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(10),
-    marginRight: '5vh'
+    marginRight: theme.spacing(10)
   },
   link: {
     color: colors.royalBlue,
@@ -50,13 +58,10 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500
   },
   listContainer: {
-    paddingLeft: theme.spacing(4),
-    paddingRight: theme.spacing(4),
-    paddingTop: 18,
-    borderRadius: 12,
-    paddingBottom: 18,
+    padding: theme.spacing(3, 4),
+    borderRadius: theme.spacing(3),
     backgroundColor: colors.whisperWhite,
-    marginTop: 8
+    marginTop: theme.spacing(2)
   },
   listRightWrapper: {
     display: 'flex',
@@ -79,8 +84,7 @@ const useStyles = makeStyles((theme) => ({
   listHeading: {
     display: 'flex',
     alignItems: 'center',
-    paddingLeft: theme.spacing(4),
-    paddingRight: theme.spacing(4)
+    padding: theme.spacing(0, 4)
   },
   boldHeading: {
     display: 'flex',
@@ -88,44 +92,53 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold'
   },
   footer: {
-    marginTop: theme.spacing(6),
-    marginBottom: theme.spacing(6)
-  }
+    margin: theme.spacing(6, 0)
+  },
+  centerVertical: { display: 'flex', alignItems: 'center' },
+  iconWrapper: { display: 'flex', justifyContent: 'center' }
 }));
 
 const Rituals = (props: Props) => {
-  const [open, setOpen] = useState(false);
+  const [helpModal, setHelpModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState('');
   const [orderBy, setOrderBy] = useState('asc');
+
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
   const { companyId, teamId } = useParams<ParamTypes>();
 
   const rituals = useSelector((state: RootStateOrAny) => state.rituals.data);
+
   useEffect(() => {
-    // dispatch(getTeamById(teamId));
     dispatch(getRituals(teamId));
   }, []);
+
   const handleOrderBy = (event: React.ChangeEvent<{ value: unknown }>) => {
     setOrderBy(event.target.value as string);
   };
+
+  const handleDelete = () => {
+    dispatch(deleteRitual(deleteId));
+    setDeleteModal(false);
+  };
   const renderListItem = ({ id, action, trigger, teamId }: any) => {
     return (
-      <Grid container item key={id}>
+      <Grid container item key={id} className={classes.centerVertical}>
         <Grid
           container
           direction='row'
           item
           xs={11}
-          spacing={1}
           className={classes.listContainer}
         >
-          <Grid item xs={5}>
+          <Grid item xs={5} className={classes.centerVertical}>
             <Typography variant='h4' className={classes.listTitle}>
               {trigger}
             </Typography>
           </Grid>
-          <Grid container item xs={7}>
+          <Grid container item xs={7} className={classes.centerVertical}>
             <Grid item xs={10}>
               <Typography variant='h4' className={classes.listTitle}>
                 {action}
@@ -134,18 +147,27 @@ const Rituals = (props: Props) => {
             <Grid item xs={2} className={classes.editIcon}>
               <NavLink
                 to={{
-                  pathname: `/company/${companyId}/ritual/edit/${id}`,
+                  pathname: `/${companyId}/ritual/edit/${id}`,
                   state: { id, action, trigger, teamId }
                 }}
               >
-                <CreateOutlinedIcon style={{ color: colors.royalBlue }} />
+                <IconButton>
+                  <CreateOutlinedIcon style={{ color: colors.royalBlue }} />
+                </IconButton>
               </NavLink>
             </Grid>
           </Grid>
         </Grid>
-        <Link style={{ margin: 0 }} onClick={() => dispatch(deleteRitual(id))}>
-          <DeleteIcon />
-        </Link>
+        <Grid item xs={1} className={classes.iconWrapper}>
+          <IconButton
+            onClick={() => {
+              setDeleteId(id);
+              setDeleteModal(true);
+            }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Grid>
       </Grid>
     );
   };
@@ -164,32 +186,22 @@ const Rituals = (props: Props) => {
 
       <ButtonDiv>
         <Button
+          variant='contained'
           className={classes.button}
-          onClick={() =>
-            history.push(`/company/${companyId}/${teamId}/ritual/add`)
-          }
+          onClick={() => history.push(`/${companyId}/${teamId}/ritual/add`)}
         >
           Create a new ritual
         </Button>
         <Link
           startIcon={<HelpOutlineIcon color={'primary'} />}
-          onClick={() => setOpen(true)}
+          onClick={() => setHelpModal(true)}
         >
           <Typography variant='h4' className={classes.link}>
             More
           </Typography>
         </Link>
       </ButtonDiv>
-      {open && (
-        <ModalComponent
-          open={open}
-          icon={true}
-          title='Create new ritual'
-          message='Let your team agree on rituals which you want to do regularly. You can update, delete or create a new one depend on what works for your team.'
-          buttonTitle='Close'
-          onButtonClick={() => setOpen(false)}
-        />
-      )}
+
       <Card>
         <Grid
           container
@@ -200,11 +212,6 @@ const Rituals = (props: Props) => {
           <Typography variant='h2' component='h5' gutterBottom>
             Commited Rituals
           </Typography>
-          <Link endIcon={<GetAppIcon style={{ color: colors.royalBlue }} />}>
-            <Typography variant='h4' className={classes.downloadAction}>
-              Download all rituals
-            </Typography>
-          </Link>
         </Grid>
         {rituals.rituals.length > 0 ? (
           <Grid container>
@@ -264,6 +271,28 @@ const Rituals = (props: Props) => {
           </Typography>
         </Link>
       </Typography>
+
+      <ModalComponent
+        open={helpModal}
+        icon={true}
+        title='Create new ritual'
+        message='Let your team agree on rituals which you want to do regularly. You can update, delete or create a new one depend on what works for your team.'
+        buttonTitle='Close'
+        onClose={() => setHelpModal(false)}
+      />
+
+      <ModalComponent
+        open={deleteModal}
+        // open={true}
+        icon={false}
+        type='confirm'
+        title='Do you really want to delete this ritual?'
+        onClose={() => setDeleteModal(false)}
+        yesClickTitle='Yes'
+        noClickTitle='No'
+        onYesClick={handleDelete}
+        onNoClick={() => setDeleteModal(false)}
+      />
     </RootDiv>
   );
 };

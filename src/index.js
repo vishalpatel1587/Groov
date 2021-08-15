@@ -1,16 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import App from './App';
+import ReactDOM from 'react-dom';
 
+import { logger } from 'redux-logger';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
-import { applyMiddleware, createStore } from 'redux';
-import { rootReducer } from './store/reducers/rootReducers';
-import { logger } from 'redux-logger';
-import rootSaga from './store/sagas/index';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { applyMiddleware, createStore } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import { composeWithDevTools } from 'redux-devtools-extension';
+
+import rootSaga from './store/sagas/index';
+import { rootReducer } from './store/reducers/rootReducers';
 import { PersistGate } from 'redux-persist/integration/react';
 
 const persistConfig = {

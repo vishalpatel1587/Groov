@@ -6,10 +6,6 @@ export const GET_TEAMS_BY_COMPANY_ID_BEGIN = 'GET_TEAMS_BY_COMPANY_ID_BEGIN';
 export const GET_TEAMS_BY_COMPANY_ID_SUCCESS = 'GET_TEAMS_BY_COMPANY_ID_SUCCESS';
 export const GET_TEAMS_BY_COMPANY_ID_FAILURE = 'GET_TEAMS_BY_COMPANY_ID_FAILURE';
 
-// export const GET_TEAM_BY_ID_BEGIN = 'GET_TEAM_BY_ID_BEGIN';
-// export const GET_TEAM_BY_ID_SUCCESS = 'GET_TEAM_BY_ID_SUCCESS';
-// export const GET_TEAM_BY_ID_FAILURE = 'GET_TEAM_BY_ID_FAILURE';
-
 export const CREATE_TEAM_BEGIN = 'CREATE_TEAM_BEGIN';
 export const CREATE_TEAM_SUCCESS = 'CREATE_TEAM_SUCCESS';
 export const CREATE_TEAM_FAILURE = 'CREATE_TEAM_FAILURE';
@@ -45,11 +41,6 @@ export const getTeamsByCompanyId = (limit,offset,orderBy,companyId) => ({
   type: GET_TEAMS_BY_COMPANY_ID_BEGIN,
   payload: {limit,offset,orderBy,companyId}
 });
-
-// export const getTeamById = (teamId) => ({
-//   type: GET_TEAM_BY_ID_BEGIN,
-//   payload: teamId
-// });
 
 export const createTeam = (data) => ({
   type: CREATE_TEAM_BEGIN,

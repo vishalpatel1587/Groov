@@ -1,11 +1,12 @@
 import React from 'react';
+import { VariantType } from 'notistack';
 import { Box, Grid } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { VariantType } from 'notistack';
+
 import { ToasterUtils } from './ToasterUtils';
-import { CloseToasterButton } from './CloseToasterButton';
 import { toasterStyles } from './toasterStyles';
 import { toasterPrompts } from '../../prompts/prompts';
+import { CloseToasterButton } from './CloseToasterButton';
 import lightningIcon from '../../assets/icons/ic-lightning.svg';
 
 const useStyles = makeStyles((theme: Theme) => toasterStyles);

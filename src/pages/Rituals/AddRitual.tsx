@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { makeStyles, Typography } from '@material-ui/core';
-import { Card } from '../../components/Card';
-import { Input } from '../../components/TextInput';
-import { Button } from '../../components/Button';
-import { colors } from '../../styling/styles/colors';
-import { Link } from '../../components/Link';
 import { useLocation, useParams } from 'react-router-dom';
-import ModalComponent from '../../components/Modal';
+import { makeStyles, Typography } from '@material-ui/core';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { createRitual, updateRitual } from '../../store/actions/actions';
-import Loader from '../../components/Loader';
-import { ToasterUtils } from '../../components/Toaster/ToasterUtils';
+
+import { Link, Loader, Card, Button, Input,ModalComponent,ToasterUtils } from '../../components';
+import { colors } from '../../styling/styles/colors';
+
 
 interface Props {}
 
@@ -21,9 +17,8 @@ interface ParamTypes {
   teamId: string;
 }
 const RootDiv = styled.div`
-  text-align: center;
   margin: 0 0%;
-  max-width: 600px;
+  max-width: 726px;
 `;
 
 const ButtonDiv = styled.div`
@@ -35,7 +30,7 @@ const ButtonDiv = styled.div`
 const InputDiv = styled.div`
   display: flex;
   align-items: center;
-  margin: 20px 0px;
+  margin: 25px 0px;
 `;
 
 const useStyles = makeStyles((theme) => ({
@@ -50,7 +45,11 @@ const useStyles = makeStyles((theme) => ({
   linkButton: {
     margin: theme.spacing(1)
   },
-  linkClickHere: {},
+  inputRowText: {
+    float: 'left',
+    minWidth: 'fit-content',
+    marginRight: theme.spacing(3)
+  },
   subHeader: {
     marginBottom: theme.spacing(8)
   }
@@ -93,17 +92,22 @@ const AddRitual = (props: Props) => {
 
   return (
     <RootDiv>
-      <Typography variant='h1' component='h1' gutterBottom>
+      <Typography variant='h1' component='h1' gutterBottom align='center'>
         {id ? `Update ritual` : `Create new ritual`}
       </Typography>
 
       {id ? (
-        <Typography variant='body2' gutterBottom className={classes.subHeader}>
+        <Typography
+          variant='body2'
+          gutterBottom
+          className={classes.subHeader}
+          align='center'
+        >
           You can update existing ritual to fit better your team needs.
         </Typography>
       ) : (
         <>
-          <Typography variant='body2' gutterBottom>
+          <Typography variant='body2' gutterBottom align='center'>
             By filling the trigger and action you will create team ritual.
             Ritual will be save on your team page.
           </Typography>
@@ -111,8 +115,9 @@ const AddRitual = (props: Props) => {
             variant='body2'
             gutterBottom
             className={classes.subHeader}
+            align='center'
           >
-            <Link className={classes.linkClickHere}>
+            <Link>
               <Typography variant='h4' className={classes.link}>
                 Click Here
               </Typography>
@@ -123,7 +128,11 @@ const AddRitual = (props: Props) => {
       )}
       <Card>
         <InputDiv>
-          <Typography variant='h3' component='h1'>
+          <Typography
+            variant='h3'
+            component='h1'
+            className={classes.inputRowText}
+          >
             The team aggres that
           </Typography>
           <Input
@@ -133,11 +142,16 @@ const AddRitual = (props: Props) => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setTriggers(e.target.value)
             }
+            style={{ marginTop: 0 }}
             placeholder='Trigger example: At the beginning of every meeting'
           />
         </InputDiv>
         <InputDiv>
-          <Typography variant='h3' component='h1'>
+          <Typography
+            variant='h3'
+            component='h1'
+            className={classes.inputRowText}
+          >
             we will
           </Typography>
           <Input
@@ -147,9 +161,10 @@ const AddRitual = (props: Props) => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setActions(e.target.value)
             }
+            style={{ marginTop: 0 }}
             placeholder='Action example: Share one thing you did well, one thing you learned, and one thing you want to improve'
             multiline={true}
-            rows={2}
+            maxRows={3}
           />
         </InputDiv>
         <InputDiv>
@@ -164,12 +179,17 @@ const AddRitual = (props: Props) => {
             title='Yay! You have created new ritual'
             message='The summary of your rituals have been sent to your email or you can download them by clickling the icon in right top corner.'
             buttonTitle='OK'
-            onButtonClick={() => setOpen(false)}
+            onClose={() => setOpen(false)}
           />
         )}
 
         <ButtonDiv>
-          <Button className={classes.button} onClick={handleSubmit}>
+          <Button
+            className={classes.button}
+            onClick={handleSubmit}
+            variant='contained'
+            disabled={actions === '' || triggers === ''}
+          >
             {id ? (
               ritual.update.loading ? (
                 <Loader />
@@ -183,11 +203,13 @@ const AddRitual = (props: Props) => {
             )}
           </Button>
         </ButtonDiv>
-        <Link className={classes.linkButton}>
-          <Typography variant='h4' className={classes.link}>
-            Cancel
-          </Typography>
-        </Link>
+        <ButtonDiv>
+          <Link className={classes.linkButton}>
+            <Typography variant='h4' className={classes.link}>
+              Cancel
+            </Typography>
+          </Link>
+        </ButtonDiv>
       </Card>
     </RootDiv>
   );

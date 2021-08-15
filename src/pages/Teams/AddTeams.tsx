@@ -1,26 +1,24 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { makeStyles, Typography } from '@material-ui/core';
-import { Card } from '../../components/Card';
-import { Input } from '../../components/TextInput';
-import { Button } from '../../components/Button';
-import { colors } from '../../styling/styles/colors';
-import { Link } from '../../components/Link';
-import ModalComponent from '../../components/Modal';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import Loader from '../../components/Loader';
+import { makeStyles, Typography } from '@material-ui/core';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+
+import {Loader,Link,Card,Button,Input,ModalComponent,ToasterUtils} from '../../components';
+import { colors } from '../../styling/styles/colors';
 import { createTeam } from '../../store/actions/actions';
 import { validateEmail, validateName } from '../../utils/validation';
-import { ToasterUtils } from '../../components/Toaster/ToasterUtils';
-interface Props {}
+
+interface Props { }
+
 interface ParamTypes {
   companyId: string;
 }
 
 const RootDiv = styled.div`
   margin: 0 0%;
-  max-width: 600px;
+  padding-bottom: 30px;
+  max-width: 750px;
 `;
 
 const ButtonDiv = styled.div`
@@ -32,7 +30,7 @@ const ButtonDiv = styled.div`
 const InputDiv = styled.div`
   display: flex;
   align-items: center;
-  margin: 20px 0px;
+  margin: 25px 0px;
 `;
 
 const useStyles = makeStyles((theme) => ({
@@ -50,12 +48,12 @@ const useStyles = makeStyles((theme) => ({
   },
   card: { marginTop: '2em' },
   input: {
-    width: theme.spacing(125),
-    marginLeft: theme.spacing(5)
+    marginTop: theme.spacing(0)
   },
-  input2: {
-    width: theme.spacing(160),
-    marginLeft: theme.spacing(5)
+  inputRowText: {
+    float: 'left',
+    minWidth: 'fit-content',
+    marginRight: theme.spacing(3)
   }
 }));
 const AddTeams = (props: Props) => {
@@ -73,9 +71,9 @@ const AddTeams = (props: Props) => {
   const { companyId } = useParams<ParamTypes>();
 
   const handleSubmit = () => {
-    const team = { name, leaderEmail, companyId, };
-    const ritual = { action, trigger }
-    const data = {team,ritual}
+    const team = { name, leaderEmail, companyId };
+    const ritual = { action, trigger };
+    const data = { team, ritual };
 
     if (validateName(name)) {
       if (validateEmail(leaderEmail)) {
@@ -145,10 +143,15 @@ const AddTeams = (props: Props) => {
           Commit first ritual
         </Typography>
         <InputDiv>
-          <Typography variant='h3' component='h1'>
+          <Typography
+            variant='h3'
+            component='h1'
+            className={classes.inputRowText}
+          >
             The team aggres that
           </Typography>
           <Input
+            fullWidth={true}
             className={classes.input}
             name='trigger'
             value={trigger}
@@ -159,8 +162,11 @@ const AddTeams = (props: Props) => {
           />
         </InputDiv>
         <InputDiv>
-          <Typography variant='h3'>we will</Typography>
+          <Typography variant='h3' className={classes.inputRowText}>
+            we will
+          </Typography>
           <Input
+            fullWidth={true}
             className={classes.input}
             name='action'
             value={action}
@@ -184,11 +190,15 @@ const AddTeams = (props: Props) => {
             title="Great, you've created a new team!"
             message="To add your first ritual, check your email for the special link that we've sent."
             buttonTitle='OK'
-            onButtonClick={() => setOpen(false)}
+            onClose={() => setOpen(false)}
           ></ModalComponent>
         )}
         <ButtonDiv>
-          <Button className={classes.button} onClick={handleSubmit}>
+          <Button
+            className={classes.button}
+            onClick={handleSubmit}
+            variant='contained'
+          >
             {team.loading ? <Loader /> : `Save`}
           </Button>
         </ButtonDiv>
