@@ -7,12 +7,12 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 
 import {
   Loader,
-  Link,
   Card,
   Button,
   Pagination,
   ModalComponent,
-  SelectMenu
+  SelectMenu,
+  Link
 } from '../../components';
 import { colors } from '../../styling/styles/colors';
 import {
@@ -34,15 +34,23 @@ const RootDiv = styled.div`
 const ButtonDiv = styled.div`
   display: flex;
   padding-left: 35%;
-  align-items: baseline;
-  margin-bottom: 2em;
+  margin: 2em 0;
 `;
 
 const useStyles = makeStyles((theme) => ({
   button: {
-    marginTop: theme.spacing(10),
-    marginRight: theme.spacing(10)
+    marginRight: theme.spacing(3)
   },
+  buttonMore: {
+    backgroundColor: 'transparent',
+    color: colors.royalBlue,
+    padding: theme.spacing(4),
+    '&:hover': {
+      background: colors.royalBlueHover
+    }
+  },
+  description: { marginBottom: theme.spacing(6) },
+  descriptionWithLink: {display:'flex',justifyContent:'center'},
   link: {
     color: colors.royalBlue,
     fontFamily: 'Averta-Semibold',
@@ -124,7 +132,7 @@ const Teams = (props: Props) => {
   const { companyId } = useParams<ParamTypes>();
   const teams = useSelector((state: RootStateOrAny) => state.teams);
   const company = useSelector((state: RootStateOrAny) => state.company);
-
+  console.log('======teams', teams);
   useEffect(() => {
     dispatch(getCompanyById(companyId));
     dispatch(getTeamsByCompanyId(pageLimit, offset, orderBy, companyId));
@@ -150,16 +158,16 @@ const Teams = (props: Props) => {
   const handleOrderBy = (event: React.ChangeEvent<{ value: unknown }>) => {
     setOrderBy(event.target.value as string);
   };
-  const renderListItem = ({ id, name, rituals }: any) => {
+  const renderListItem = ({ id, name, rituals }: any, keyId: number) => {
     return (
       <Grid
         container
         direction='row'
-        key={id}
+        key={'team' + keyId}
         item
         xs={12}
         className={classes.listContainer}
-        onClick={() => history.push(`/${companyId}/${id}/rituals`)}
+        // onClick={() => history.push(`/${companyId}/${id}/rituals`)}
       >
         <Grid item xs={3}>
           <Typography variant='h3' className={classes.listTitleName}>
@@ -167,13 +175,13 @@ const Teams = (props: Props) => {
           </Typography>
         </Grid>
         <Grid container item xs={9} className={classes.ritualsContainer}>
-          {rituals.map(({ id, trigger, action }: any) => (
+          {rituals.map(({ id, trigger, action }: any, index: number) => (
             <Box
               display='flex'
               flexDirection='row'
               justifyContent='space-between'
               className={classes.listItemBorder}
-              key={id}
+              key={'ritual'+ index}
             >
               <Grid item xs={6}>
                 <Typography variant='h4' className={classes.listTitle}>
@@ -196,26 +204,39 @@ const Teams = (props: Props) => {
     ? Math.ceil(teams.data.total / teams.data.limit)
     : 0;
 
-  teams.data.teams && console.log('teamsda dasd', teams.data.teams);
   return (
     <RootDiv>
       <Typography variant='h1' component='h1' gutterBottom align='center'>
         {company.name || '!WrongCompanyId!'}
       </Typography>
-      <Typography variant='body2' gutterBottom align='center'>
+      <Typography
+        variant='body2'
+        gutterBottom
+        align='center'
+        className={classes.description} 
+      >
         A simple way to bake wellbeing into your workplace is to create rituals
         for team wellbeing. The idea is to link a wellbeing action, like group
         deep breathing, to something in your work day (a trigger), such as a
         regular meeting. In this way, wellbeing becomes an automatic part of
-        every day. Click here to spark ideas about triggers and actions suitable
-        for your team.
+        every day.
       </Typography>
-      <Typography variant='body2' gutterBottom align='center'>
+      <Typography
+        variant='body2'
+        gutterBottom
+        align='center'
+        className={classes.description}
+      >
         Teams at your company are creating and sharing their rituals. Science
         shows that recording and sharing these commitments will help make them
         stick.
       </Typography>
-      <Typography variant='body2' gutterBottom align='center'>
+      <Typography
+        variant='body2'
+        gutterBottom
+        align='center'
+        className={classes.descriptionWithLink}
+      >
         Click below to create some for your team.
       </Typography>
       <ButtonDiv>
@@ -226,19 +247,23 @@ const Teams = (props: Props) => {
         >
           Add a new team
         </Button>
-        <Link
-          startIcon={<HelpOutlineIcon color={'primary'} />}
-          className={classes.linkButton}
+        <Button
+          className={classes.buttonMore}
+          variant='contained'
           onClick={() => setOpen(true)}
         >
-          <Typography
-            variant='h4'
-            className={classes.link}
-            onClick={() => setOpen(true)}
+          <Box
+            width={70}
+            display='flex'
+            justifyContent='space-between'
+            alignItems='center'
           >
-            More
-          </Typography>
-        </Link>
+            <HelpOutlineIcon color={'primary'} />
+            <Typography variant='h4' className={classes.link}>
+              More
+            </Typography>
+          </Box>
+        </Button>
       </ButtonDiv>
       {open && (
         <ModalComponent
@@ -262,12 +287,8 @@ const Teams = (props: Props) => {
             Teams and rituals
           </Typography>
         </Grid>
-        <Box p={10}>
-          <Typography variant='body1' component='h2' align='center'>
-            Watch this space
-          </Typography>
-        </Box>
-        {/* {teams.data.teams.length > 0 ? (
+
+        {teams?.data?.teams?.length > 0 ? (
           <>
             <Grid container>
               <Grid container item xs={3} className={classes.listHeading}>
@@ -284,13 +305,13 @@ const Teams = (props: Props) => {
                 </Typography>
               </Grid>
               <Grid container item xs={5} className={classes.listHeading}>
-                <Typography variant='h4'>Triggers</Typography>
+                <Typography variant='h4' className={classes.boldHeading}>Triggers</Typography>
               </Grid>
               <Grid container item xs={4} className={classes.listHeading}>
-                <Typography variant='h4'>Actions</Typography>
+                <Typography variant='h4' className={classes.boldHeading}>Actions</Typography>
               </Grid>
 
-              {teams.data.teams?.map((items: any) => renderListItem(items))}
+              {teams?.data?.teams?.map((items: any, index: number) => renderListItem(items, index))}
             </Grid>
 
             <Pagination
@@ -301,7 +322,7 @@ const Teams = (props: Props) => {
           </>
         ) : (
           <>
-            {teams.data.loading ? (
+            {teams.loading ? (
               <Box p={10} display='flex' justifyContent='center'>
                 <Loader color={colors.royalBlue} size={50} thickness={4} />
               </Box>
@@ -316,21 +337,8 @@ const Teams = (props: Props) => {
               </Box>
             )}
           </>
-        )} */}
+        )}
       </Card>
-      <Typography
-        variant='body2'
-        gutterBottom
-        align='center'
-        className={classes.footer}
-      >
-        If you need any help, please get in touch with our
-        <Link>
-          <Typography variant='h4' className={classes.link}>
-            support team.
-          </Typography>
-        </Link>
-      </Typography>
     </RootDiv>
   );
 };

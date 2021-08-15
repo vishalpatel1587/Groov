@@ -8,34 +8,36 @@ import {
 } from '../actions/actions';
 
 const initialState = {
-  data: { teams: [], loading: false, error: '' },
-  team: { loading: false, error: '', rituals: [] },
-  createTeam: { loading: false, error: '' }
+  loading: false,
+  error: '',
+  data: [],
 };
 const TeamsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_TEAMS_BY_COMPANY_ID_BEGIN:
-      return { ...state, data: { ...state.data, loading: true } };
+      return { ...state, loading: true,};
     case GET_TEAMS_BY_COMPANY_ID_SUCCESS:
       return {
         ...state,
-        data: { ...action.payload, loading: false }
+        loading: false,
+        data: action.payload
       };
     case GET_TEAMS_BY_COMPANY_ID_FAILURE:
-      return { ...state, data: { error: action.payload, loading: false } };
+      return { ...state, loading: false,  error: action.payload, data: []};
 
     // CREATE TEAM
     case CREATE_TEAM_BEGIN:
-      return { ...state, createTeam: { loading: true } };
+      return { ...state, loading:true, };
     case CREATE_TEAM_SUCCESS:
       return {
         ...state,
-        createTeam: { ...action.payload, loading: false }
+        loading: false,
       };
     case CREATE_TEAM_FAILURE:
       return {
         ...state,
-        createTeam: { error: action.payload, loading: false }
+        loading: false,
+        error: action.payload,
       };
 
     default:
