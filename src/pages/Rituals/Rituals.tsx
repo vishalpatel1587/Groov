@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Link as NavLink } from 'react-router-dom';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
@@ -121,6 +121,7 @@ const Rituals = (props: Props) => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
+  const match = useRouteMatch();
   const { companyId, teamId } = useParams<ParamTypes>();
 
   const rituals = useSelector((state: RootStateOrAny) => state.rituals);

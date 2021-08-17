@@ -232,7 +232,7 @@ const Teams = (props: Props) => {
         align='center'
         className={`${classes.description} ${classes.descriptionWithLink}`}
       >
-        <Link href={`ideas`}>
+        <Link href={`/${companyId}/ideas`}>
           <Typography variant='h4' className={classes.link}>
             Click Here
           </Typography>

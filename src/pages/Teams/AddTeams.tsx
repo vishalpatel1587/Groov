@@ -79,6 +79,7 @@ const AddTeams = (props: Props) => {
 
   const classes = useStyles();
   const dispatch = useDispatch();
+  
   const { companyId } = useParams<ParamTypes>();
 
   const handleSubmit = () => {
