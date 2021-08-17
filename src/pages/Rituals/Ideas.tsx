@@ -31,7 +31,8 @@ const Ideas = (props: Props) => {
         align='center'
         className={classes.title}
       >
-        Ideas for Team Rituals at {company.name}
+        Ideas for Team Rituals 
+        {/* at {company.name} */}
       </Typography>
       <Card>
         {ritualsIdeas.map(({ id, trigger, action }) => {

@@ -125,6 +125,7 @@ const Rituals = (props: Props) => {
   const { companyId, teamId } = useParams<ParamTypes>();
 
   const rituals = useSelector((state: RootStateOrAny) => state.rituals);
+
   console.log('===============', rituals);
   useEffect(() => {
     dispatch(getRituals(teamId));
@@ -270,7 +271,8 @@ const Rituals = (props: Props) => {
             Commited Rituals
           </Typography>
         </Grid>
-        {rituals?.data?.length > 0 ? (
+        {rituals.data && rituals.data.rituals && rituals.data.rituals.length > 0 ? (
+       // {rituals?.data?.length > 0 ? (
           <Grid container>
             <Grid item xs={2}>
               <Box display='flex'>
@@ -301,9 +303,11 @@ const Rituals = (props: Props) => {
                 Actions
               </Typography>
             </Grid>
-            {rituals?.data?.map((items: any, index: number) =>
+           {rituals?.data?.rituals.map((items: any, index:number) => renderListItem(items, index))}
+
+            {/* {rituals?.data?.map((items: any, index: number) =>
               renderListItem(items, index)
-            )}
+            )} */}
           </Grid>
         ) : (
           <>
