@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(3)
   },
   description: { marginBottom: theme.spacing(6) },
-  withLink: { display: 'flex', justifyContent: 'center' },
+  withLink: { display: 'flex', justifyContent: 'center' }
 }));
 const AddTeams = (props: Props) => {
   const [open, setOpen] = useState(false);
@@ -84,7 +84,7 @@ const AddTeams = (props: Props) => {
   const handleSubmit = () => {
     const team = { name, leaderEmail, companyId };
     const ritual = { action, trigger };
-    const data = { team, ritual };
+    const data = { ...team, ritual };
 
     if (validateName(name)) {
       if (validateEmail(leaderEmail)) {
@@ -110,18 +110,40 @@ const AddTeams = (props: Props) => {
       <Typography variant='h1' component='h1' gutterBottom align='center'>
         Add a new team
       </Typography>
-      <Typography variant='body2' gutterBottom align='center'className={classes.description}>
+      <Typography
+        variant='body2'
+        gutterBottom
+        align='center'
+        className={classes.description}
+      >
         This is where you can record the rituals for your team. These can be
         viewed by the rest of the organisation, inspiring them to create ones of
         their own. Science also shows that recording and sharing commitments
         will help to make them stick.
       </Typography>
-      <Typography variant='body2' gutterBottom align='center'className={classes.description}>
+      <Typography
+        variant='body2'
+        gutterBottom
+        align='center'
+        className={classes.description}
+      >
         When you save the first ritual, you'll receive an email with a unique
         link to this page so that you can view and update these rituals. You can
         share this link with your team.
       </Typography>
-  
+      <Typography
+        variant='body2'
+        gutterBottom
+        align='center'
+        className={`${classes.description} ${classes.withLink}`}
+      >
+        <Link href={`/${companyId}/ideas`}>
+          <Typography variant='h4' className={classes.link}>
+            Click here
+          </Typography>
+        </Link>{' '}
+        to spark ideas about triggers and actions suitable for your team.
+      </Typography>
       <Card className={classes.card}>
         <Typography variant='h2' component='h1' gutterBottom align='center'>
           Team information
@@ -210,7 +232,7 @@ const AddTeams = (props: Props) => {
             onClick={handleSubmit}
             variant='contained'
           >
-            {team.loading ? <Loader /> : `Commit`}
+            {team?.createTeam?.loading ? <Loader /> : `Commit`}
           </Button>
         </ButtonDiv>
         <ButtonDiv>

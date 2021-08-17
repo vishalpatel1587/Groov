@@ -14,82 +14,95 @@ import {
 } from '../actions/actions';
 
 const initialState = {
-  data: { rituals: [], loading: false, error: '' },
-  create: { error: '', loading: false },
-  update: { error: '', loading: false },
-  delete: { error: '', loading: false }
+  loading: false,
+  error: '',
+  data: [],
 };
 
 const RitualsReducer = (state = initialState, action) => {
   switch (action.type) {
     // GET_RITUALS
     case GET_RITUALS_BEGIN:
-      return { ...state, data: { ...state.data, loading: true } };
+      return { ...state, loading:true,};
 
     case GET_RITUALS_SUCCESS:
       return {
         ...state,
-        data: { ...action.payload.team, loading: false }
+        loading: false,
+        data: [...action.payload.rituals]
       };
 
     case GET_RITUALS_FAILURE:
       return {
         ...state,
-        data: { rituals: [], error: action.payload, loading: false }
+        loading: false,
+        data: [],
+        error: action.payload
       };
 
     // CREATE_RITUALS
     case CREATE_RITUAL_BEGIN:
       return {
         ...state,
-        create: { loading: true }
+        loading:true,
       };
 
     case CREATE_RITUAL_SUCCESS:
       return {
         ...state,
-        create: { ...state.create, ...action.payload, loading: false }
+        loading:false,
       };
 
     case CREATE_RITUAL_FAILURE:
-      return { ...state, create: { error: action.payload, loading: false } };
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
 
     // UPDATE_RITUALS
     case UPDATE_RITUAL_BEGIN:
       return {
         ...state,
-        update: { loading: true }
+        loading: true,
       };
 
     case UPDATE_RITUAL_SUCCESS:
       return {
         ...state,
-        update: { ...state.create, ...action.payload, loading: false }
+        loading: false,
       };
 
     case UPDATE_RITUAL_FAILURE:
-      return { ...state, update: { error: action.payload, loading: false } };
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
 
     // DELETE_RITUALS
     case DELETE_RITUAL_BEGIN:
       return {
         ...state,
-        delete: { loading: true }
+        loading: true,
       };
 
     case DELETE_RITUAL_SUCCESS:
-      const deletedData = state.data.rituals.filter(
+      const deletedData = state.data.filter(
         (item) => item.id !== action.payload.id
       );
       return {
         ...state,
-        data: { rituals: [...deletedData], loading: false },
-        delete: { loading: false }
+        loading: false,
+        data: [...deletedData]
       };
 
     case DELETE_RITUAL_FAILURE:
-      return { ...state, delete: { error: action.payload, loading: false } };
-
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      }
     default:
       return state;
   }

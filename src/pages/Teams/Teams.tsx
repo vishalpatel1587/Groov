@@ -27,8 +27,9 @@ interface ParamTypes {
 }
 
 const RootDiv = styled.div`
-  margin: 0 20%;
+  // margin: 0 20%;
   padding-bottom: 30px;
+  max-width: 60vw;
 `;
 
 const ButtonDiv = styled.div`
@@ -50,11 +51,16 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   description: { marginBottom: theme.spacing(6) },
-  descriptionWithLink: {display:'flex',justifyContent:'center'},
+  descriptionWithLink: { display: 'flex', justifyContent: 'center' },
   link: {
     color: colors.royalBlue,
     fontFamily: 'Averta-Semibold',
     fontWeight: 500
+  },
+  listTitleName: {
+    paddingRight: theme.spacing(6),
+    wordBreak: 'break-word',
+    hyphens: 'auto'
   },
   linkButton: {
     margin: theme.spacing(1)
@@ -91,7 +97,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     padding: theme.spacing(0, 4)
   },
-  listTitleName: { paddingRight: theme.spacing(6) },
   listItemBorder: {
     width: '100%'
   },
@@ -181,7 +186,7 @@ const Teams = (props: Props) => {
               flexDirection='row'
               justifyContent='space-between'
               className={classes.listItemBorder}
-              key={'ritual'+ index}
+              key={'ritual' + index}
             >
               <Grid item xs={6}>
                 <Typography variant='h4' className={classes.listTitle}>
@@ -207,19 +212,32 @@ const Teams = (props: Props) => {
   return (
     <RootDiv>
       <Typography variant='h1' component='h1' gutterBottom align='center'>
-        {company.name || '!WrongCompanyId!'}
+        {company.name || 'NO SUCH COMPANY ID EXIST!!'}
       </Typography>
       <Typography
         variant='body2'
         gutterBottom
         align='center'
-        className={classes.description} 
+        className={classes.description}
       >
         A simple way to bake wellbeing into your workplace is to create rituals
         for team wellbeing. The idea is to link a wellbeing action, like group
         deep breathing, to something in your work day (a trigger), such as a
         regular meeting. In this way, wellbeing becomes an automatic part of
         every day.
+      </Typography>
+      <Typography
+        variant='body2'
+        gutterBottom
+        align='center'
+        className={`${classes.description} ${classes.descriptionWithLink}`}
+      >
+        <Link href={`ideas`}>
+          <Typography variant='h4' className={classes.link}>
+            Click Here
+          </Typography>
+        </Link>{' '}
+        to spark ideas about triggers and actions suitable for your team.
       </Typography>
       <Typography
         variant='body2'
@@ -305,13 +323,19 @@ const Teams = (props: Props) => {
                 </Typography>
               </Grid>
               <Grid container item xs={5} className={classes.listHeading}>
-                <Typography variant='h4' className={classes.boldHeading}>Triggers</Typography>
+                <Typography variant='h4' className={classes.boldHeading}>
+                  Triggers
+                </Typography>
               </Grid>
               <Grid container item xs={4} className={classes.listHeading}>
-                <Typography variant='h4' className={classes.boldHeading}>Actions</Typography>
+                <Typography variant='h4' className={classes.boldHeading}>
+                  Actions
+                </Typography>
               </Grid>
 
-              {teams?.data?.teams?.map((items: any, index: number) => renderListItem(items, index))}
+              {teams?.data?.teams?.map((items: any, index: number) =>
+                renderListItem(items, index)
+              )}
             </Grid>
 
             <Pagination

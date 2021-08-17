@@ -4,10 +4,10 @@ import {
   GET_TEAMS_BY_COMPANY_ID_FAILURE,
   CREATE_TEAM_SUCCESS,
   CREATE_TEAM_FAILURE,
-  CREATE_RITUAL_BEGIN
 } from '../actions/actions';
 import { TeamsByCompanyIdApi, CreateTeamApi } from '../../services/api';
 import { ToasterUtils } from '../../components/Toaster/ToasterUtils';
+import history from '../../utils/history';
 
 export function* TeamsByCompanyId(action) {
   try {
@@ -21,34 +21,32 @@ export function* TeamsByCompanyId(action) {
       throw response;
     }
   } catch (error) {
-    ToasterUtils.error(error.response.data);
+    ToasterUtils.error(error.response?.data);
     yield put({
       type: GET_TEAMS_BY_COMPANY_ID_FAILURE,
-      payload: error.response.data
+      payload: error.response?.data
     });
   }
 }
 
 export function* CreateTeam(action) {
   try {
-    const response = yield call(CreateTeamApi, action.payload.team);
+    const response = yield call(CreateTeamApi, action.payload);
     if (response) {
       yield put({
         type: CREATE_TEAM_SUCCESS,
         payload: response.data
       });
-      const data = { teamId: response.data.team.id, ...action.payload.ritual };
-      yield put({
-        type: CREATE_RITUAL_BEGIN,
-        payload: data
-      });
+      const { team } = response.data
+      history.push(`${history.location.pathname}/success?id=${team.id}`);
     } else {
       throw response;
     }
   } catch (error) {
+    ToasterUtils.error(error.response?.data.message);
     yield put({
       type: CREATE_TEAM_FAILURE,
-      payload: error.response.data
+      payload: error.response?.data
     });
   }
 }

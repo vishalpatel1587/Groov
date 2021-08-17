@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
       background: colors.royalBlueHover
     }
   },
-  descriptionWithLink: { display: 'flex',justifyContent:'center' },
+  descriptionWithLink: { display: 'flex', justifyContent: 'center' },
   description: { marginBottom: theme.spacing(6) },
   link: {
     color: colors.royalBlue,
@@ -109,8 +109,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(6, 0)
   },
   centerVertical: { display: 'flex', alignItems: 'center' },
-  iconWrapper: { display: 'flex', justifyContent: 'center' },
-  
+  iconWrapper: { display: 'flex', justifyContent: 'center' }
 }));
 
 const Rituals = (props: Props) => {
@@ -125,7 +124,7 @@ const Rituals = (props: Props) => {
   const { companyId, teamId } = useParams<ParamTypes>();
 
   const rituals = useSelector((state: RootStateOrAny) => state.rituals);
-  console.log('ritual --main', rituals);
+  console.log('===============', rituals);
   useEffect(() => {
     dispatch(getRituals(teamId));
   }, []);
@@ -138,9 +137,17 @@ const Rituals = (props: Props) => {
     dispatch(deleteRitual(deleteId));
     setDeleteModal(false);
   };
-  const renderListItem = ({ id, action, trigger, teamId }: any, index:number) => {
+  const renderListItem = (
+    { id, action, trigger, teamId }: any,
+    index: number
+  ) => {
     return (
-      <Grid container item key={'rt' + index} className={classes.centerVertical}>
+      <Grid
+        container
+        item
+        key={'rt' + index}
+        className={classes.centerVertical}
+      >
         <Grid
           container
           direction='row'
@@ -189,7 +196,7 @@ const Rituals = (props: Props) => {
   return (
     <RootDiv>
       <Typography variant='h1' component='h1' gutterBottom align='center'>
-       { rituals?.data?.name } 
+        {rituals?.rituals?.name}
       </Typography>
       <Typography
         variant='body2'
@@ -202,6 +209,20 @@ const Rituals = (props: Props) => {
         their own. Science also shows that recording and sharing commitments
         will help to make them stick.
       </Typography>
+      <Typography
+        variant='body2'
+        gutterBottom
+        align='center'
+        className={`${classes.description} ${classes.descriptionWithLink}`}
+      >
+        <Link href={`/${companyId}/ideas`}>
+          <Typography variant='h4' className={classes.link}>
+            Click Here
+          </Typography>
+        </Link>{' '}
+        to spark ideas about triggers and actions suitable for your team.
+      </Typography>
+
       <ButtonDiv>
         <Button
           variant='contained'
@@ -248,7 +269,7 @@ const Rituals = (props: Props) => {
             Commited Rituals
           </Typography>
         </Grid>
-        {rituals.data && rituals.data.rituals && rituals.data.rituals.length > 0 ? (
+        {rituals?.data?.length > 0 ? (
           <Grid container>
             <Grid item xs={2}>
               <Box display='flex'>
@@ -269,12 +290,19 @@ const Rituals = (props: Props) => {
               </Box>
             </Grid>
             <Grid item xs={3} className={classes.listHeading}>
-              <Typography variant='h4' className={classes.boldHeading}> Triggers</Typography>
+              <Typography variant='h4' className={classes.boldHeading}>
+                {' '}
+                Triggers
+              </Typography>
             </Grid>
             <Grid item xs={6} className={classes.listHeading}>
-              <Typography variant='h4' className={classes.boldHeading}>Actions</Typography>
+              <Typography variant='h4' className={classes.boldHeading}>
+                Actions
+              </Typography>
             </Grid>
-            {rituals?.data?.rituals.map((items: any, index:number) => renderListItem(items, index))}
+            {rituals?.data?.map((items: any, index: number) =>
+              renderListItem(items, index)
+            )}
           </Grid>
         ) : (
           <>

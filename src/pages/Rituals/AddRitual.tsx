@@ -130,6 +130,19 @@ const AddRitual = (props: Props) => {
             ones of their own. Science also shows that recording and sharing
             commitments will help to make them stick.
           </Typography>
+          <Typography
+            variant='body2'
+            gutterBottom
+            className={classes.subHeader}
+            align='center'
+          >
+            <Link>
+              <Typography variant='h4' className={classes.link}>
+                Click Here
+              </Typography>
+            </Link>{' '}
+            to spark ideas about triggers and action suitable for your team
+          </Typography>
         </>
       )}
       <Card>
