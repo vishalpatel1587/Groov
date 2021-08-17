@@ -29,6 +29,7 @@ interface ParamTypes {
 const RootDiv = styled.div`
  // margin: 0 20%;
   padding-bottom: 30px;
+  max-width: 60vw;
 `;
 
 const ButtonDiv = styled.div`
