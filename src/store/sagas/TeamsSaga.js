@@ -4,6 +4,7 @@ import {
   GET_TEAMS_BY_COMPANY_ID_FAILURE,
   CREATE_TEAM_SUCCESS,
   CREATE_TEAM_FAILURE,
+  CREATE_RITUAL_BEGIN,
 } from '../actions/actions';
 import { TeamsByCompanyIdApi, CreateTeamApi } from '../../services/api';
 import { ToasterUtils } from '../../components/Toaster/ToasterUtils';
@@ -37,8 +38,13 @@ export function* CreateTeam(action) {
         type: CREATE_TEAM_SUCCESS,
         payload: response.data
       });
-      const { team } = response.data
-      history.push(`${history.location.pathname}/success?id=${team.id}`);
+      // const { team } = response.data
+      // history.push(`${history.location.pathname}/success?id=${team.id}`);
+      const data = { teamId: response.data.team.id, ...action.payload.ritual };
+      yield put({
+        type: CREATE_RITUAL_BEGIN,
+        payload: data
+      });
     } else {
       throw response;
     }
