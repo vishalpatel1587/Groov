@@ -10,7 +10,7 @@ const RootDiv = styled.div`
 
 const RootMain = styled.div`
   background-color: #fbfbfd;
-  margin: 0px 15%;
+  // margin: 0px 15%;
   display: flex;
   justify-content: center;
 `;

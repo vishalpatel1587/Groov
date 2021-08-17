@@ -202,6 +202,20 @@ const Rituals = (props: Props) => {
         their own. Science also shows that recording and sharing commitments
         will help to make them stick.
       </Typography>
+      <Typography
+        variant='body2'
+        gutterBottom
+        align='center'
+        className={`${classes.description} ${classes.descriptionWithLink}`}
+      >
+        <Link>
+          <Typography variant='h4' className={classes.link}>
+            Click Here
+          </Typography>
+        </Link>{' '}
+        to spark ideas about triggers and actions suitable for your team.
+      </Typography>
+
       <ButtonDiv>
         <Button
           variant='contained'
@@ -248,7 +262,7 @@ const Rituals = (props: Props) => {
             Commited Rituals
           </Typography>
         </Grid>
-        {rituals.data && rituals.data.rituals && rituals.data.rituals.length > 0 ? (
+        {rituals?.data?.length > 0 ? (
           <Grid container>
             <Grid item xs={2}>
               <Box display='flex'>
@@ -274,7 +288,7 @@ const Rituals = (props: Props) => {
             <Grid item xs={6} className={classes.listHeading}>
               <Typography variant='h4' className={classes.boldHeading}>Actions</Typography>
             </Grid>
-            {rituals?.data?.rituals.map((items: any, index:number) => renderListItem(items, index))}
+            {rituals?.data?.map((items: any, index:number) => renderListItem(items, index))}
           </Grid>
         ) : (
           <>

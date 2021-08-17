@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(3)
   },
   description: { marginBottom: theme.spacing(6) },
-  withLink: { display: 'flex', justifyContent: 'center' },
+  withLink: { display: 'flex', justifyContent: 'center' }
 }));
 const AddTeams = (props: Props) => {
   const [open, setOpen] = useState(false);
@@ -121,7 +121,19 @@ const AddTeams = (props: Props) => {
         link to this page so that you can view and update these rituals. You can
         share this link with your team.
       </Typography>
-  
+      <Typography
+        variant='body2'
+        gutterBottom
+        align='center'
+        className={`${classes.description} ${classes.withLink}`}
+      >
+        <Link>
+          <Typography variant='h4' className={classes.link}>
+            Click here
+          </Typography>
+        </Link>{' '}
+        to spark ideas about triggers and actions suitable for your team.
+      </Typography>
       <Card className={classes.card}>
         <Typography variant='h2' component='h1' gutterBottom align='center'>
           Team information
@@ -210,7 +222,7 @@ const AddTeams = (props: Props) => {
             onClick={handleSubmit}
             variant='contained'
           >
-            {team.loading ? <Loader /> : `Commit`}
+            {team?.createTeam?.loading ? <Loader /> : `Commit`}
           </Button>
         </ButtonDiv>
         <ButtonDiv>

@@ -28,7 +28,7 @@ export const ToasterUtils = {
     this.toast(msg, 'info');
   },
   error(msg: string) {
-    this.toast(msg, 'error');
+    this.toast(msg || 'Contact Administrator', 'error');
   },
   toast(msg: string, variant: VariantType = 'default', title?: string) {
     snackbarRef.closeSnackbar();

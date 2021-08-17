@@ -1,10 +1,14 @@
+import { useParams } from 'react-router-dom';
 import { makeStyles, Typography } from '@material-ui/core';
-import { Button } from '../components/Button';
-import { Link } from '../components/Link';
+import { Link , Button } from '../components';
 import logo from '../assets/mentemia_logo.png';
 import { colors } from '../styling/styles/colors';
+import history from '../utils/history';
 
 interface Props {}
+interface ParamTypes {
+  companyId: string;
+}
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -39,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Success = (props: Props) => {
   const classes = useStyles();
-  
+  const { companyId } = useParams<ParamTypes>();
 
   return (
     <div className={classes.content}>
@@ -65,7 +69,7 @@ const Success = (props: Props) => {
       </Typography>
       <Button
         className={classes.button}
-        // onClick={() => history.push('/')}
+        onClick={() => history.push(`/${companyId}`)}
       >
         Go to the team page
       </Button>

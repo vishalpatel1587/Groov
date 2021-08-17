@@ -24,16 +24,16 @@ export function* GetRituals(action) {
     if (response) {
       yield put({
         type: GET_RITUALS_SUCCESS,
-        payload: response.data
+        payload: response.data.team
       });
     } else {
       throw response;
     }
   } catch (error) {
-    ToasterUtils.error(error.response.data.message);
+    ToasterUtils.error(error.response?.data.message);
     yield put({
       type: GET_RITUALS_FAILURE,
-      payload: error.response.data
+      payload: error.response?.data
     });
   }
 }
@@ -46,15 +46,20 @@ export function* CreateRitual(action) {
         type: CREATE_RITUAL_SUCCESS,
         payload: response.data
       });
-      history.goBack();
+      if (action.payload.firstTime) {
+        history.push(`${history.location.pathname}/success`);
+      } else {
+        history.goBack();
+      }
     } else {
       throw response;
     }
   } catch (error) {
-     ToasterUtils.error(error.response.data.message);
+    
+    ToasterUtils.error(error.response?.data.message);
     yield put({
       type: CREATE_RITUAL_FAILURE,
-      payload: error.response.data
+      payload: error.response?.data
     });
   }
 }
@@ -72,10 +77,10 @@ export function* UpdateRitual(action) {
       throw response;
     }
   } catch (error) {
-     ToasterUtils.error(error.response.data.message);
+    ToasterUtils.error(error.response?.data.message);
     yield put({
       type: UPDATE_RITUAL_FAILURE,
-      payload: error.response.data
+      payload: error.response?.data
     });
   }
 }
@@ -92,10 +97,10 @@ export function* DeleteRitual(action) {
       throw response;
     }
   } catch (error) {
-     ToasterUtils.error(error.response.data.message);
+    ToasterUtils.error(error.response?.data.message);
     yield put({
       type: DELETE_RITUAL_FAILURE,
-      payload: error.response.data
+      payload: error.response?.data
     });
   }
 }

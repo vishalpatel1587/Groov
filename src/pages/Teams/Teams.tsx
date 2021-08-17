@@ -27,7 +27,7 @@ interface ParamTypes {
 }
 
 const RootDiv = styled.div`
-  margin: 0 20%;
+ // margin: 0 20%;
   padding-bottom: 30px;
 `;
 
@@ -55,6 +55,11 @@ const useStyles = makeStyles((theme) => ({
     color: colors.royalBlue,
     fontFamily: 'Averta-Semibold',
     fontWeight: 500
+  },
+  listTitleName: {
+    paddingRight: theme.spacing(6),
+    wordBreak: 'break-word',
+    hyphens: 'auto'
   },
   linkButton: {
     margin: theme.spacing(1)
@@ -91,7 +96,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     padding: theme.spacing(0, 4)
   },
-  listTitleName: { paddingRight: theme.spacing(6) },
   listItemBorder: {
     width: '100%'
   },
@@ -207,7 +211,7 @@ const Teams = (props: Props) => {
   return (
     <RootDiv>
       <Typography variant='h1' component='h1' gutterBottom align='center'>
-        {company.name || '!WrongCompanyId!'}
+        {company.name || 'NO SUCH COMPANY ID EXIST!!'}
       </Typography>
       <Typography
         variant='body2'
@@ -219,7 +223,8 @@ const Teams = (props: Props) => {
         for team wellbeing. The idea is to link a wellbeing action, like group
         deep breathing, to something in your work day (a trigger), such as a
         regular meeting. In this way, wellbeing becomes an automatic part of
-        every day.
+        every day.Click Here to spark ideas about triggers and actions suitable
+        for your team.
       </Typography>
       <Typography
         variant='body2'

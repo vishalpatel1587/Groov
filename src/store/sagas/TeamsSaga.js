@@ -21,10 +21,10 @@ export function* TeamsByCompanyId(action) {
       throw response;
     }
   } catch (error) {
-    ToasterUtils.error(error.response.data);
+    ToasterUtils.error(error.response?.data);
     yield put({
       type: GET_TEAMS_BY_COMPANY_ID_FAILURE,
-      payload: error.response.data
+      payload: error.response?.data
     });
   }
 }
@@ -37,7 +37,7 @@ export function* CreateTeam(action) {
         type: CREATE_TEAM_SUCCESS,
         payload: response.data
       });
-      const data = { teamId: response.data.team.id, ...action.payload.ritual };
+      const data = { teamId: response.data.team.id,firstTime:true, ...action.payload.ritual };
       yield put({
         type: CREATE_RITUAL_BEGIN,
         payload: data
@@ -46,9 +46,10 @@ export function* CreateTeam(action) {
       throw response;
     }
   } catch (error) {
+    ToasterUtils.error(error.response?.data.message);
     yield put({
       type: CREATE_TEAM_FAILURE,
-      payload: error.response.data
+      payload: error.response?.data
     });
   }
 }

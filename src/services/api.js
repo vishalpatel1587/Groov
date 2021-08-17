@@ -37,12 +37,14 @@ export const GetRitualsApi = async (teamId) => {
   return result;
 };
 
-export const CreateRitualApi = async (data) => {
+export const CreateRitualApi = async ({trigger, action, teamId}) => {
+  const dataToSend = { trigger, action, teamId };
   const config = {
     url: `/ritual`,
     method: 'POST',
-    data: data
+    data: dataToSend
   };
+
   const result = await ApiRequest(config);
   return result;
 };
