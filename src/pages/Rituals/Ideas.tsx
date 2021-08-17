@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
+import { RootStateOrAny, useSelector } from 'react-redux';
 
 import { Card } from '../../components';
 import { ritualsIdeas } from '../../utils/data';
 
-interface Props { }
+interface Props {}
 
 const RootDiv = styled.div`
   padding-bottom: 30px;
@@ -20,6 +21,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Ideas = (props: Props) => {
   const classes = useStyles();
+  const company = useSelector((state: RootStateOrAny) => state.company);
+
   return (
     <RootDiv>
       <Typography
@@ -28,7 +31,7 @@ const Ideas = (props: Props) => {
         align='center'
         className={classes.title}
       >
-        Ideas for Team Rituals at NZ Post
+        Ideas for Team Rituals at {company.name}
       </Typography>
       <Card>
         {ritualsIdeas.map(({ id, trigger, action }) => {

@@ -26,10 +26,10 @@ function App() {
             <Route exact path={['/:companyId', '/:companyId/teams']} component={Teams} />
             <Route exact path='/:companyId/teams/add' component={AddTeams} />
             <Route exact path='/:companyId/:teamId/rituals' component={Rituals} />
-            <Route exact path='/:companyId/:teamId/rituals/ideas' component={Ideas} />
+            <Route exact path='/:companyId/ideas' component={Ideas} />
             <Route exact path='/:companyId/:teamId/ritual/add' component={AddRitual} />
             <Route exact path='/:companyId/ritual/edit/:id' component={AddRitual} />
-            <Route exact path='/:companyId/:teamId/ritual/add/success' component={Success} />
+            <Route exact path='/:companyId/teams/add/success' component={Success} />
           </Router>
         </SnackbarProvider>
       </Layout>

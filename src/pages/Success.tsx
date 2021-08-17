@@ -1,11 +1,13 @@
 import { useParams } from 'react-router-dom';
 import { makeStyles, Typography } from '@material-ui/core';
-import { Link , Button } from '../components';
+import { Link, Button } from '../components';
 import logo from '../assets/mentemia_logo.png';
 import { colors } from '../styling/styles/colors';
 import history from '../utils/history';
 
-interface Props {}
+interface Props {
+  location: any;
+}
 interface ParamTypes {
   companyId: string;
 }
@@ -44,6 +46,11 @@ const useStyles = makeStyles((theme) => ({
 const Success = (props: Props) => {
   const classes = useStyles();
   const { companyId } = useParams<ParamTypes>();
+  const { location } = props;
+
+  let teamId =
+    location.search &&
+    location.search.substring(location.search.indexOf('=') + 1);
 
   return (
     <div className={classes.content}>
@@ -59,7 +66,7 @@ const Success = (props: Props) => {
         className={classes.subHeader}
       >
         Here is the unique
-        <Link>
+        <Link href={`/${companyId}/${teamId}/rituals`}>
           <Typography variant='h4' className={classes.link}>
             team link.
           </Typography>

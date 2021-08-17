@@ -46,11 +46,7 @@ export function* CreateRitual(action) {
         type: CREATE_RITUAL_SUCCESS,
         payload: response.data
       });
-      if (action.payload.firstTime) {
-        history.push(`${history.location.pathname}/success`);
-      } else {
-        history.goBack();
-      }
+      history.goBack();
     } else {
       throw response;
     }

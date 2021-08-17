@@ -84,7 +84,7 @@ const AddTeams = (props: Props) => {
   const handleSubmit = () => {
     const team = { name, leaderEmail, companyId };
     const ritual = { action, trigger };
-    const data = { team, ritual };
+    const data = { ...team, ritual };
 
     if (validateName(name)) {
       if (validateEmail(leaderEmail)) {
@@ -110,13 +110,23 @@ const AddTeams = (props: Props) => {
       <Typography variant='h1' component='h1' gutterBottom align='center'>
         Add a new team
       </Typography>
-      <Typography variant='body2' gutterBottom align='center'className={classes.description}>
+      <Typography
+        variant='body2'
+        gutterBottom
+        align='center'
+        className={classes.description}
+      >
         This is where you can record the rituals for your team. These can be
         viewed by the rest of the organisation, inspiring them to create ones of
         their own. Science also shows that recording and sharing commitments
         will help to make them stick.
       </Typography>
-      <Typography variant='body2' gutterBottom align='center'className={classes.description}>
+      <Typography
+        variant='body2'
+        gutterBottom
+        align='center'
+        className={classes.description}
+      >
         When you save the first ritual, you'll receive an email with a unique
         link to this page so that you can view and update these rituals. You can
         share this link with your team.
@@ -127,7 +137,7 @@ const AddTeams = (props: Props) => {
         align='center'
         className={`${classes.description} ${classes.withLink}`}
       >
-        <Link>
+        <Link href={`/${companyId}/ideas`}>
           <Typography variant='h4' className={classes.link}>
             Click here
           </Typography>
