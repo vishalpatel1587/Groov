@@ -197,7 +197,7 @@ const Rituals = (props: Props) => {
   return (
     <RootDiv>
       <Typography variant='h1' component='h1' gutterBottom align='center'>
-        {rituals?.rituals?.name}
+        {rituals?.data?.name}
       </Typography>
       <Typography
         variant='body2'
