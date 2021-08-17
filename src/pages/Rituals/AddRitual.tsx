@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useLocation, useParams, useHistory } from 'react-router-dom';
+import { useLocation, useParams, useHistory, useRouteMatch } from 'react-router-dom';
 import { makeStyles, Typography } from '@material-ui/core';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { createRitual, updateRitual } from '../../store/actions/actions';
@@ -39,7 +39,6 @@ const InputDiv = styled.div`
   align-items: center;
   margin: 25px 0px;
 `;
-
 const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(10)
@@ -70,8 +69,8 @@ const AddRitual = (props: Props) => {
   const [open, setOpen] = React.useState(false);
   const [actions, setActions] = useState('');
   const [triggers, setTriggers] = useState('');
-
-  let { id, teamId } = useParams<ParamTypes>();
+  let match = useRouteMatch();
+  let { id, teamId , companyId } = useParams<ParamTypes>();
   const location = useLocation<any>();
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -136,7 +135,7 @@ const AddRitual = (props: Props) => {
             className={classes.subHeader}
             align='center'
           >
-            <Link>
+            <Link href={`/${companyId}/ideas`}>
               <Typography variant='h4' className={classes.link}>
                 Click Here
               </Typography>

@@ -76,7 +76,7 @@ const Success = (props: Props) => {
       </Typography>
       <Button
         className={classes.button}
-        onClick={() => history.push(`/${companyId}`)}
+        onClick={() => history.push(`/${companyId}/${teamId}/rituals`)}
       >
         Go to the team page
       </Button>
