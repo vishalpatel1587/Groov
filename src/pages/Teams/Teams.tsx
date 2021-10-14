@@ -12,7 +12,8 @@ import {
   Pagination,
   ModalComponent,
   SelectMenu,
-  Link
+  Link,
+  TabBar
 } from '../../components';
 import { colors } from '../../styling/styles/colors';
 import {
@@ -20,7 +21,7 @@ import {
   getTeamsByCompanyId
 } from '../../store/actions/actions';
 
-interface Props {}
+interface Props { }
 
 interface ParamTypes {
   companyId: string;
@@ -122,14 +123,26 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: theme.spacing(3),
       marginBottom: theme.spacing(3)
     }
-  }
+  },
+  tabbar: {
+    padding: theme.spacing(5),
+    color: colors.darkGrey,
+  },
+  tabbarTitle: {
+    fontFamily: ['Averta','Helvetica'].join(','),
+    fontWeight: 500,
+    color: colors.darkGrey,
+    
+  },
 }));
 const pageLimit = 5;
+const TABS = [ 'Company Rituals','Team Rituals']
 const Teams = (props: Props) => {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(1);
   const [offset, setOffset] = useState(0);
   const [orderBy, setOrderBy] = useState('asc');
+  const [selectedTab, setSelectedTab] = useState(0)
 
   const classes = useStyles();
   const history = useHistory();
@@ -137,7 +150,6 @@ const Teams = (props: Props) => {
   const { companyId } = useParams<ParamTypes>();
   const teams = useSelector((state: RootStateOrAny) => state.teams);
   const company = useSelector((state: RootStateOrAny) => state.company);
-  console.log('======teams', teams);
   useEffect(() => {
     dispatch(getCompanyById(companyId));
     dispatch(getTeamsByCompanyId(pageLimit, offset, orderBy, companyId));
@@ -163,6 +175,10 @@ const Teams = (props: Props) => {
   const handleOrderBy = (event: React.ChangeEvent<{ value: unknown }>) => {
     setOrderBy(event.target.value as string);
   };
+  const handleTabChange = (event: any, newValue: number) => {
+    setSelectedTab(newValue);
+  };
+
   const renderListItem = ({ id, name, rituals }: any, keyId: number) => {
     return (
       <Grid
@@ -172,7 +188,7 @@ const Teams = (props: Props) => {
         item
         xs={12}
         className={classes.listContainer}
-        // onClick={() => history.push(`/${companyId}/${id}/rituals`)}
+      // onClick={() => history.push(`/${companyId}/${id}/rituals`)}
       >
         <Grid item xs={3}>
           <Typography variant='h3' className={classes.listTitleName}>
@@ -294,75 +310,150 @@ const Teams = (props: Props) => {
           onClose={() => setOpen(false)}
         />
       )}
-      <Card>
-        <Grid
-          container
-          direction='row'
-          justifyContent='space-between'
-          className={classes.cardHeader}
-        >
-          <Typography variant='h2' component='h5' gutterBottom>
-            Teams and rituals
-          </Typography>
-        </Grid>
+      <TabBar className={classes.tabbar} tabs={TABS} handleChange={handleTabChange} selectedTab={selectedTab} />
+      {selectedTab === 0 && (
+        <Card>
+          <Grid
+            container
+            direction='row'
+            justifyContent='space-between'
+            className={classes.cardHeader}
+          >
+            <Typography variant='h2' component='h5' gutterBottom>
+              Company Rituals
+            </Typography>
+          </Grid>
 
-        {teams?.data?.teams?.length > 0 ? (
-          <>
-            <Grid container>
-              <Grid container item xs={3} className={classes.listHeading}>
-                <Typography variant='h4' className={classes.boldHeading}>
-                  Sort{' '}
-                  <SelectMenu
-                    value={orderBy}
-                    onChange={handleOrderBy}
-                    items={[
-                      { label: 'A - Z', value: 'asc' },
-                      { label: 'Z - A', value: 'desc' }
-                    ]}
-                  />
-                </Typography>
-              </Grid>
-              <Grid container item xs={5} className={classes.listHeading}>
-                <Typography variant='h4' className={classes.boldHeading}>
-                  Triggers
-                </Typography>
-              </Grid>
-              <Grid container item xs={4} className={classes.listHeading}>
-                <Typography variant='h4' className={classes.boldHeading}>
-                  Actions
-                </Typography>
+          {teams?.data?.teams?.length > 0 ? (
+            <>
+              <Grid container>
+                <Grid container item xs={3} className={classes.listHeading}>
+                  <Typography variant='h4' className={classes.boldHeading}>
+                    Sort{' '}
+                    <SelectMenu
+                      value={orderBy}
+                      onChange={handleOrderBy}
+                      items={[
+                        { label: 'A - Z', value: 'asc' },
+                        { label: 'Z - A', value: 'desc' }
+                      ]}
+                    />
+                  </Typography>
+                </Grid>
+                <Grid container item xs={5} className={classes.listHeading}>
+                  <Typography variant='h4' className={classes.boldHeading}>
+                    Triggers
+                  </Typography>
+                </Grid>
+                <Grid container item xs={4} className={classes.listHeading}>
+                  <Typography variant='h4' className={classes.boldHeading}>
+                    Actions
+                  </Typography>
+                </Grid>
+
+                {teams?.data?.teams?.map((items: any, index: number) =>
+                  renderListItem(items, index)
+                )}
               </Grid>
 
-              {teams?.data?.teams?.map((items: any, index: number) =>
-                renderListItem(items, index)
+              <Pagination
+                count={totalPageCount}
+                page={page}
+                onChange={(p) => handlePage(p)}
+              />
+            </>
+          ) : (
+            <>
+              {teams.loading ? (
+                <Box p={10} display='flex' justifyContent='center'>
+                  <Loader color={colors.royalBlue} size={50} thickness={4} />
+                </Box>
+              ) : (
+                <Box p={10}>
+                  <Typography variant='body1' component='h2' align='center'>
+                    Watch this space
+                  </Typography>
+                  <Typography variant='body1' component='h2' align='center'>
+                    No teams have been added yet.
+                  </Typography>
+                </Box>
               )}
-            </Grid>
+            </>
+          )}
+        </Card>
+      )}
+      {selectedTab === 1 && (
+        <Card>
+          <Grid
+            container
+            direction='row'
+            justifyContent='space-between'
+            className={classes.cardHeader}
+          >
+            <Typography variant='h2' component='h5' gutterBottom>
+              Teams and rituals
+            </Typography>
+          </Grid>
 
-            <Pagination
-              count={totalPageCount}
-              page={page}
-              onChange={(p) => handlePage(p)}
-            />
-          </>
-        ) : (
-          <>
-            {teams.loading ? (
-              <Box p={10} display='flex' justifyContent='center'>
-                <Loader color={colors.royalBlue} size={50} thickness={4} />
-              </Box>
-            ) : (
-              <Box p={10}>
-                <Typography variant='body1' component='h2' align='center'>
-                  Watch this space
-                </Typography>
-                <Typography variant='body1' component='h2' align='center'>
-                  No teams have been added yet.
-                </Typography>
-              </Box>
-            )}
-          </>
-        )}
-      </Card>
+          {teams?.data?.teams?.length > 0 ? (
+            <>
+              <Grid container>
+                <Grid container item xs={3} className={classes.listHeading}>
+                  <Typography variant='h4' className={classes.boldHeading}>
+                    Sort{' '}
+                    <SelectMenu
+                      value={orderBy}
+                      onChange={handleOrderBy}
+                      items={[
+                        { label: 'A - Z', value: 'asc' },
+                        { label: 'Z - A', value: 'desc' }
+                      ]}
+                    />
+                  </Typography>
+                </Grid>
+                <Grid container item xs={5} className={classes.listHeading}>
+                  <Typography variant='h4' className={classes.boldHeading}>
+                    Triggers
+                  </Typography>
+                </Grid>
+                <Grid container item xs={4} className={classes.listHeading}>
+                  <Typography variant='h4' className={classes.boldHeading}>
+                    Actions
+                  </Typography>
+                </Grid>
+
+                {teams?.data?.teams?.map((items: any, index: number) =>
+                  renderListItem(items, index)
+                )}
+              </Grid>
+
+              <Pagination
+                count={totalPageCount}
+                page={page}
+                onChange={(p) => handlePage(p)}
+              />
+            </>
+          ) : (
+            <>
+              {teams.loading ? (
+                <Box p={10} display='flex' justifyContent='center'>
+                  <Loader color={colors.royalBlue} size={50} thickness={4} />
+                </Box>
+              ) : (
+                <Box p={10}>
+                  <Typography variant='body1' component='h2' align='center'>
+                    Watch this space
+                  </Typography>
+                  <Typography variant='body1' component='h2' align='center'>
+                    No teams have been added yet.
+                  </Typography>
+                </Box>
+              )}
+            </>
+          )}
+        </Card>
+      )}
+
     </RootDiv>
   );
 };
