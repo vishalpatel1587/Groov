@@ -69,3 +69,15 @@ export const OrgOverviewPrompts = {
 export const HighlightPrompts = {
     highlightsNotFound: 'There are no highlights to show at the moment, please check back later.',
 };
+
+export const RitualsHeaderPropts = {
+    ritualsHead: {
+        companyRituals: 'Company Rituals',
+        teamRituals: 'Team Rituals'
+    },
+    titleInfo: {
+        companyPageInfo: `A simple way to bake wellbeing into your workspace is to create rituals for team wellbeing.
+                        The idea is to link a wellbeing action, like group deep breathing, to something in your work day(a
+                        trigger), such as a regular meeting. In this way, wellbeing becomes an automatic part  of every day.`
+    }
+};

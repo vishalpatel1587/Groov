@@ -28,6 +28,10 @@ export const DELETE_RITUAL_FAILURE = 'DELETE_RITUAL_FAILURE';
 
 export const RESET_STORE = 'RESET_STORE';
 
+export const GET_COMPANY_RITUAL_BY_COMPANY_ID_BEGIN = 'GET_COMPANY_RITUAL_BY_COMPANY_ID_BEGIN';
+export const GET_COMPANY_RITUAL_BY_COMPANY_ID_SUCCESS = 'GET_COMPANY_RITUAL_BY_COMPANY_ID_SUCCESS';
+export const GET_COMPANY_RITUAL_BY_COMPANY_ID_FAILURE = 'GET_COMPANY_RITUAL_BY_COMPANY_ID_FAILURE';
+
 export const resetStore = () => ({
   type: RESET_STORE
 });
@@ -39,6 +43,10 @@ export const getCompanyById = (id) => ({
 
 export const getTeamsByCompanyId = (limit,offset,orderBy,companyId) => ({
   type: GET_TEAMS_BY_COMPANY_ID_BEGIN,
+  payload: {limit,offset,orderBy,companyId}
+});
+export const getCompanyRitualByCompanyId = (limit,offset,orderBy,companyId) => ({
+  type: GET_COMPANY_RITUAL_BY_COMPANY_ID_BEGIN,
   payload: {limit,offset,orderBy,companyId}
 });
 

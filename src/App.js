@@ -23,9 +23,10 @@ function App() {
         >
           <ToasterConfig />
           <Router history={history}>
-            <Route exact path={['/:companyId', '/:companyId/teams']} component={Teams} />
-            <Route exact path='/:companyId/teams/add' component={AddTeams} />
-            <Route exact path='/:companyId/:teamId/rituals' component={Rituals} />
+            {/* TODO : Need to adde exact in  route */}
+            <Route  path={['/:companyId', '/:companyId/teams']} component={Teams} />
+            <Route  path='/:companyId/teams/add' component={AddTeams} />
+            <Route path='/:companyId/:teamId/rituals' component={Rituals} />
             <Route exact path='/:companyId/ideas' component={Ideas} />
             <Route exact path='/:companyId/:teamId/ritual/add' component={AddRitual} />
             <Route exact path='/:companyId/ritual/edit/:id' component={AddRitual} />
