@@ -236,7 +236,10 @@ const Teams = (props: Props) => {
     setOrderBy(event.target.value as string);
   };
 
-  const renderTeamsListItem = ({ id, name, rituals }: any, keyId: number) => {
+  const renderItem = (
+    { id, type, name, role, rituals }: any,
+    keyId: number
+  ) => {
     return (
       <Grid
         container
@@ -248,9 +251,14 @@ const Teams = (props: Props) => {
         // onClick={() => history.push(`/${companyId}/${id}/rituals`)}
       >
         <Grid item xs={3}>
-          <Typography variant='h3' className={classes.listTitleName}>
+          <Typography variant='h4' className={classes.listTitle}>
             {name}
           </Typography>
+          {type === 'company' && (
+            <Typography variant='h6' className={classes.sponserRole}>
+              {role}
+            </Typography>
+          )}
         </Grid>
         <Grid container item xs={9} className={classes.ritualsContainer}>
           {rituals.map(({ id, trigger, action }: any, index: number) => (
@@ -278,74 +286,32 @@ const Teams = (props: Props) => {
       </Grid>
     );
   };
-  const renderCompnayListItem = (
-    { id, sponsorName, sponsorRole, rituals }: any,
-    keyId: number
-  ) => {
-    return (
-      <Grid
-        container
-        direction='row'
-        key={'team' + keyId}
-        item
-        xs={12}
-        className={classes.listContainer}
-        // onClick={() => history.push(`/${companyId}/${id}/rituals`)}
-      >
-        <Grid item xs={3}>
-          <Typography variant='h4' className={classes.listTitle}>
-            {sponsorName}
-          </Typography>
-          <Typography variant='h6' className={classes.sponserRole}>
-            {sponsorRole}
-          </Typography>
-        </Grid>
-        <Grid container item xs={9} className={classes.ritualsContainer}>
-          {rituals.map(({ id, comments, actionPlan }: any, index: number) => (
-            <Box
-              display='flex'
-              flexDirection='row'
-              justifyContent='space-between'
-              className={classes.listItemBorder}
-              key={'ritual' + index}
-            >
-              <Grid item xs={5}>
-                <Typography variant='h4' className={classes.listTitle}>
-                  {comments}
-                </Typography>
-              </Grid>
-
-              <Grid item xs={5}>
-                <Typography variant='h4' className={classes.listTitle}>
-                  {actionPlan}
-                </Typography>
-              </Grid>
-            </Box>
-          ))}
-        </Grid>
-      </Grid>
-    );
-  };
   const totalPageCount = teams.data
     ? Math.ceil(teams.data.total / teams.data.limit)
     : 0;
   const totalCompanyPageCount = teams.companyRituals
     ? Math.ceil(teams.companyRituals.total / teams.companyRituals.limit)
     : 0;
+
+  const headerTitle = () => {
+    return (
+      <Grid
+        container
+        direction='row'
+        justifyContent='space-between'
+        className={classes.cardHeader}
+      >
+        <Typography variant='h2' component='h5'>
+          {activeTab === 'CompanyRitual' && 'Company Ritual'}
+          {activeTab === 'TeamRitual' && 'Teams and rituals'}
+        </Typography>
+      </Grid>
+    );
+  };
   const teamRituals = () => {
     return (
       <Card>
-        <Grid
-          container
-          direction='row'
-          justifyContent='space-between'
-          className={classes.cardHeader}
-        >
-          <Typography variant='h2' component='h5' gutterBottom>
-            Teams and rituals
-          </Typography>
-        </Grid>
-
+        {headerTitle()}
         {teams?.data?.teams?.length > 0 ? (
           <>
             <Grid container>
@@ -373,9 +339,16 @@ const Teams = (props: Props) => {
                 </Typography>
               </Grid>
 
-              {teams?.data?.teams?.map((items: any, index: number) =>
-                renderTeamsListItem(items, index)
-              )}
+              {teams?.data?.teams?.map((items: any, index: number) => {
+                const { name, rituals, id } = items;
+                const obj = {
+                  id,
+                  type: 'team',
+                  name,
+                  rituals
+                };
+                return renderItem(obj, index);
+              })}
             </Grid>
             {totalPageCount && (
               <Pagination
@@ -409,17 +382,7 @@ const Teams = (props: Props) => {
   const companyRituals = () => {
     return (
       <Card>
-        <Grid
-          container
-          direction='row'
-          justifyContent='space-between'
-          className={classes.cardHeader}
-        >
-          <Typography variant='h2' component='h5'>
-            Company Ritual
-          </Typography>
-        </Grid>
-
+        {headerTitle()}
         {teams?.companyRituals?.companyRituals?.length > 0 ? (
           <>
             <Grid container>
@@ -440,8 +403,17 @@ const Teams = (props: Props) => {
               </Grid>
 
               {teams?.companyRituals?.companyRituals?.map(
-                (items: any, index: number) =>
-                  renderCompnayListItem(items, index)
+                (items: any, index: number) => {
+                  const { sponsorName, sponsorRole, rituals, id } = items;
+                  const obj = {
+                    id,
+                    type: 'company',
+                    name: sponsorName,
+                    role: sponsorRole,
+                    rituals
+                  };
+                  return renderItem(obj, index);
+                }
               )}
             </Grid>
             {totalCompanyPageCount > 1 && (
