@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useHistory, useParams, useLocation, useRouteMatch, Switch, Route, Redirect } from 'react-router-dom';
+import {
+  useHistory,
+  useParams,
+  useLocation,
+  useRouteMatch,
+  Switch,
+  Route,
+  Redirect
+} from 'react-router-dom';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
@@ -14,16 +22,16 @@ import {
   Pagination,
   ModalComponent,
   SelectMenu,
-  Link,
-  TabBar
+  Link
 } from '../../components';
 import { colors } from '../../styling/styles/colors';
 import {
   getTeamsByCompanyId,
-  getCompanyRitualByCompanyId
+  getCompanyRitualByCompanyId,
+  getCompanyById
 } from '../../store/actions/actions';
 
-interface Props { }
+interface Props {}
 
 interface ParamTypes {
   companyId: string;
@@ -101,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
   listTitle: {
     fontFamily: 'Averta',
     fontWeight: 'normal',
-    color: colors.darkGrey,
+    color: colors.darkGrey
   },
   listHeading: {
     display: 'flex',
@@ -121,7 +129,7 @@ const useStyles = makeStyles((theme) => ({
   boldHeading: {
     display: 'flex',
     alignItems: 'center',
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   footer: {
     margin: theme.spacing(6, 0)
@@ -136,12 +144,12 @@ const useStyles = makeStyles((theme) => ({
   },
   tabbar: {
     padding: theme.spacing(5),
-    color: colors.darkGrey,
+    color: colors.darkGrey
   },
   tabbarTitle: {
     fontFamily: ['Averta', 'Helvetica'].join(','),
     fontWeight: 500,
-    color: colors.darkGrey,
+    color: colors.darkGrey
   },
   headerMenu: {
     marginTop: 24,
@@ -149,8 +157,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flex: 3,
     alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-  },
+    justifyContent: 'flex-start'
+  }
 }));
 const pageLimit = 5;
 //const TABS = ['Company Rituals', 'Team Rituals']
@@ -172,7 +180,9 @@ const Teams = (props: Props) => {
   const company = useSelector((state: RootStateOrAny) => state.company);
   const location = useLocation();
 
-
+  useEffect(() => {
+    dispatch(getCompanyById(companyId));
+  }, []);
   useEffect(() => {
     if (location.pathname === '/mentemia/compnay_rituals') {
       setActiveTab('CompanyRitual');
@@ -187,7 +197,14 @@ const Teams = (props: Props) => {
   }, [offset, orderBy]);
 
   useEffect(() => {
-    dispatch(getCompanyRitualByCompanyId(pageLimit, compnayOffset, orderCompanyBy, companyId));
+    dispatch(
+      getCompanyRitualByCompanyId(
+        pageLimit,
+        compnayOffset,
+        orderCompanyBy,
+        companyId
+      )
+    );
   }, [compnayOffset, orderCompanyBy]);
 
   const handlePage = (currentPage: any) => {
@@ -228,7 +245,7 @@ const Teams = (props: Props) => {
         item
         xs={12}
         className={classes.listContainer}
-      // onClick={() => history.push(`/${companyId}/${id}/rituals`)}
+        // onClick={() => history.push(`/${companyId}/${id}/rituals`)}
       >
         <Grid item xs={3}>
           <Typography variant='h3' className={classes.listTitleName}>
@@ -261,7 +278,10 @@ const Teams = (props: Props) => {
       </Grid>
     );
   };
-  const renderCompnayListItem = ({ id, sponsorName, sponsorRole, rituals }: any, keyId: number) => {
+  const renderCompnayListItem = (
+    { id, sponsorName, sponsorRole, rituals }: any,
+    keyId: number
+  ) => {
     return (
       <Grid
         container
@@ -270,7 +290,7 @@ const Teams = (props: Props) => {
         item
         xs={12}
         className={classes.listContainer}
-      // onClick={() => history.push(`/${companyId}/${id}/rituals`)}
+        // onClick={() => history.push(`/${companyId}/${id}/rituals`)}
       >
         <Grid item xs={3}>
           <Typography variant='h4' className={classes.listTitle}>
@@ -357,12 +377,13 @@ const Teams = (props: Props) => {
                 renderTeamsListItem(items, index)
               )}
             </Grid>
-            {totalPageCount && (<Pagination
-              count={totalPageCount}
-              page={page}
-              onChange={(p) => handlePage(p)}
-            />)}
-
+            {totalPageCount && (
+              <Pagination
+                count={totalPageCount}
+                page={page}
+                onChange={(p) => handlePage(p)}
+              />
+            )}
           </>
         ) : (
           <>
@@ -383,8 +404,8 @@ const Teams = (props: Props) => {
           </>
         )}
       </Card>
-    )
-  }
+    );
+  };
   const companyRituals = () => {
     return (
       <Card>
@@ -399,7 +420,7 @@ const Teams = (props: Props) => {
           </Typography>
         </Grid>
 
-        {teams?.companyRitual?.companyRituals?.length > 0 ? (
+        {teams?.companyRituals?.companyRituals?.length > 0 ? (
           <>
             <Grid container>
               <Grid container item xs={3} className={classes.listHeading}>
@@ -418,8 +439,9 @@ const Teams = (props: Props) => {
                 </Typography>
               </Grid>
 
-              {teams?.companyRituals?.companyRituals?.map((items: any, index: number) =>
-                renderCompnayListItem(items, index)
+              {teams?.companyRituals?.companyRituals?.map(
+                (items: any, index: number) =>
+                  renderCompnayListItem(items, index)
               )}
             </Grid>
             {totalCompanyPageCount > 1 && (
@@ -429,7 +451,6 @@ const Teams = (props: Props) => {
                 onChange={(p) => handleCompanyPage(p)}
               />
             )}
-
           </>
         ) : (
           <>
@@ -450,14 +471,14 @@ const Teams = (props: Props) => {
           </>
         )}
       </Card>
-    )
-  }
+    );
+  };
 
   return (
     <RootDiv>
       <Typography variant='h1' component='h1' gutterBottom align='center'>
         {company.name || 'NO SUCH COMPANY ID EXIST!!'}
-        {console.log("company", company.name)}
+        {console.log('company', company.name)}
       </Typography>
       <Typography
         variant='body2'
@@ -539,7 +560,13 @@ const Teams = (props: Props) => {
           onClose={() => setOpen(false)}
         />
       )}
-      <Grid container direction="row" justify="flex-start" alignItems="center" className={classes.headerMenu}>
+      <Grid
+        container
+        direction='row'
+        justify='flex-start'
+        alignItems='center'
+        className={classes.headerMenu}
+      >
         <NavLink to={`${url}/${RoutPath.CompanyRituals}`}>
           {RitualsHeaderPropts.ritualsHead.companyRituals}
         </NavLink>
@@ -550,7 +577,7 @@ const Teams = (props: Props) => {
       {activeTab === 'CompanyRitual' && companyRituals()}
       {activeTab === 'TeamRitual' && teamRituals()}
       <Switch>
-        <Route path="/">
+        <Route path='/'>
           <Redirect to={`${url}/${RoutPath.CompanyRituals}`} />
         </Route>
       </Switch>
@@ -562,4 +589,3 @@ export default Teams;
 function setSelectedTab(newValue: number) {
   throw new Error('Function not implemented.');
 }
-
