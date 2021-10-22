@@ -16,7 +16,6 @@ export function* TeamsByCompanyId(action) {
   try {
     const response = yield call(TeamsByCompanyIdApi, action.payload);
     if (response) {
-      console.log("====== response.data",  response.data)
       yield put({
         type: GET_TEAMS_BY_COMPANY_ID_SUCCESS,
         payload: response.data
