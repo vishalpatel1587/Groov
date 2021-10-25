@@ -5,8 +5,10 @@ import {
   CREATE_TEAM_SUCCESS,
   CREATE_TEAM_FAILURE,
   CREATE_RITUAL_BEGIN,
+  GET_COMPANY_RITUAL_BY_COMPANY_ID_FAILURE,
+  GET_COMPANY_RITUAL_BY_COMPANY_ID_SUCCESS
 } from '../actions/actions';
-import { TeamsByCompanyIdApi, CreateTeamApi } from '../../services/api';
+import { TeamsByCompanyIdApi, CreateTeamApi, CompanyRitualByCompanyIdApi } from '../../services/api';
 import { ToasterUtils } from '../../components/Toaster/ToasterUtils';
 import history from '../../utils/history';
 
@@ -52,6 +54,25 @@ export function* CreateTeam(action) {
     ToasterUtils.error(error.response?.data.message);
     yield put({
       type: CREATE_TEAM_FAILURE,
+      payload: error.response?.data
+    });
+  }
+}
+export function* CompanyRitualByCompanyId(action) {
+  try {
+    const response = yield call(CompanyRitualByCompanyIdApi, action.payload);
+    if (response) {
+      yield put({
+        type: GET_COMPANY_RITUAL_BY_COMPANY_ID_SUCCESS,
+        payload: response.data
+      });
+    } else {
+      throw response;
+    }
+  } catch (error) {
+    ToasterUtils.error(error.response?.data);
+    yield put({
+      type: GET_COMPANY_RITUAL_BY_COMPANY_ID_FAILURE,
       payload: error.response?.data
     });
   }

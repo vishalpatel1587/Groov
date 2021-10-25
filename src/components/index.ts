@@ -10,3 +10,4 @@ export * from './Pagination';
 export * from './TextInput';
 
 export * from "./Toaster"
+export * from './TabBar'

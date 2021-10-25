@@ -17,6 +17,14 @@ export const TeamsByCompanyIdApi = async ({limit,offset,orderBy,companyId}) => {
   const result = await ApiRequest(config);
   return result;
 };
+export const CompanyRitualByCompanyIdApi = async ({limit,offset,orderBy,companyId}) => {
+  const config = {
+    url: `/company/${companyId}/company-rituals?active=true&limit=${limit}&offset=${offset}&sortBy=name&orderBy=${orderBy}`,
+    method: 'GET'
+  };
+  const result = await ApiRequest(config);
+  return result;
+};
 
 export const CreateTeamApi = async (data) => {
   const config = {
