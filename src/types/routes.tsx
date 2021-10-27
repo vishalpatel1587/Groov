@@ -1,6 +1,6 @@
 export enum RoutPath {
     CompanyRituals = 'company_rituals',
-    TeamRituals = 'team_rituals'
+    TeamRituals = 'teams'
 }
 
 export enum MainRoutPath {

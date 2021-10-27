@@ -186,7 +186,7 @@ const Teams = (props: Props) => {
     if (location.pathname === `/${companyId}/company_rituals`) {
       setActiveTab('CompanyRitual');
     }
-    if (location.pathname === `/${companyId}/team_rituals`) {
+    if (location.pathname === `/${companyId}/teams`) {
       setActiveTab('TeamRitual');
     }
   }, [location.pathname]);
@@ -538,10 +538,10 @@ const Teams = (props: Props) => {
         alignItems='center'
         className={classes.headerMenu}
       >
-        <NavLink to={`${url}/${RoutPath.CompanyRituals}`}>
+        <NavLink to={`/${companyId}/${RoutPath.CompanyRituals}`}>
           {RitualsHeaderPropts.ritualsHead.companyRituals}
         </NavLink>
-        <NavLink to={`${url}/${RoutPath.TeamRituals}`}>
+        <NavLink to={`/${companyId}/${RoutPath.TeamRituals}`}>
           {RitualsHeaderPropts.ritualsHead.teamRituals}
         </NavLink>
       </Grid>
@@ -549,7 +549,7 @@ const Teams = (props: Props) => {
       {activeTab === 'TeamRitual' && teamRituals()}
       <Switch>
         <Route path='/'>
-          <Redirect to={`${url}/${RoutPath.CompanyRituals}`} />
+          <Redirect to={`/${companyId}/${RoutPath.TeamRituals}`} />
         </Route>
       </Switch>
     </RootDiv>
