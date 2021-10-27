@@ -184,10 +184,10 @@ const Teams = (props: Props) => {
     dispatch(getCompanyById(companyId));
   }, []);
   useEffect(() => {
-    if (location.pathname === '/mentemia/compnay_rituals') {
+    if (location.pathname === `/${companyId}/compnay_rituals`) {
       setActiveTab('CompanyRitual');
     }
-    if (location.pathname === '/mentemia/team_rituals') {
+    if (location.pathname === `/${companyId}/team_rituals`) {
       setActiveTab('TeamRitual');
     }
   }, [location.pathname]);
