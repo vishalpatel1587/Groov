@@ -309,7 +309,6 @@ const Teams = (props: Props) => {
     );
   };
   const teamRituals = () => {
-    console.log('========', teams?.data?.teams);
     return (
       <Card>
         {headerTitle()}
