@@ -161,7 +161,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 const pageLimit = 5;
-//const TABS = ['Company Rituals', 'Team Rituals']
 const Teams = (props: Props) => {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(1);
@@ -302,7 +301,7 @@ const Teams = (props: Props) => {
         className={classes.cardHeader}
       >
         <Typography variant='h2' component='h5'>
-          {activeTab === 'CompanyRitual' && 'Company Ritual'}
+          {activeTab === 'CompanyRitual' && 'Company Rituals'}
           {activeTab === 'TeamRitual' && 'Teams and rituals'}
         </Typography>
       </Grid>
