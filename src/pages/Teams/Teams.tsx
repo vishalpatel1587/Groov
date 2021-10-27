@@ -184,7 +184,7 @@ const Teams = (props: Props) => {
     dispatch(getCompanyById(companyId));
   }, []);
   useEffect(() => {
-    if (location.pathname === `/${companyId}/compnay_rituals`) {
+    if (location.pathname === `/${companyId}/company_rituals`) {
       setActiveTab('CompanyRitual');
     }
     if (location.pathname === `/${companyId}/team_rituals`) {
@@ -416,7 +416,7 @@ const Teams = (props: Props) => {
                 }
               )}
             </Grid>
-            {totalCompanyPageCount > 1 && (
+            {totalCompanyPageCount && (
               <Pagination
                 count={totalCompanyPageCount}
                 page={companyPage}
