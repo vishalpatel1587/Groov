@@ -16,7 +16,7 @@ import {
 const initialState = {
   loading: false,
   error: '',
-  data: [],
+  data: {},
 };
 
 const RitualsReducer = (state = initialState, action) => {
@@ -88,13 +88,18 @@ const RitualsReducer = (state = initialState, action) => {
       };
 
     case DELETE_RITUAL_SUCCESS:
-      const deletedData = state.data.filter(
+      const deletedData = (state.data.rituals || []).filter(
         (item) => item.id !== action.payload.id
       );
+      const data = {
+        ...state.data,
+        rituals: deletedData
+      }
+      
       return {
         ...state,
         loading: false,
-        data: [...deletedData]
+        data
       };
 
     case DELETE_RITUAL_FAILURE:
