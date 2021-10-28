@@ -40,13 +40,8 @@ export function* CreateTeam(action) {
         type: CREATE_TEAM_SUCCESS,
         payload: response.data
       });
-      // const { team } = response.data
-      // history.push(`${history.location.pathname}/success?id=${team.id}`);
-      const data = { teamId: response.data.team.id, ...action.payload.ritual };
-      yield put({
-        type: CREATE_RITUAL_BEGIN,
-        payload: data
-      });
+      const { team } = response.data
+      history.push(`${history.location.pathname}/success?id=${team.id}`);
     } else {
       throw response;
     }
