@@ -9,6 +9,7 @@ import {
 import { makeStyles, Typography } from "@material-ui/core";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { createRitual, updateRitual } from "../../store/actions/actions";
+import { RitualCheckinFrequency } from '../../types/rituals';
 
 import {
   Link,
@@ -18,6 +19,7 @@ import {
   Input,
   ModalComponent,
   ToasterUtils,
+  SelectMenu,
 } from "../../components";
 import { colors } from "../../styling/styles/colors";
 
@@ -73,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
 const AddRitual = (props: Props) => {
   const [open, setOpen] = React.useState(false);
   const [actions, setActions] = useState("");
+  const [frequency, setFrequency] = useState(RitualCheckinFrequency.Monthly.toString());
   const [triggers, setTriggers] = useState("");
   let match = useRouteMatch();
   let { id, teamId, companyId } = useParams<ParamTypes>();
@@ -92,10 +95,15 @@ const AddRitual = (props: Props) => {
   const handleSubmit = () => {
     const createData = {
       action: actions,
+      frequency: frequency,
       trigger: triggers,
       teamId: teamId,
     };
-    const updateData = { action: actions, trigger: triggers };
+    const updateData = {
+      action: actions,
+      trigger: triggers,
+      frequency: frequency,
+    };
 
     if (actions !== "" && triggers !== "") {
       id
@@ -188,6 +196,25 @@ const AddRitual = (props: Props) => {
             placeholder="Action example: Share one thing you did well, one thing you learned, and one thing you want to improve"
             multiline={true}
             maxRows={3}
+          />
+        </InputDiv>
+        <InputDiv>
+          <Typography
+            variant="h3"
+            component="h1"
+            className={classes.inputRowText}
+          >
+            Check in frequency:
+          </Typography>
+          <SelectMenu
+            value={frequency}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setFrequency(e.target.value)
+            }
+            items={[
+              { label: "Monthly", value: RitualCheckinFrequency.Monthly },
+              { label: "No check in", value: RitualCheckinFrequency.None },
+            ]}
           />
         </InputDiv>
         {open && (
