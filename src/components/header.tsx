@@ -1,5 +1,5 @@
-import logo from '../assets/mentemia_logo.png';
-import styled from 'styled-components';
+import logo from "../assets/groov_logo.png";
+import styled from "styled-components";
 
 const RootDiv = styled.div`
   padding: 10px 20px 40px 20px;
@@ -7,7 +7,7 @@ const RootDiv = styled.div`
 const Header = () => {
   return (
     <RootDiv>
-      <img width={'15%'} src={logo} alt={'logo'}></img>
+      <img width={"124px"} src={logo} alt={"logo"}></img>
     </RootDiv>
   );
 };

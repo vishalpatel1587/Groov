@@ -1,9 +1,9 @@
-import styled from 'styled-components';
-import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
-import { RootStateOrAny, useSelector } from 'react-redux';
+import styled from "styled-components";
+import { Box, Grid, makeStyles, Typography } from "@material-ui/core";
+import { RootStateOrAny, useSelector } from "react-redux";
 
-import { Card } from '../../components';
-import { ritualsIdeas } from '../../utils/data';
+import { Card } from "../../components";
+import { ritualsIdeas } from "../../utils/data";
 
 interface Props {}
 
@@ -14,9 +14,9 @@ const RootDiv = styled.div`
 
 const useStyles = makeStyles((theme) => ({
   title: {
-    margin: theme.spacing(10, 0)
+    margin: theme.spacing(10, 0),
   },
-  rowList: { marginBottom: theme.spacing(6) }
+  rowList: { marginBottom: theme.spacing(6) },
 }));
 
 const Ideas = (props: Props) => {
@@ -26,12 +26,12 @@ const Ideas = (props: Props) => {
   return (
     <RootDiv>
       <Typography
-        variant='h1'
+        variant="h1"
         gutterBottom
-        align='center'
+        align="center"
         className={classes.title}
       >
-        Ideas for Team Rituals 
+        Ideas for team rituals
         {/* at {company.name} */}
       </Typography>
       <Card>
@@ -40,17 +40,17 @@ const Ideas = (props: Props) => {
             <Grid container className={classes.rowList} key={id}>
               <Grid item>
                 <Box px={4}>
-                  <Typography variant='h3'>{`${id})`}</Typography>
+                  <Typography variant="h3">{`${id})`}</Typography>
                 </Box>
               </Grid>
               <Grid item xs={11}>
-                <Typography variant='h3' gutterBottom>
+                <Typography variant="h3" gutterBottom>
                   Trigger: {trigger}
                 </Typography>
 
                 {action.map((item, index) => {
                   return (
-                    <Typography variant='body1' gutterBottom key={index}>
+                    <Typography variant="body1" gutterBottom key={index}>
                       Action: {item}
                     </Typography>
                   );
