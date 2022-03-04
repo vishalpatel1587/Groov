@@ -5,7 +5,7 @@ import Footer from "./Footer";
 import { colors } from "../styling/styles/colors";
 
 const RootDiv = styled.div`
-  background-color: ${colors.ghostWhite};
+  background-color: ${colors.grey[5]};
   min-height: 100vh;
 `;
 

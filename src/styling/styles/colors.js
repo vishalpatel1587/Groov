@@ -16,8 +16,8 @@ export const colors = {
   snow: "#fbfbfd",
   black: "#000000",
   whisperWhiteDark: "#f6f6f6",
-  ghostWhite: "#f8fcff",
   grey: {
+    5: "#f8fcff",
     40: "#A5ABB7",
   },
   groovBlue: {
