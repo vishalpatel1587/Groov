@@ -61,8 +61,6 @@ const useStyles = makeStyles((theme) => ({
   link: {
     padding: 0,
     margin: 0,
-    fontFamily: "Averta-Semibold",
-    fontWeight: 500,
   },
   listTitleName: {
     paddingRight: theme.spacing(6),
@@ -71,11 +69,9 @@ const useStyles = makeStyles((theme) => ({
   },
   sponserRole: {
     color: colors.slateGrey2,
-    fontSize: 14,
   },
   executiveSponser: {
     color: colors.slateGrey2,
-    fontSize: 14,
   },
   linkButton: {
     margin: theme.spacing(1),
@@ -103,8 +99,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   listTitle: {
-    fontFamily: "Averta",
-    fontWeight: "normal",
     color: colors.darkGrey,
   },
   listHeading: {
@@ -122,11 +116,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     "&:hover": { cursor: "pointer" },
   },
-  boldHeading: {
-    display: "flex",
-    alignItems: "center",
-    fontWeight: "bold",
-  },
   footer: {
     margin: theme.spacing(6, 0),
   },
@@ -143,8 +132,6 @@ const useStyles = makeStyles((theme) => ({
     color: colors.darkGrey,
   },
   tabBarTitle: {
-    fontFamily: ["Averta-Semibold", "Helvetica"].join(","),
-    fontWeight: 600,
     color: colors.darkGrey,
   },
   headerMenu: {
@@ -295,7 +282,7 @@ const Teams = (props: Props) => {
           <>
             <Grid container>
               <Grid container item xs={3} className={classes.listHeading}>
-                <Typography variant="h4" className={classes.boldHeading}>
+                <Typography variant="h4">
                   Sort{" "}
                   <SelectMenu
                     value={orderBy}
@@ -308,14 +295,10 @@ const Teams = (props: Props) => {
                 </Typography>
               </Grid>
               <Grid container item xs={5} className={classes.listHeading}>
-                <Typography variant="h4" className={classes.boldHeading}>
-                  Triggers
-                </Typography>
+                <Typography variant="h4">Triggers</Typography>
               </Grid>
               <Grid container item xs={4} className={classes.listHeading}>
-                <Typography variant="h4" className={classes.boldHeading}>
-                  Actions
-                </Typography>
+                <Typography variant="h4">Actions</Typography>
               </Grid>
 
               {teams?.data?.teams?.map((items: any, index: number) => {
@@ -345,10 +328,10 @@ const Teams = (props: Props) => {
               </Box>
             ) : (
               <Box p={10}>
-                <Typography variant="body1" component="h2" align="center">
+                <Typography variant="body1" align="center">
                   Watch this space
                 </Typography>
-                <Typography variant="body1" component="h2" align="center">
+                <Typography variant="body1" align="center">
                   No teams have been added yet.
                 </Typography>
               </Box>
@@ -365,19 +348,13 @@ const Teams = (props: Props) => {
           <>
             <Grid container>
               <Grid container item xs={3} className={classes.listHeading}>
-                <Typography variant="h4" className={classes.boldHeading}>
-                  Executive Sponser
-                </Typography>
+                <Typography variant="h4">Executive Sponser</Typography>
               </Grid>
               <Grid container item xs={5} className={classes.listHeading}>
-                <Typography variant="h4" className={classes.boldHeading}>
-                  Triggers
-                </Typography>
+                <Typography variant="h4">Triggers</Typography>
               </Grid>
               <Grid container item xs={4} className={classes.listHeading}>
-                <Typography variant="h4" className={classes.boldHeading}>
-                  Actions
-                </Typography>
+                <Typography variant="h4">Actions</Typography>
               </Grid>
 
               {teams?.companyRituals?.companyRituals?.map(
@@ -410,10 +387,10 @@ const Teams = (props: Props) => {
               </Box>
             ) : (
               <Box p={10}>
-                <Typography variant="body1" component="h2" align="center">
+                <Typography variant="body1" align="center">
                   Watch this space
                 </Typography>
-                <Typography variant="body1" component="h2" align="center">
+                <Typography variant="body1" align="center">
                   No teams have been added yet.
                 </Typography>
               </Box>

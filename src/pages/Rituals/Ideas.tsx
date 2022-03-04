@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Box, Grid, makeStyles, Typography } from "@material-ui/core";
-import { RootStateOrAny, useSelector } from "react-redux";
 
 import { Card } from "../../components";
 import { ritualsIdeas } from "../../utils/data";
@@ -21,13 +20,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Ideas = (props: Props) => {
   const classes = useStyles();
-  const company = useSelector((state: RootStateOrAny) => state.company);
 
   return (
     <RootDiv>
       <Typography variant="h1" gutterBottom className={classes.title}>
         Ideas for team rituals
-        {/* at {company.name} */}
       </Typography>
       <Card>
         {ritualsIdeas.map(({ id, trigger, action }) => {

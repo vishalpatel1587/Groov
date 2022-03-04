@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {
-  useLocation,
-  useParams,
-  useHistory,
-  useRouteMatch,
-} from "react-router-dom";
+import { useLocation, useParams, useHistory } from "react-router-dom";
 import { makeStyles, Typography } from "@material-ui/core";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { createRitual, updateRitual } from "../../store/actions/actions";
@@ -52,8 +47,6 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     margin: 0,
     color: colors.royalBlue,
-    fontFamily: "Averta-Semibold",
-    fontWeight: 500,
   },
   description: { marginBottom: theme.spacing(6) },
   linkButton: {
@@ -109,7 +102,7 @@ const AddRitual = (props: Props) => {
 
   return (
     <RootDiv>
-      <Typography variant="h1" component="h1" gutterBottom>
+      <Typography variant="h1" gutterBottom>
         {id ? `Update ritual` : `Create new ritual`}
       </Typography>
 
@@ -139,7 +132,11 @@ const AddRitual = (props: Props) => {
             className={classes.subHeader}
           >
             <Link href={`/${companyId}/ideas`} className={classes.link}>
-              <Typography variant="h4" style={{ color: colors.royalBlue }}>
+              <Typography
+                variant="h4"
+                component="span"
+                style={{ color: colors.royalBlue }}
+              >
                 Click here
               </Typography>
             </Link>{" "}
@@ -149,11 +146,7 @@ const AddRitual = (props: Props) => {
       )}
       <Card>
         <InputDiv>
-          <Typography
-            variant="h3"
-            component="h1"
-            className={classes.inputRowText}
-          >
+          <Typography variant="h3" className={classes.inputRowText}>
             Trigger:
           </Typography>
           <Input
@@ -168,11 +161,7 @@ const AddRitual = (props: Props) => {
           />
         </InputDiv>
         <InputDiv>
-          <Typography
-            variant="h3"
-            component="h1"
-            className={classes.inputRowText}
-          >
+          <Typography variant="h3" className={classes.inputRowText}>
             Action:
           </Typography>
           <Input
@@ -206,7 +195,9 @@ const AddRitual = (props: Props) => {
             variant="contained"
             disabled={actions === "" || triggers === ""}
           >
-            {ritual?.loading ? <Loader /> : id ? "Update" : `Commit`}
+            <Typography variant="h4">
+              {ritual?.loading ? <Loader /> : id ? "Update" : `Commit`}
+            </Typography>
           </Button>
         </ButtonDiv>
         <ButtonDiv>

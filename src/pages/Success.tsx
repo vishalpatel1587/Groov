@@ -27,13 +27,10 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     color: colors.royalBlue,
-    fontFamily: "Averta-Semibold",
-    fontWeight: 500,
   },
   linkButton: {
     margin: theme.spacing(1),
   },
-
   subHeader: {
     marginTop: theme.spacing(8),
     marginBottom: theme.spacing(8),

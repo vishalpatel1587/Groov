@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonMore: {
     backgroundColor: "transparent",
-    color: colors.blue,
+    color: colors.groovBlue[100],
     padding: theme.spacing(4),
     "&:hover": {
       background: colors.royalBlueHover,
@@ -56,13 +56,10 @@ const useStyles = makeStyles((theme) => ({
   link: {
     padding: 0,
     margin: 0,
-    color: colors.blue,
-    fontFamily: "Averta-Semibold",
-    fontWeight: 500,
+    color: colors.groovBlue[100],
   },
   downloadAction: {
-    color: colors.blue,
-    fontFamily: "Averta-Semibold",
+    color: colors.groovBlue[100],
     fontWeight: 500,
   },
   listContainer: {
@@ -79,14 +76,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   listTitle: {
-    fontFamily: "Averta",
-    fontWeight: "normal",
-    color: colors.darkGrey,
-    marginLeft: theme.spacing(4),
-  },
-  listTitleBold: {
-    fontFamily: "Averta",
-    fontWeight: "bold",
     color: colors.darkGrey,
     marginLeft: theme.spacing(4),
   },
@@ -99,11 +88,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     padding: theme.spacing(0, 4),
-  },
-  boldHeading: {
-    display: "flex",
-    alignItems: "center",
-    fontWeight: "bold",
   },
   footer: {
     margin: theme.spacing(6, 0),
@@ -157,7 +141,7 @@ const Rituals = (props: Props) => {
           className={classes.listContainer}
         >
           <Grid item xs={5} className={classes.centerVertical}>
-            <Typography variant="h4" className={classes.listTitleBold}>
+            <Typography variant="h4" className={classes.listTitle}>
               {trigger}
             </Typography>
           </Grid>
@@ -196,7 +180,7 @@ const Rituals = (props: Props) => {
   };
   return (
     <RootDiv>
-      <Typography variant="h1" component="h1" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         {rituals?.data?.name}
       </Typography>
       <Typography variant="body1" gutterBottom className={classes.description}>
@@ -211,7 +195,11 @@ const Rituals = (props: Props) => {
         className={`${classes.description}`}
       >
         <Link href={`/${companyId}/ideas`} className={classes.link}>
-          <Typography variant="h4" style={{ color: colors.blue }}>
+          <Typography
+            variant="h4"
+            style={{ color: colors.groovBlue[100] }}
+            component="span"
+          >
             Click here
           </Typography>
         </Link>{" "}
@@ -238,7 +226,7 @@ const Rituals = (props: Props) => {
             alignItems="center"
           >
             <HelpOutlineIcon color={"primary"} />
-            <Typography variant="h4" className={classes.link}>
+            <Typography variant="h5" className={classes.link}>
               More
             </Typography>
           </Box>
@@ -260,7 +248,7 @@ const Rituals = (props: Props) => {
           justifyContent="space-between"
           className={classes.cardHeader}
         >
-          <Typography variant="h2" component="h5" gutterBottom>
+          <Typography variant="h2" gutterBottom>
             Commited Rituals
           </Typography>
         </Grid>
@@ -271,10 +259,7 @@ const Rituals = (props: Props) => {
           <Grid container>
             <Grid item xs={2}>
               <Box display="flex">
-                <Typography
-                  variant="h4"
-                  style={{ fontWeight: "bold", marginRight: 10 }}
-                >
+                <Typography variant="h4" style={{ marginRight: 10 }}>
                   {` Sort `}
                   <SelectMenu
                     value={orderBy}
@@ -288,15 +273,10 @@ const Rituals = (props: Props) => {
               </Box>
             </Grid>
             <Grid item xs={3} className={classes.listHeading}>
-              <Typography variant="h4" className={classes.boldHeading}>
-                {" "}
-                Triggers
-              </Typography>
+              <Typography variant="h4"> Triggers</Typography>
             </Grid>
             <Grid item xs={6} className={classes.listHeading}>
-              <Typography variant="h4" className={classes.boldHeading}>
-                Actions
-              </Typography>
+              <Typography variant="h4">Actions</Typography>
             </Grid>
             {rituals?.data?.rituals.map((items: any, index: number) =>
               renderListItem(items, index)
@@ -314,7 +294,7 @@ const Rituals = (props: Props) => {
               </Box>
             ) : (
               <Box p={10}>
-                <Typography variant="h3" component="h2" align="center">
+                <Typography variant="h3" align="center">
                   No data
                 </Typography>
               </Box>

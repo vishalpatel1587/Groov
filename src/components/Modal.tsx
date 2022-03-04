@@ -55,9 +55,7 @@ export const ModalComponent = (props: Props) => {
     <Modal open={props.open} className={classes.modal} onClose={props.onClose}>
       <div className={classes.paper}>
         {props.icon && <HelpOutlineIcon className={classes.icon} />}
-        <Typography variant="h2" component="h2">
-          {props.title}
-        </Typography>
+        <Typography variant="h2">{props.title}</Typography>
         <br />
         <Typography variant="body1">{props.message}</Typography>
         <br />

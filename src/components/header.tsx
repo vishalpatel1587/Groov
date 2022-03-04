@@ -6,9 +6,8 @@ import { colors } from "../styling/styles/colors";
 
 const useStyles = makeStyles((theme) => ({
   companyName: {
-    color: colors.groovGray,
+    color: colors.grey[40],
     marginLeft: theme.spacing(4),
-    fontWeight: 600,
   },
 }));
 
@@ -23,7 +22,7 @@ const Header = () => {
   return (
     <RootDiv>
       <img width={"124px"} src={logo} alt={"logo"}></img>
-      <Typography className={classes.companyName}>
+      <Typography variant="h5" className={classes.companyName}>
         {company?.name || ""}
       </Typography>
     </RootDiv>

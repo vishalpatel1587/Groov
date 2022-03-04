@@ -23,10 +23,10 @@ const useStyles = makeStyles((theme: Theme) =>
       textTransform: "none",
     },
     activeRouteText: {
-      color: colors.blue,
+      color: colors.groovBlue[100],
     },
     underline: {
-      borderBottom: `2px solid ${colors.blue}`,
+      borderBottom: `2px solid ${colors.groovBlue[100]}`,
     },
   })
 );

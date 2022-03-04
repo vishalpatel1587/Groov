@@ -4,8 +4,6 @@ import { Link } from "../components";
 const useStyles = makeStyles((theme) => ({
   link: {
     color: colors.royalBlue,
-    fontFamily: "Averta-Semibold",
-    fontWeight: 500,
   },
   linkButton: {
     margin: theme.spacing(1),
@@ -13,6 +11,8 @@ const useStyles = makeStyles((theme) => ({
   withLink: { display: "flex", justifyContent: "center" },
   footer: {
     margin: theme.spacing(6, 0),
+    display: "flex",
+    alignItems: "center",
   },
 }));
 const Footer = () => {

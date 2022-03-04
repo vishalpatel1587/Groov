@@ -13,7 +13,6 @@ import {
   ModalComponent,
   ToasterUtils,
 } from "../../components";
-import { colors } from "../../styling/styles/colors";
 import { createTeam } from "../../store/actions/actions";
 import { validateEmail, validateName } from "../../utils/validation";
 import theme from "../../styling/theme";
@@ -49,8 +48,6 @@ const useStyles = makeStyles((theme) => ({
   link: {
     padding: 0,
     margin: 0,
-    fontFamily: "Averta-Semibold",
-    fontWeight: 500,
   },
   linkButton: {
     alignSelf: "center",
@@ -110,7 +107,7 @@ const AddTeams = (props: Props) => {
 
   return (
     <RootDiv>
-      <Typography variant="h1" component="h1" gutterBottom>
+      <Typography variant="h1" gutterBottom>
         Add a new team
       </Typography>
       <Typography variant="body1" gutterBottom className={classes.description}>
@@ -126,14 +123,12 @@ const AddTeams = (props: Props) => {
       </Typography>
       <Typography variant="body1" gutterBottom className={classes.description}>
         <Link href={`/${companyId}/ideas`} className={classes.link}>
-          <Typography variant="h4" style={{ color: colors.royalBlue }}>
-            Click here
-          </Typography>
+          <Typography variant="h4">Click here</Typography>
         </Link>{" "}
         to spark ideas about triggers and actions suitable for your team.
       </Typography>
       <Card className={classes.card}>
-        <Typography variant="h2" component="h1" gutterBottom>
+        <Typography variant="h2" gutterBottom>
           Team information
         </Typography>
         <Input
@@ -164,16 +159,12 @@ const AddTeams = (props: Props) => {
           placeholder="Confirm your email"
         />
         <Box mt={theme.spacing(2)}>
-          <Typography variant="h2" component="h1" gutterBottom>
+          <Typography variant="h2" gutterBottom>
             The first team ritual
           </Typography>
         </Box>
         <InputDiv>
-          <Typography
-            variant="h3"
-            component="h1"
-            className={classes.inputRowText}
-          >
+          <Typography variant="h3" className={classes.inputRowText}>
             Trigger:
           </Typography>
           <Input

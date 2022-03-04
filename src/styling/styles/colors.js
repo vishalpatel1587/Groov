@@ -8,16 +8,19 @@ export const colors = {
   green: "#23e094",
   green2: "#23e095",
   lightGreen: "#b4fadd",
-  blue: "#006AFF",
   mysticGrey: "#EDF0F5",
   royalBlue: "#456DE6",
   royalBlueHover: "rgba(69, 109, 230,0.04)",
-  crimsonRed: "#D31045",
   orange: "#ff554f",
   redWarn: "#ff7d78",
   snow: "#fbfbfd",
   black: "#000000",
   whisperWhiteDark: "#f6f6f6",
   ghostWhite: "#f8fcff",
-  groovGray: "#A5ABB7",
+  grey: {
+    40: "#A5ABB7",
+  },
+  groovBlue: {
+    100: "#006AFF",
+  },
 };
