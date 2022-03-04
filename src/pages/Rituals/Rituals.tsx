@@ -37,7 +37,6 @@ const RootDiv = styled.div`
 
 const ButtonDiv = styled.div`
   display: flex;
-  padding-left: 35%;
   margin: 2em 0;
 `;
 
@@ -55,6 +54,8 @@ const useStyles = makeStyles((theme) => ({
   },
   description: { marginBottom: theme.spacing(6) },
   link: {
+    padding: 0,
+    margin: 0,
     color: colors.blue,
     fontFamily: "Averta-Semibold",
     fontWeight: 500,
@@ -195,7 +196,7 @@ const Rituals = (props: Props) => {
   };
   return (
     <RootDiv>
-      <Typography variant="h1" component="h1" gutterBottom align="center">
+      <Typography variant="h1" component="h1" gutterBottom>
         {rituals?.data?.name}
       </Typography>
       <Typography variant="body1" gutterBottom className={classes.description}>
@@ -209,8 +210,8 @@ const Rituals = (props: Props) => {
         gutterBottom
         className={`${classes.description}`}
       >
-        <Link href={`/${companyId}/ideas`}>
-          <Typography variant="h4" className={classes.link}>
+        <Link href={`/${companyId}/ideas`} className={classes.link}>
+          <Typography variant="h4" style={{ color: colors.blue }}>
             Click here
           </Typography>
         </Link>{" "}

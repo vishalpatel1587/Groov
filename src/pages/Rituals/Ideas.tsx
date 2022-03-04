@@ -25,12 +25,7 @@ const Ideas = (props: Props) => {
 
   return (
     <RootDiv>
-      <Typography
-        variant="h1"
-        gutterBottom
-        align="center"
-        className={classes.title}
-      >
+      <Typography variant="h1" gutterBottom className={classes.title}>
         Ideas for team rituals
         {/* at {company.name} */}
       </Typography>

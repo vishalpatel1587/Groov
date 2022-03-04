@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "transparent",
     color: colors.royalBlue,
     padding: theme.spacing(4),
-    marginRight: theme.spacing(4),
+    marginLeft: theme.spacing(4),
     "&:hover": {
       background: colors.royalBlueHover,
     },
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   description: { marginBottom: theme.spacing(6) },
   link: {
     padding: 0,
-    color: colors.royalBlue,
+    margin: 0,
     fontFamily: "Averta-Semibold",
     fontWeight: 500,
   },
@@ -288,25 +288,9 @@ const Teams = (props: Props) => {
     ? Math.ceil(teams.companyRituals.total / teams.companyRituals.limit)
     : 0;
 
-  const headerTitle = () => {
-    return (
-      <Grid
-        container
-        direction="row"
-        justifyContent="space-between"
-        className={classes.cardHeader}
-      >
-        <Typography variant="h2" component="h5">
-          {activeTab === "CompanyRitual" && "Company Rituals"}
-          {activeTab === "TeamRitual" && "Teams and rituals"}
-        </Typography>
-      </Grid>
-    );
-  };
   const teamRituals = () => {
     return (
       <Box mt={theme.spacing(2)}>
-        {headerTitle()}
         {teams?.data?.teams?.length > 0 ? (
           <>
             <Grid container>
@@ -377,7 +361,6 @@ const Teams = (props: Props) => {
   const companyRituals = () => {
     return (
       <Box mt={theme.spacing(2)}>
-        {headerTitle()}
         {teams?.companyRituals?.companyRituals?.length > 0 ? (
           <>
             <Grid container>
@@ -445,7 +428,7 @@ const Teams = (props: Props) => {
     <RootDiv>
       <Card>
         <Grid container>
-          <Grid item lg={8}>
+          <Grid item lg={12}>
             <Typography variant="h1" component="h1" gutterBottom>
               {company.name || "NO SUCH COMPANY ID EXIST!!"}
             </Typography>
@@ -465,8 +448,8 @@ const Teams = (props: Props) => {
               gutterBottom
               className={classes.description}
             >
-              <Link href={`/${companyId}/ideas`}>
-                <Typography variant="h4" className={classes.link}>
+              <Link href={`/${companyId}/ideas`} className={classes.link}>
+                <Typography variant="h4" style={{ color: colors.royalBlue }}>
                   Click here
                 </Typography>
               </Link>{" "}
@@ -485,30 +468,28 @@ const Teams = (props: Props) => {
               Click below to create some for your team.
             </Typography>
           </Grid>
-          <Grid container item lg={4} spacing={8}>
-            <Grid item xs={12} sm={5}>
-              <Button
-                className={classes.buttonMore}
-                variant="contained"
-                onClick={() => setOpen(true)}
-                iconComponent={<HelpOutlineIcon color={"primary"} />}
-              >
-                <Typography variant="h4" className={classes.link}>
-                  More
-                </Typography>
-              </Button>
-            </Grid>
-            <Grid item xs={12} sm={7}>
-              <Button
-                className={classes.button}
-                onClick={() => history.push(`/${companyId}/teams/add`)}
-                variant="contained"
-              >
-                Add a new team
-              </Button>
-            </Grid>
-          </Grid>
+          <Box mt={theme.spacing(2)} mb={theme.spacing(1)}>
+            <Button
+              className={classes.button}
+              onClick={() => history.push(`/${companyId}/teams/add`)}
+              variant="contained"
+            >
+              Add a new team
+            </Button>
+
+            <Button
+              className={classes.buttonMore}
+              variant="contained"
+              onClick={() => setOpen(true)}
+              iconComponent={<HelpOutlineIcon color={"primary"} />}
+            >
+              <Typography variant="h4" className={classes.link}>
+                More
+              </Typography>
+            </Button>
+          </Box>
         </Grid>
+
         {open && (
           <ModalComponent
             open={open}

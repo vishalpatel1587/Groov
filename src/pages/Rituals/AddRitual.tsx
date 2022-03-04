@@ -49,6 +49,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(10),
   },
   link: {
+    padding: 0,
+    margin: 0,
     color: colors.royalBlue,
     fontFamily: "Averta-Semibold",
     fontWeight: 500,
@@ -107,7 +109,7 @@ const AddRitual = (props: Props) => {
 
   return (
     <RootDiv>
-      <Typography variant="h1" component="h1" gutterBottom align="center">
+      <Typography variant="h1" component="h1" gutterBottom>
         {id ? `Update ritual` : `Create new ritual`}
       </Typography>
 
@@ -116,7 +118,6 @@ const AddRitual = (props: Props) => {
           variant="body1"
           gutterBottom
           className={classes.updateDescription}
-          align="center"
         >
           Update this ritual to make it work better for your team.
         </Typography>
@@ -125,7 +126,6 @@ const AddRitual = (props: Props) => {
           <Typography
             variant="body1"
             gutterBottom
-            align="center"
             className={classes.description}
           >
             Create a new ritual by entering a trigger and an action. These can
@@ -137,10 +137,9 @@ const AddRitual = (props: Props) => {
             variant="body1"
             gutterBottom
             className={classes.subHeader}
-            align="center"
           >
-            <Link href={`/${companyId}/ideas`}>
-              <Typography variant="h4" className={classes.link}>
+            <Link href={`/${companyId}/ideas`} className={classes.link}>
+              <Typography variant="h4" style={{ color: colors.royalBlue }}>
                 Click here
               </Typography>
             </Link>{" "}
