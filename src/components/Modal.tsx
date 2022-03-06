@@ -1,10 +1,10 @@
-import Modal from '@material-ui/core/Modal';
-import { Box, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import Modal from "@material-ui/core/Modal";
+import { Box, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 
-import { Button } from './Button';
-import { colors } from '../styling/styles/colors';
+import { Button } from "./Button";
+import { colors } from "../styling/styles/colors";
 
 interface Props {
   open: boolean;
@@ -22,19 +22,19 @@ interface Props {
 }
 const useStyles = makeStyles((theme) => ({
   modalButton: {
-    marginTop: theme.spacing(4)
+    marginTop: theme.spacing(4),
   },
   paper: {
-    position: 'absolute',
+    position: "absolute",
     width: 280,
-    textAlign: 'center',
+    textAlign: "center",
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(4, 4, 3),
-    borderRadius: theme.spacing(6),
-    top: '30%',
-    margin: 'auto',
-    zIndex: 100
+    borderRadius: theme.spacing(3),
+    top: "30%",
+    margin: "auto",
+    zIndex: 100,
   },
   icon: {
     width: 30,
@@ -43,9 +43,9 @@ const useStyles = makeStyles((theme) => ({
     color: colors.white,
     backgroundColor: colors.royalBlue,
     padding: theme.spacing(4),
-    borderRadius: 50
+    borderRadius: 50,
   },
-  modal: { display: 'flex', alignItems: 'center', justifyContent: 'center' }
+  modal: { display: "flex", alignItems: "center", justifyContent: "center" },
 }));
 
 export const ModalComponent = (props: Props) => {
@@ -55,35 +55,33 @@ export const ModalComponent = (props: Props) => {
     <Modal open={props.open} className={classes.modal} onClose={props.onClose}>
       <div className={classes.paper}>
         {props.icon && <HelpOutlineIcon className={classes.icon} />}
-        <Typography variant='h2' component='h2'>
-          {props.title}
-        </Typography>
+        <Typography variant="h2">{props.title}</Typography>
         <br />
-        <Typography variant='body1'>{props.message}</Typography>
+        <Typography variant="body1">{props.message}</Typography>
         <br />
-        <Typography variant='body1'>{props.secondMessage}</Typography>
+        <Typography variant="body1">{props.secondMessage}</Typography>
         {props.buttonTitle && (
           <Button
             className={classes.modalButton}
             onClick={props.onClose}
-            variant='contained'
+            variant="contained"
           >
             {props.buttonTitle}
           </Button>
         )}
-        {props.type === 'confirm' && (
-          <Box display='flex' justifyContent='space-evenly'>
+        {props.type === "confirm" && (
+          <Box display="flex" justifyContent="space-evenly">
             <Button
               className={classes.modalButton}
               onClick={props.onYesClick}
-              variant='outlined'
+              variant="outlined"
             >
               {props.yesClickTitle}
             </Button>
             <Button
               className={classes.modalButton}
               onClick={props.onClose}
-              variant='contained'
+              variant="contained"
             >
               {props.noClickTitle}
             </Button>
@@ -93,5 +91,3 @@ export const ModalComponent = (props: Props) => {
     </Modal>
   );
 };
-
-
