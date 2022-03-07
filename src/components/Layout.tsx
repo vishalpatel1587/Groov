@@ -1,16 +1,15 @@
-import React from 'react';
-import styled from 'styled-components';
-import Header from './header';
-import Footer from './Footer';
+import React from "react";
+import styled from "styled-components";
+import Header from "./header";
+import Footer from "./Footer";
+import { colors } from "../styling/styles/colors";
 
 const RootDiv = styled.div`
-  background-color: #fbfbfd;
+  background-color: ${colors.grey[5]};
   min-height: 100vh;
 `;
 
 const RootMain = styled.div`
-  background-color: #fbfbfd;
-  // margin: 0px 15%;
   display: flex;
   justify-content: center;
 `;

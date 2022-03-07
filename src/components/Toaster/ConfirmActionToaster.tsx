@@ -1,40 +1,40 @@
-import React from 'react';
-import { VariantType } from 'notistack';
-import { Grid } from '@material-ui/core';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import React from "react";
+import { VariantType } from "notistack";
+import { Grid } from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core/styles";
 
-import { Button } from '../Button';
-import { ToasterUtils } from './ToasterUtils';
-import { toasterStyles } from './toasterStyles';
-import { colors } from '../../styling/styles/colors';
-import { CloseToasterButton } from './CloseToasterButton';
+import { Button } from "../Button";
+import { ToasterUtils } from "./ToasterUtils";
+import { toasterStyles } from "./toasterStyles";
+import { colors } from "../../styling/styles/colors";
+import { CloseToasterButton } from "./CloseToasterButton";
 
 const useStyles = makeStyles((theme: Theme) => ({
   ...toasterStyles,
   snackbar: {
     ...toasterStyles.snackbar,
-    width: 480
+    width: 480,
   },
   description: {
     ...toasterStyles.description,
-    color: colors.slateGrey
+    color: colors.slateGrey,
   },
   confirmButton: {
     background: colors.orange,
-    borderRadius: 28,
+    borderRadius: theme.spacing(3),
     width: 132,
     height: 56,
     padding: 18,
     marginRight: 16,
-    '&:hover': {
-      background: colors.redWarn
-    }
-  }
+    "&:hover": {
+      background: colors.redWarn,
+    },
+  },
 }));
 
 interface Props {
   id: any;
-  variant: VariantType | 'confirm';
+  variant: VariantType | "confirm";
   title?: string;
   message?: string;
   confirmButtonText?: string;
@@ -46,9 +46,9 @@ export const ConfirmActionToaster = React.forwardRef(
     {
       variant,
       onConfirm,
-      title = 'Are you certain?',
-      message = 'Please confirm',
-      confirmButtonText = 'Confirm'
+      title = "Are you certain?",
+      message = "Please confirm",
+      confirmButtonText = "Confirm",
     }: Props,
     ref: any
   ) => {
@@ -61,8 +61,8 @@ export const ConfirmActionToaster = React.forwardRef(
     return (
       <div ref={ref}>
         <Grid container className={classes.snackbar}>
-          <Grid item className={classes.iconGrid} justify='center'></Grid>
-          <Grid item style={{ width: '45%' }}>
+          <Grid item className={classes.iconGrid} justify="center"></Grid>
+          <Grid item style={{ width: "45%" }}>
             <div className={classes.title}>{title}</div>
             <div className={classes.description}>{message}</div>
           </Grid>
