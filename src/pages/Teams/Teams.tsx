@@ -407,7 +407,7 @@ const Teams = (props: Props) => {
         <Grid container>
           <Grid item lg={12}>
             <Typography variant="h1" component="h1" gutterBottom>
-              {company.name || "NO SUCH COMPANY ID EXIST!!"}
+              Ritual Builder
             </Typography>
             <Typography
               variant="body1"
