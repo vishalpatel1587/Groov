@@ -58,9 +58,15 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   description: { marginBottom: theme.spacing(6) },
+  descriptionWithLink: {
+    display: "flex",
+    alignItems: "flex-start",
+  },
   link: {
     padding: 0,
     margin: 0,
+    color: colors.royalBlue,
+    fontWeight: 800,
   },
   listTitleName: {
     paddingRight: theme.spacing(6),
@@ -420,18 +426,24 @@ const Teams = (props: Props) => {
               (a trigger), such as a regular meeting. In this way, wellbeing
               becomes an automatic part of every day.
             </Typography>
-            <Typography
-              variant="body1"
-              gutterBottom
-              className={classes.description}
-            >
+            <Box className={classes.descriptionWithLink}>
               <Link href={`/${companyId}/ideas`} className={classes.link}>
-                <Typography variant="h4" style={{ color: colors.royalBlue }}>
+                <Typography variant="body1" className={classes.link}>
                   Click here
                 </Typography>
-              </Link>{" "}
-              to spark ideas about triggers and actions suitable for your team.
-            </Typography>
+              </Link>
+              <Typography
+                variant="body1"
+                className={`${classes.description}`}
+                style={{
+                  display: "inline-block",
+                  marginLeft: theme.spacing(1),
+                }}
+              >
+                to spark ideas about triggers and actions suitable for your
+                team.
+              </Typography>
+            </Box>
             <Typography
               variant="body1"
               gutterBottom
