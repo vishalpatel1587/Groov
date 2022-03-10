@@ -83,6 +83,8 @@ const useStyles = makeStyles((theme) => ({
   listTitle: {
     color: colors.darkGrey,
     marginLeft: theme.spacing(4),
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   },
   editIcon: {
     display: "flex",

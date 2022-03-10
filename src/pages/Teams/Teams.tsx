@@ -106,6 +106,8 @@ const useStyles = makeStyles((theme) => ({
   },
   listTitle: {
     color: colors.darkGrey,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   },
   listHeading: {
     display: "flex",
