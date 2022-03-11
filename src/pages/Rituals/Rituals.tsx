@@ -24,6 +24,7 @@ import {
   Link,
 } from "../../components";
 import { colors } from "../../styling/styles/colors";
+import theme from "../../styling/theme";
 
 interface ParamTypes {
   companyId: string;
@@ -53,6 +54,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   description: { marginBottom: theme.spacing(6) },
+  descriptionWithLink: {
+    display: "flex",
+    alignItems: "flex-start",
+  },
   link: {
     padding: 0,
     margin: 0,
@@ -78,6 +83,8 @@ const useStyles = makeStyles((theme) => ({
   listTitle: {
     color: colors.darkGrey,
     marginLeft: theme.spacing(4),
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   },
   editIcon: {
     display: "flex",
@@ -189,22 +196,22 @@ const Rituals = (props: Props) => {
         their own. Science also shows that recording and sharing commitments
         will help to make them stick.
       </Typography>
-      <Typography
-        variant="body1"
-        gutterBottom
-        className={`${classes.description}`}
-      >
+      <Box className={classes.descriptionWithLink}>
         <Link href={`/${companyId}/ideas`} className={classes.link}>
-          <Typography
-            variant="h4"
-            style={{ color: colors.groovBlue[100] }}
-            component="span"
-          >
+          <Typography variant="body1" className={classes.link}>
             Click here
           </Typography>
-        </Link>{" "}
-        to spark ideas about triggers and actions suitable for your team.
-      </Typography>
+        </Link>
+        <Typography
+          variant="body1"
+          style={{
+            display: "inline-block",
+            marginLeft: theme.spacing(1),
+          }}
+        >
+          to spark ideas about triggers and actions suitable for your team.
+        </Typography>
+      </Box>
 
       <ButtonDiv>
         <Button

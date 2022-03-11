@@ -7,12 +7,11 @@ import { colors } from "../styling/styles/colors";
 const useStyles = makeStyles((theme) => ({
   companyName: {
     color: colors.grey[40],
-    marginLeft: theme.spacing(4),
   },
 }));
 
 const RootDiv = styled.div`
-  padding: 10px 20px 40px 20px;
+  padding: 33px 76px;
 `;
 
 const Header = () => {
