@@ -88,7 +88,7 @@ const AddRitual = (props: Props) => {
   const classes = useStyles();
   const history = useHistory();
   const ritual = useSelector((state: RootStateOrAny) => state.rituals);
-  console.log("=======ritual", ritual);
+
   useEffect(() => {
     if (id) {
       setTriggers(location.state.trigger);
