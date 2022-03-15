@@ -9,7 +9,7 @@ import {
 import { makeStyles, Typography } from "@material-ui/core";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { createRitual, updateRitual } from "../../store/actions/actions";
-import { RitualCheckinFrequency } from '../../types/rituals';
+import { RitualCheckinFrequency } from "../../types/rituals";
 
 import {
   Link,
@@ -51,6 +51,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(10),
   },
   link: {
+    padding: 0,
+    margin: 0,
     color: colors.royalBlue,
     fontFamily: "Averta-Semibold",
     fontWeight: 500,
@@ -75,7 +77,9 @@ const useStyles = makeStyles((theme) => ({
 const AddRitual = (props: Props) => {
   const [open, setOpen] = React.useState(false);
   const [actions, setActions] = useState("");
-  const [frequency, setFrequency] = useState(RitualCheckinFrequency.Monthly.toString());
+  const [frequency, setFrequency] = useState(
+    RitualCheckinFrequency.Monthly.toString()
+  );
   const [triggers, setTriggers] = useState("");
   let match = useRouteMatch();
   let { id, teamId, companyId } = useParams<ParamTypes>();
