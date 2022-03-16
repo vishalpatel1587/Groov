@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
   },
   listContainer: {
-    padding: theme.spacing(3, 4),
+    padding: theme.spacing(4, 0),
     borderRadius: theme.spacing(3),
     backgroundColor: colors.whisperWhite,
     marginTop: theme.spacing(2),
@@ -94,7 +94,8 @@ const useStyles = makeStyles((theme) => ({
   listHeading: {
     display: "flex",
     alignItems: "center",
-    padding: theme.spacing(0, 4),
+    padding: theme.spacing(3, 4),
+    marginTop: theme.spacing(4),
   },
   footer: {
     margin: theme.spacing(6, 0),
@@ -130,7 +131,7 @@ const Rituals = (props: Props) => {
     setDeleteModal(false);
   };
   const renderListItem = (
-    { id, action, trigger, teamId }: any,
+    { id, action, trigger, checkinFrequency, teamId }: any,
     index: number
   ) => {
     return (
@@ -140,20 +141,19 @@ const Rituals = (props: Props) => {
         key={"rt" + index}
         className={classes.centerVertical}
       >
-        <Grid
-          container
-          direction="row"
-          item
-          xs={11}
-          className={classes.listContainer}
-        >
-          <Grid item xs={5} className={classes.centerVertical}>
+        <Grid container direction="row" item className={classes.listContainer}>
+          <Grid item xs={3} className={classes.centerVertical}>
+            <Typography variant="h4" className={classes.listTitle}>
+              {checkinFrequency}
+            </Typography>
+          </Grid>
+          <Grid item xs={3} className={classes.centerVertical}>
             <Typography variant="h4" className={classes.listTitle}>
               {trigger}
             </Typography>
           </Grid>
-          <Grid container item xs={7} className={classes.centerVertical}>
-            <Grid item xs={10}>
+          <Grid container item xs={6} className={classes.centerVertical}>
+            <Grid item xs={8}>
               <Typography variant="h4" className={classes.listTitle}>
                 {action}
               </Typography>
@@ -162,7 +162,7 @@ const Rituals = (props: Props) => {
               <NavLink
                 to={{
                   pathname: `/${companyId}/ritual/edit/${id}`,
-                  state: { id, action, trigger, teamId },
+                  state: { id, action, trigger, checkinFrequency, teamId },
                 }}
               >
                 <IconButton>
@@ -170,17 +170,17 @@ const Rituals = (props: Props) => {
                 </IconButton>
               </NavLink>
             </Grid>
+            <Grid item xs={2} className={classes.iconWrapper}>
+              <IconButton
+                onClick={() => {
+                  setDeleteId(id);
+                  setDeleteModal(true);
+                }}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid item xs={1} className={classes.iconWrapper}>
-          <IconButton
-            onClick={() => {
-              setDeleteId(id);
-              setDeleteModal(true);
-            }}
-          >
-            <DeleteIcon />
-          </IconButton>
         </Grid>
       </Grid>
     );
@@ -262,37 +262,43 @@ const Rituals = (props: Props) => {
         {rituals.data &&
         rituals.data.rituals &&
         rituals.data.rituals.length > 0 ? (
-          // {rituals?.data?.length > 0 ? (
-          <Grid container>
-            <Grid item xs={2}>
-              <Box display="flex">
-                <Typography variant="h4" style={{ marginRight: 10 }}>
-                  {` Sort `}
-                  <SelectMenu
-                    value={orderBy}
-                    onChange={handleOrderBy}
-                    items={[
-                      { label: "A - Z", value: "asc" },
-                      { label: "Z - A", value: "desc" },
-                    ]}
-                  />
-                </Typography>
-              </Box>
+          <>
+            <Grid container>
+              <Grid item xs={3}>
+                <Box display="flex">
+                  <Typography variant="h4" style={{ marginRight: 10 }}>
+                    {` Sort `}
+                    <SelectMenu
+                      value={orderBy}
+                      onChange={handleOrderBy}
+                      items={[
+                        { label: "A - Z", value: "asc" },
+                        { label: "Z - A", value: "desc" },
+                      ]}
+                    />
+                  </Typography>
+                </Box>
+              </Grid>
             </Grid>
-            <Grid item xs={3} className={classes.listHeading}>
-              <Typography variant="h4"> Triggers</Typography>
-            </Grid>
-            <Grid item xs={6} className={classes.listHeading}>
-              <Typography variant="h4">Actions</Typography>
-            </Grid>
-            {rituals?.data?.rituals.map((items: any, index: number) =>
-              renderListItem(items, index)
-            )}
+            <Grid container>
+              <Grid item xs={3} className={classes.listHeading}>
+                <Typography variant="h4">Check-in frequency</Typography>
+              </Grid>
+              <Grid item xs={3} className={classes.listHeading}>
+                <Typography variant="h4">Triggers</Typography>
+              </Grid>
+              <Grid item xs={6} className={classes.listHeading}>
+                <Typography variant="h4">Actions</Typography>
+              </Grid>
+              {rituals?.data?.rituals.map((items: any, index: number) =>
+                renderListItem(items, index)
+              )}
 
-            {/* {rituals?.data?.map((items: any, index: number) =>
+              {/* {rituals?.data?.map((items: any, index: number) =>
               renderListItem(items, index)
             )} */}
-          </Grid>
+            </Grid>
+          </>
         ) : (
           <>
             {rituals.loading ? (

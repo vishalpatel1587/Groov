@@ -19,7 +19,7 @@ import {
   Input,
   ModalComponent,
   ToasterUtils,
-  SelectMenu,
+  FullSelectMenu,
 } from "../../components";
 import { colors } from "../../styling/styles/colors";
 
@@ -93,6 +93,7 @@ const AddRitual = (props: Props) => {
     if (id) {
       setTriggers(location.state.trigger);
       setActions(location.state.action);
+      setFrequency(location.state.checkinFrequency);
     }
   }, []);
 
@@ -163,63 +164,55 @@ const AddRitual = (props: Props) => {
       )}
       <Card>
         <InputDiv>
-          <Typography
-            variant="h3"
-            component="h1"
-            className={classes.inputRowText}
-          >
-            Trigger:
+          <Typography variant="h3" className={classes.inputRowText}>
+            Trigger
           </Typography>
-          <Input
-            fullWidth={true}
-            name="triggers"
-            value={triggers}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setTriggers(e.target.value)
-            }
-            style={{ marginTop: 0 }}
-            placeholder="Trigger example: At the beginning of every meeting"
-          />
         </InputDiv>
+        <Input
+          fullWidth={true}
+          name="triggers"
+          value={triggers}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setTriggers(e.target.value)
+          }
+          style={{ marginTop: 0 }}
+          placeholder="Example: At the beginning of every meeting"
+        />
+        <InputDiv>
+          <Typography variant="h3" className={classes.inputRowText}>
+            Action
+          </Typography>
+        </InputDiv>
+        <Input
+          fullWidth={true}
+          name="actions"
+          value={actions}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setActions(e.target.value)
+          }
+          style={{ marginTop: 0 }}
+          placeholder="Example: Share one thing you did well, one thing you learned, and one thing you want to improve"
+          multiline={true}
+          maxRows={3}
+        />
         <InputDiv>
           <Typography
             variant="h3"
             component="h1"
             className={classes.inputRowText}
           >
-            Action:
+            Check-in frequency
           </Typography>
-          <Input
-            fullWidth={true}
-            name="actions"
-            value={actions}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setActions(e.target.value)
-            }
-            style={{ marginTop: 0 }}
-            placeholder="Action example: Share one thing you did well, one thing you learned, and one thing you want to improve"
-            multiline={true}
-            maxRows={3}
-          />
         </InputDiv>
-        <InputDiv>
-          <Typography
-            variant="h3"
-            component="h1"
-            className={classes.inputRowText}
-          >
-            Check in frequency:
-          </Typography>
-          <SelectMenu
-            value={checkinFrequency}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setFrequency(e.target.value)
-            }
-            items={Object.values(CHECKIN_FREQUENCY).map((frequency) => {
-              return { label: frequency, value: frequency };
-            })}
-          />
-        </InputDiv>
+        <FullSelectMenu
+          value={checkinFrequency}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setFrequency(e.target.value)
+          }
+          items={Object.values(CHECKIN_FREQUENCY).map((frequency) => {
+            return { label: frequency, value: frequency };
+          })}
+        />
         {open && (
           <ModalComponent
             open={open}
