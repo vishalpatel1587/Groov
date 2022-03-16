@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {
-  useLocation,
-  useParams,
-  useHistory,
-  useRouteMatch,
-} from "react-router-dom";
+import { useLocation, useParams, useHistory } from "react-router-dom";
 import { makeStyles, Typography } from "@material-ui/core";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { createRitual, updateRitual } from "../../store/actions/actions";
@@ -54,8 +49,6 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     margin: 0,
     color: colors.royalBlue,
-    fontFamily: "Averta-Semibold",
-    fontWeight: 500,
   },
   description: { marginBottom: theme.spacing(6) },
   linkButton: {
@@ -74,14 +67,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddRitual = (props: Props) => {
+const AddRitual = () => {
   const [open, setOpen] = React.useState(false);
   const [actions, setActions] = useState("");
   const [checkinFrequency, setFrequency] = useState(
     CHECKIN_FREQUENCY.EVERY_MONTH.toString()
   );
   const [triggers, setTriggers] = useState("");
-  let match = useRouteMatch();
   let { id, teamId, companyId } = useParams<ParamTypes>();
   const location = useLocation<any>();
   const dispatch = useDispatch();
@@ -127,7 +119,7 @@ const AddRitual = (props: Props) => {
 
       {id ? (
         <Typography
-          variant="body2"
+          variant="body1"
           gutterBottom
           className={classes.updateDescription}
           align="center"
@@ -137,7 +129,7 @@ const AddRitual = (props: Props) => {
       ) : (
         <>
           <Typography
-            variant="body2"
+            variant="body1"
             gutterBottom
             align="center"
             className={classes.description}
@@ -148,14 +140,14 @@ const AddRitual = (props: Props) => {
             commitments will help to make them stick.
           </Typography>
           <Typography
-            variant="body2"
+            variant="body1"
             gutterBottom
             className={classes.subHeader}
             align="center"
           >
             <Link href={`/${companyId}/ideas`}>
               <Typography variant="h4" className={classes.link}>
-                Click Here
+                Click here
               </Typography>
             </Link>{" "}
             to spark ideas about triggers and action suitable for your team
