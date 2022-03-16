@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
   linkButton: {
     alignSelf: "center",
     margin: theme.spacing(1),
+    marginTop: theme.spacing(10),
   },
   card: { marginTop: "2em" },
   input: {
@@ -241,22 +242,18 @@ const AddTeams = (props: Props) => {
             onClose={() => setOpen(false)}
           ></ModalComponent>
         )}
-        <ButtonDiv>
-          <Button
-            className={classes.button}
-            onClick={handleSubmit}
-            variant="contained"
-          >
-            {team?.createTeam?.loading ? <Loader /> : `Commit`}
-          </Button>
-        </ButtonDiv>
-        <ButtonDiv>
-          <Button className={classes.linkButton} onClick={history.goBack}>
-            <Typography variant="h4" className={classes.link}>
-              Cancel
-            </Typography>
-          </Button>
-        </ButtonDiv>
+        <Button className={classes.linkButton} onClick={history.goBack}>
+          <Typography variant="body1" className={classes.link}>
+            Cancel
+          </Typography>
+        </Button>
+        <Button
+          className={classes.button}
+          onClick={handleSubmit}
+          variant="contained"
+        >
+          {team?.createTeam?.loading ? <Loader /> : `Commit`}
+        </Button>
       </Card>
     </RootDiv>
   );
