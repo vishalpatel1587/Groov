@@ -187,58 +187,63 @@ const Rituals = (props: Props) => {
   };
   return (
     <RootDiv>
-      <Typography variant="h2" gutterBottom>
-        {rituals?.data?.name}
-      </Typography>
-      <Typography variant="body1" gutterBottom className={classes.description}>
-        This is where you can record the rituals for your team. These can be
-        viewed by the rest of the organisation, inspiring them to create ones of
-        their own. Science also shows that recording and sharing commitments
-        will help to make them stick.
-      </Typography>
-      <Box className={classes.descriptionWithLink}>
-        <Link href={`/${companyId}/ideas`} className={classes.link}>
-          <Typography variant="body1" className={classes.link}>
-            Click here
-          </Typography>
-        </Link>
+      <Card>
+        <Typography variant="h2" gutterBottom>
+          {rituals?.data?.name}
+        </Typography>
         <Typography
           variant="body1"
-          style={{
-            display: "inline-block",
-            marginLeft: theme.spacing(1),
-          }}
+          gutterBottom
+          className={classes.description}
         >
-          to spark ideas about triggers and actions suitable for your team.
+          This is where you can record the rituals for your team. These can be
+          viewed by the rest of the organisation, inspiring them to create ones
+          of their own. Science also shows that recording and sharing
+          commitments will help to make them stick.
         </Typography>
-      </Box>
-
-      <ButtonDiv>
-        <Button
-          variant="contained"
-          className={classes.button}
-          onClick={() => history.push(`/${companyId}/${teamId}/ritual/add`)}
-        >
-          Create a new ritual
-        </Button>
-        <Button
-          className={classes.buttonMore}
-          variant="contained"
-          onClick={() => setHelpModal(true)}
-        >
-          <Box
-            width={70}
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <HelpOutlineIcon color={"primary"} />
-            <Typography variant="h5" className={classes.link}>
-              More
+        <Box className={classes.descriptionWithLink}>
+          <Link href={`/${companyId}/ideas`} className={classes.link}>
+            <Typography variant="body1" className={classes.link}>
+              Click here
             </Typography>
-          </Box>
-        </Button>
-        {/* <Link
+          </Link>
+          <Typography
+            variant="body1"
+            style={{
+              display: "inline-block",
+              marginLeft: theme.spacing(1),
+            }}
+          >
+            to spark ideas about triggers and actions suitable for your team.
+          </Typography>
+        </Box>
+
+        <ButtonDiv>
+          <Button
+            variant="contained"
+            className={classes.button}
+            onClick={() => history.push(`/${companyId}/${teamId}/ritual/add`)}
+          >
+            Create a new ritual
+          </Button>
+          <Button
+            className={classes.buttonMore}
+            variant="contained"
+            onClick={() => setHelpModal(true)}
+          >
+            <Box
+              width={70}
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <HelpOutlineIcon color={"primary"} />
+              <Typography variant="h5" className={classes.link}>
+                More
+              </Typography>
+            </Box>
+          </Button>
+          {/* <Link
           startIcon={<HelpOutlineIcon color={'primary'} />}
           onClick={() => setHelpModal(true)}
         >
@@ -246,9 +251,8 @@ const Rituals = (props: Props) => {
             More
           </Typography>
         </Link> */}
-      </ButtonDiv>
+        </ButtonDiv>
 
-      <Card>
         <Grid
           container
           direction="row"
@@ -256,7 +260,7 @@ const Rituals = (props: Props) => {
           className={classes.cardHeader}
         >
           <Typography variant="h2" gutterBottom>
-            Commited Rituals
+            Commited rituals
           </Typography>
         </Grid>
         {rituals.data &&
