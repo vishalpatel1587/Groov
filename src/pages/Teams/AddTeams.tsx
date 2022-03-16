@@ -12,10 +12,12 @@ import {
   Input,
   ModalComponent,
   ToasterUtils,
+  SelectMenu,
 } from "../../components";
 import { createTeam } from "../../store/actions/actions";
 import { validateEmail, validateName } from "../../utils/validation";
 import theme from "../../styling/theme";
+import { CHECKIN_FREQUENCY } from "../../types/CheckinFrequency";
 
 interface Props {}
 
@@ -72,6 +74,9 @@ const AddTeams = (props: Props) => {
   const [confirmLeaderEmail, setConfirmLeaderEmail] = useState("");
   const [action, setAction] = useState("");
   const [trigger, setTrigger] = useState("");
+  const [checkinFrequency, setFrequency] = useState(
+    CHECKIN_FREQUENCY.EVERY_MONTH.toString()
+  );
   const history = useHistory();
 
   const team = useSelector((state: RootStateOrAny) => state.teams);
@@ -83,7 +88,7 @@ const AddTeams = (props: Props) => {
 
   const handleSubmit = () => {
     const team = { name, leaderEmail, companyId };
-    const ritual = { action, trigger };
+    const ritual = { action, trigger, checkinFrequency };
     const data = { ...team, ritual };
 
     if (validateName(name)) {
@@ -193,6 +198,24 @@ const AddTeams = (props: Props) => {
             placeholder="Action example: Share one thing you did well, one thing you learned, and one thing you want to improve"
             multiline={true}
             rows={2}
+          />
+        </InputDiv>
+        <InputDiv>
+          <Typography
+            variant="h3"
+            component="h1"
+            className={classes.inputRowText}
+          >
+            Check in frequency:
+          </Typography>
+          <SelectMenu
+            value={checkinFrequency}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setFrequency(e.target.value)
+            }
+            items={Object.values(CHECKIN_FREQUENCY).map((frequency) => {
+              return { label: frequency, value: frequency };
+            })}
           />
         </InputDiv>
         {open && (
