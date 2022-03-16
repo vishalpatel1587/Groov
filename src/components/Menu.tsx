@@ -1,9 +1,9 @@
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputBase from '@material-ui/core/InputBase';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
-import { colors } from '../styling/styles/colors';
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import InputBase from "@material-ui/core/InputBase";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { createStyles, withStyles, Theme } from "@material-ui/core/styles";
+import { colors } from "../styling/styles/colors";
 
 interface Props {
   items: any;
@@ -17,16 +17,16 @@ const Input = withStyles((theme: Theme) =>
     input: {
       borderTopLeftRadius: theme.spacing(1),
       borderTopRightRadius: theme.spacing(1),
-      position: 'relative',
+      position: "relative",
       color: colors.black,
       fontSize: 16,
       marginLeft: theme.spacing(2),
-      transition: theme.transitions.create(['border-color', 'box-shadow']),
-      '&:focus': {
+      transition: theme.transitions.create(["border-color", "box-shadow"]),
+      "&:focus": {
         borderTopLeftRadius: theme.spacing(1),
-        borderTopRightRadius: theme.spacing(1)
-      }
-    }
+        borderTopRightRadius: theme.spacing(1),
+      },
+    },
   })
 )(InputBase);
 
@@ -34,17 +34,16 @@ const CustomSelect = withStyles((theme: Theme) =>
   createStyles({
     root: {
       color: colors.black,
-      fontWeight: 'bold',
+      fontWeight: "bold",
       marginRight: theme.spacing(8),
       borderBottom: `3px solid ${colors.royalBlue}`,
-      padding: '4px 8px !important'
+      padding: "4px 8px !important",
     },
     icon: {
-      color: colors.black
-    }
+      color: colors.black,
+    },
   })
-)(Select)
-
+)(Select);
 
 export const SelectMenu = (props: Props) => {
   return (
@@ -52,16 +51,32 @@ export const SelectMenu = (props: Props) => {
       // autoWidth={true}
       value={props.value}
       onChange={props.onChange}
-      input={<Input  />}
+      input={<Input />}
       IconComponent={ExpandMoreIcon}
     >
       {props.items.map(({ label, value }: any, index: number) => (
-        <MenuItem value={value} key={'menu' + index}>
+        <MenuItem value={value} key={"menu" + index}>
           {label}
         </MenuItem>
       ))}
     </CustomSelect>
-
   );
 };
 
+export const FullSelectMenu = (props: Props) => {
+  return (
+    <Select
+      fullWidth
+      value={props.value}
+      onChange={props.onChange}
+      IconComponent={ExpandMoreIcon}
+      variant="outlined"
+    >
+      {props.items.map(({ label, value }: any, index: number) => (
+        <MenuItem value={value} key={"menu" + index}>
+          {label}
+        </MenuItem>
+      ))}
+    </Select>
+  );
+};
