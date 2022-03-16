@@ -9,7 +9,7 @@ import {
 import { makeStyles, Typography } from "@material-ui/core";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { createRitual, updateRitual } from "../../store/actions/actions";
-import { RitualCheckinFrequency } from "../../types/rituals";
+import { CHECKIN_FREQUENCY } from "../../types/CheckinFrequency";
 
 import {
   Link,
@@ -78,7 +78,7 @@ const AddRitual = (props: Props) => {
   const [open, setOpen] = React.useState(false);
   const [actions, setActions] = useState("");
   const [frequency, setFrequency] = useState(
-    RitualCheckinFrequency.Monthly.toString()
+    CHECKIN_FREQUENCY.EVERY_MONTH.toString()
   );
   const [triggers, setTriggers] = useState("");
   let match = useRouteMatch();
@@ -215,10 +215,9 @@ const AddRitual = (props: Props) => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFrequency(e.target.value)
             }
-            items={[
-              { label: "Monthly", value: RitualCheckinFrequency.Monthly },
-              { label: "No check in", value: RitualCheckinFrequency.None },
-            ]}
+            items={Object.values(CHECKIN_FREQUENCY).map((frequency) => {
+              return { label: frequency, value: frequency };
+            })}
           />
         </InputDiv>
         {open && (
