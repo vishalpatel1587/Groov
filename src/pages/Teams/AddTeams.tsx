@@ -184,7 +184,7 @@ const AddTeams = (props: Props) => {
         </Box>
         <InputDiv>
           <Typography variant="h3" className={classes.inputRowText}>
-            Trigger:
+            Trigger
           </Typography>
         </InputDiv>
         <Input
@@ -199,7 +199,7 @@ const AddTeams = (props: Props) => {
         />
         <InputDiv>
           <Typography variant="h3" className={classes.inputRowText}>
-            Action:
+            Action
           </Typography>
         </InputDiv>
         <Input
@@ -220,7 +220,7 @@ const AddTeams = (props: Props) => {
             component="h1"
             className={classes.inputRowText}
           >
-            Check-in frequency:
+            Check-in frequency
           </Typography>
         </InputDiv>
         <FullSelectMenu
