@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
 const AddRitual = (props: Props) => {
   const [open, setOpen] = React.useState(false);
   const [actions, setActions] = useState("");
-  const [frequency, setFrequency] = useState(
+  const [checkinFrequency, setFrequency] = useState(
     CHECKIN_FREQUENCY.EVERY_MONTH.toString()
   );
   const [triggers, setTriggers] = useState("");
@@ -99,14 +99,14 @@ const AddRitual = (props: Props) => {
   const handleSubmit = () => {
     const createData = {
       action: actions,
-      frequency: frequency,
+      checkinFrequency: checkinFrequency,
       trigger: triggers,
       teamId: teamId,
     };
     const updateData = {
       action: actions,
       trigger: triggers,
-      frequency: frequency,
+      checkinFrequency: checkinFrequency,
     };
 
     if (actions !== "" && triggers !== "") {
@@ -211,7 +211,7 @@ const AddRitual = (props: Props) => {
             Check in frequency:
           </Typography>
           <SelectMenu
-            value={frequency}
+            value={checkinFrequency}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFrequency(e.target.value)
             }
