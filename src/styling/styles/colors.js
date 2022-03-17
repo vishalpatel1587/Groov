@@ -18,6 +18,7 @@ export const colors = {
   whisperWhiteDark: "#f6f6f6",
   grey: {
     5: "#f8fcff",
+    20: "#E6EBF3",
     40: "#A5ABB7",
   },
   groovBlue: {

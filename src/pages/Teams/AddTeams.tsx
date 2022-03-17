@@ -12,10 +12,12 @@ import {
   Input,
   ModalComponent,
   ToasterUtils,
+  FullSelectMenu,
 } from "../../components";
 import { createTeam } from "../../store/actions/actions";
 import { validateEmail, validateName } from "../../utils/validation";
 import theme from "../../styling/theme";
+import { CHECKIN_FREQUENCY } from "../../types/CheckinFrequency";
 
 interface Props {}
 
@@ -48,10 +50,12 @@ const useStyles = makeStyles((theme) => ({
   link: {
     padding: 0,
     margin: 0,
+    marginBottom: "0.21em",
   },
   linkButton: {
     alignSelf: "center",
     margin: theme.spacing(1),
+    marginTop: theme.spacing(10),
   },
   card: { marginTop: "2em" },
   input: {
@@ -72,6 +76,9 @@ const AddTeams = (props: Props) => {
   const [confirmLeaderEmail, setConfirmLeaderEmail] = useState("");
   const [action, setAction] = useState("");
   const [trigger, setTrigger] = useState("");
+  const [checkinFrequency, setFrequency] = useState(
+    CHECKIN_FREQUENCY.EVERY_MONTH.toString()
+  );
   const history = useHistory();
 
   const team = useSelector((state: RootStateOrAny) => state.teams);
@@ -83,7 +90,7 @@ const AddTeams = (props: Props) => {
 
   const handleSubmit = () => {
     const team = { name, leaderEmail, companyId };
-    const ritual = { action, trigger };
+    const ritual = { action, trigger, checkinFrequency };
     const data = { ...team, ritual };
 
     if (validateName(name)) {
@@ -107,27 +114,39 @@ const AddTeams = (props: Props) => {
 
   return (
     <RootDiv>
-      <Typography variant="h1" gutterBottom>
-        Add a new team
-      </Typography>
-      <Typography variant="body1" gutterBottom className={classes.description}>
-        This is where you can record the rituals for your team. These can be
-        viewed by the rest of the organisation, inspiring them to create ones of
-        their own. Science also shows that recording and sharing commitments
-        will help to make them stick.
-      </Typography>
-      <Typography variant="body1" gutterBottom className={classes.description}>
-        When you save the first ritual, you'll receive an email with a unique
-        link to this page so that you can view and update these rituals. You can
-        share this link with your team.
-      </Typography>
-      <Typography variant="body1" gutterBottom className={classes.description}>
-        <Link href={`/${companyId}/ideas`} className={classes.link}>
-          <Typography variant="h4">Click here</Typography>
-        </Link>{" "}
-        to spark ideas about triggers and actions suitable for your team.
-      </Typography>
       <Card className={classes.card}>
+        <Typography variant="h2" gutterBottom>
+          Add a new team
+        </Typography>
+        <Typography
+          variant="body1"
+          gutterBottom
+          className={classes.description}
+        >
+          This is where you can record the rituals for your team. These can be
+          viewed by the rest of the organisation, inspiring them to create ones
+          of their own. Science also shows that recording and sharing
+          commitments will help to make them stick.
+        </Typography>
+        <Typography
+          variant="body1"
+          gutterBottom
+          className={classes.description}
+        >
+          When you save the first ritual, you'll receive an email with a unique
+          link to this page so that you can view and update these rituals. You
+          can share this link with your team.
+        </Typography>
+        <Typography
+          variant="body1"
+          gutterBottom
+          className={classes.description}
+        >
+          <Link href={`/${companyId}/ideas`} className={classes.link}>
+            <Typography variant="body1">Click here</Typography>
+          </Link>{" "}
+          to spark ideas about triggers and actions suitable for your team.
+        </Typography>
         <Typography variant="h2" gutterBottom>
           Team information
         </Typography>
@@ -160,41 +179,59 @@ const AddTeams = (props: Props) => {
         />
         <Box mt={theme.spacing(2)}>
           <Typography variant="h2" gutterBottom>
-            The first team ritual
+            Your team ritual
           </Typography>
         </Box>
         <InputDiv>
           <Typography variant="h3" className={classes.inputRowText}>
-            Trigger:
+            Trigger
           </Typography>
-          <Input
-            fullWidth={true}
-            className={classes.input}
-            name="trigger"
-            value={trigger}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setTrigger(e.target.value)
-            }
-            placeholder="Trigger example: At the beginning of every meeting"
-          />
         </InputDiv>
+        <Input
+          fullWidth={true}
+          className={classes.input}
+          name="trigger"
+          value={trigger}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setTrigger(e.target.value)
+          }
+          placeholder="Example: At the beginning of every meeting"
+        />
         <InputDiv>
           <Typography variant="h3" className={classes.inputRowText}>
-            Action:
+            Action
           </Typography>
-          <Input
-            fullWidth={true}
-            className={classes.input}
-            name="action"
-            value={action}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setAction(e.target.value)
-            }
-            placeholder="Action example: Share one thing you did well, one thing you learned, and one thing you want to improve"
-            multiline={true}
-            rows={2}
-          />
         </InputDiv>
+        <Input
+          fullWidth={true}
+          className={classes.input}
+          name="action"
+          value={action}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setAction(e.target.value)
+          }
+          placeholder="Example: Share one thing you did well, one thing you learned, and one thing you want to improve"
+          multiline={true}
+          rows={2}
+        />
+        <InputDiv>
+          <Typography
+            variant="h3"
+            component="h1"
+            className={classes.inputRowText}
+          >
+            Check-in frequency
+          </Typography>
+        </InputDiv>
+        <FullSelectMenu
+          value={checkinFrequency}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setFrequency(e.target.value)
+          }
+          items={Object.values(CHECKIN_FREQUENCY).map((frequency) => {
+            return { label: frequency, value: frequency };
+          })}
+        />
         {open && (
           <ModalComponent
             open={open}
@@ -205,22 +242,18 @@ const AddTeams = (props: Props) => {
             onClose={() => setOpen(false)}
           ></ModalComponent>
         )}
-        <ButtonDiv>
-          <Button
-            className={classes.button}
-            onClick={handleSubmit}
-            variant="contained"
-          >
-            {team?.createTeam?.loading ? <Loader /> : `Commit`}
-          </Button>
-        </ButtonDiv>
-        <ButtonDiv>
-          <Button className={classes.linkButton} onClick={history.goBack}>
-            <Typography variant="h4" className={classes.link}>
-              Cancel
-            </Typography>
-          </Button>
-        </ButtonDiv>
+        <Button className={classes.linkButton} onClick={history.goBack}>
+          <Typography variant="body1" className={classes.link}>
+            Cancel
+          </Typography>
+        </Button>
+        <Button
+          className={classes.button}
+          onClick={handleSubmit}
+          variant="contained"
+        >
+          {team?.createTeam?.loading ? <Loader /> : `Commit`}
+        </Button>
       </Card>
     </RootDiv>
   );

@@ -4,6 +4,7 @@ import { useLocation, useParams, useHistory } from "react-router-dom";
 import { makeStyles, Typography } from "@material-ui/core";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { createRitual, updateRitual } from "../../store/actions/actions";
+import { CHECKIN_FREQUENCY } from "../../types/CheckinFrequency";
 
 import {
   Link,
@@ -13,6 +14,7 @@ import {
   Input,
   ModalComponent,
   ToasterUtils,
+  FullSelectMenu,
 } from "../../components";
 import { colors } from "../../styling/styles/colors";
 
@@ -65,9 +67,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddRitual = (props: Props) => {
+const AddRitual = () => {
   const [open, setOpen] = React.useState(false);
   const [actions, setActions] = useState("");
+  const [checkinFrequency, setFrequency] = useState(
+    CHECKIN_FREQUENCY.EVERY_MONTH.toString()
+  );
   const [triggers, setTriggers] = useState("");
   let { id, teamId, companyId } = useParams<ParamTypes>();
   const location = useLocation<any>();
@@ -80,16 +85,22 @@ const AddRitual = (props: Props) => {
     if (id) {
       setTriggers(location.state.trigger);
       setActions(location.state.action);
+      setFrequency(location.state.checkinFrequency);
     }
   }, []);
 
   const handleSubmit = () => {
     const createData = {
       action: actions,
+      checkinFrequency: checkinFrequency,
       trigger: triggers,
       teamId: teamId,
     };
-    const updateData = { action: actions, trigger: triggers };
+    const updateData = {
+      action: actions,
+      trigger: triggers,
+      checkinFrequency: checkinFrequency,
+    };
 
     if (actions !== "" && triggers !== "") {
       id
@@ -102,7 +113,7 @@ const AddRitual = (props: Props) => {
 
   return (
     <RootDiv>
-      <Typography variant="h1" gutterBottom>
+      <Typography variant="h1" component="h1" gutterBottom align="center">
         {id ? `Update ritual` : `Create new ritual`}
       </Typography>
 
@@ -111,6 +122,7 @@ const AddRitual = (props: Props) => {
           variant="body1"
           gutterBottom
           className={classes.updateDescription}
+          align="center"
         >
           Update this ritual to make it work better for your team.
         </Typography>
@@ -119,6 +131,7 @@ const AddRitual = (props: Props) => {
           <Typography
             variant="body1"
             gutterBottom
+            align="center"
             className={classes.description}
           >
             Create a new ritual by entering a trigger and an action. These can
@@ -130,13 +143,10 @@ const AddRitual = (props: Props) => {
             variant="body1"
             gutterBottom
             className={classes.subHeader}
+            align="center"
           >
-            <Link href={`/${companyId}/ideas`} className={classes.link}>
-              <Typography
-                variant="h4"
-                component="span"
-                style={{ color: colors.royalBlue }}
-              >
+            <Link href={`/${companyId}/ideas`}>
+              <Typography variant="h4" className={classes.link}>
                 Click here
               </Typography>
             </Link>{" "}
@@ -147,36 +157,54 @@ const AddRitual = (props: Props) => {
       <Card>
         <InputDiv>
           <Typography variant="h3" className={classes.inputRowText}>
-            Trigger:
+            Trigger
           </Typography>
-          <Input
-            fullWidth={true}
-            name="triggers"
-            value={triggers}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setTriggers(e.target.value)
-            }
-            style={{ marginTop: 0 }}
-            placeholder="Trigger example: At the beginning of every meeting"
-          />
         </InputDiv>
+        <Input
+          fullWidth={true}
+          name="triggers"
+          value={triggers}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setTriggers(e.target.value)
+          }
+          style={{ marginTop: 0 }}
+          placeholder="Example: At the beginning of every meeting"
+        />
         <InputDiv>
           <Typography variant="h3" className={classes.inputRowText}>
-            Action:
+            Action
           </Typography>
-          <Input
-            fullWidth={true}
-            name="actions"
-            value={actions}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setActions(e.target.value)
-            }
-            style={{ marginTop: 0 }}
-            placeholder="Action example: Share one thing you did well, one thing you learned, and one thing you want to improve"
-            multiline={true}
-            maxRows={3}
-          />
         </InputDiv>
+        <Input
+          fullWidth={true}
+          name="actions"
+          value={actions}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setActions(e.target.value)
+          }
+          style={{ marginTop: 0 }}
+          placeholder="Example: Share one thing you did well, one thing you learned, and one thing you want to improve"
+          multiline={true}
+          maxRows={3}
+        />
+        <InputDiv>
+          <Typography
+            variant="h3"
+            component="h1"
+            className={classes.inputRowText}
+          >
+            Check-in frequency
+          </Typography>
+        </InputDiv>
+        <FullSelectMenu
+          value={checkinFrequency}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setFrequency(e.target.value)
+          }
+          items={Object.values(CHECKIN_FREQUENCY).map((frequency) => {
+            return { label: frequency, value: frequency };
+          })}
+        />
         {open && (
           <ModalComponent
             open={open}
@@ -195,9 +223,7 @@ const AddRitual = (props: Props) => {
             variant="contained"
             disabled={actions === "" || triggers === ""}
           >
-            <Typography variant="h4">
-              {ritual?.loading ? <Loader /> : id ? "Update" : `Commit`}
-            </Typography>
+            {ritual?.loading ? <Loader /> : id ? "Update" : `Commit`}
           </Button>
         </ButtonDiv>
         <ButtonDiv>

@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
   },
   listContainer: {
-    padding: theme.spacing(3, 4),
+    padding: theme.spacing(4, 0),
     borderRadius: theme.spacing(3),
     backgroundColor: colors.whisperWhite,
     marginTop: theme.spacing(2),
@@ -94,7 +94,8 @@ const useStyles = makeStyles((theme) => ({
   listHeading: {
     display: "flex",
     alignItems: "center",
-    padding: theme.spacing(0, 4),
+    padding: theme.spacing(3, 4),
+    marginTop: theme.spacing(4),
   },
   footer: {
     margin: theme.spacing(6, 0),
@@ -130,7 +131,7 @@ const Rituals = (props: Props) => {
     setDeleteModal(false);
   };
   const renderListItem = (
-    { id, action, trigger, teamId }: any,
+    { id, action, trigger, checkinFrequency, teamId }: any,
     index: number
   ) => {
     return (
@@ -140,20 +141,19 @@ const Rituals = (props: Props) => {
         key={"rt" + index}
         className={classes.centerVertical}
       >
-        <Grid
-          container
-          direction="row"
-          item
-          xs={11}
-          className={classes.listContainer}
-        >
-          <Grid item xs={5} className={classes.centerVertical}>
+        <Grid container direction="row" item className={classes.listContainer}>
+          <Grid item xs={3} className={classes.centerVertical}>
+            <Typography variant="h4" className={classes.listTitle}>
+              {checkinFrequency}
+            </Typography>
+          </Grid>
+          <Grid item xs={3} className={classes.centerVertical}>
             <Typography variant="h4" className={classes.listTitle}>
               {trigger}
             </Typography>
           </Grid>
-          <Grid container item xs={7} className={classes.centerVertical}>
-            <Grid item xs={10}>
+          <Grid container item xs={6} className={classes.centerVertical}>
+            <Grid item xs={8}>
               <Typography variant="h4" className={classes.listTitle}>
                 {action}
               </Typography>
@@ -162,7 +162,7 @@ const Rituals = (props: Props) => {
               <NavLink
                 to={{
                   pathname: `/${companyId}/ritual/edit/${id}`,
-                  state: { id, action, trigger, teamId },
+                  state: { id, action, trigger, checkinFrequency, teamId },
                 }}
               >
                 <IconButton>
@@ -170,75 +170,80 @@ const Rituals = (props: Props) => {
                 </IconButton>
               </NavLink>
             </Grid>
+            <Grid item xs={2} className={classes.iconWrapper}>
+              <IconButton
+                onClick={() => {
+                  setDeleteId(id);
+                  setDeleteModal(true);
+                }}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid item xs={1} className={classes.iconWrapper}>
-          <IconButton
-            onClick={() => {
-              setDeleteId(id);
-              setDeleteModal(true);
-            }}
-          >
-            <DeleteIcon />
-          </IconButton>
         </Grid>
       </Grid>
     );
   };
   return (
     <RootDiv>
-      <Typography variant="h2" gutterBottom>
-        {rituals?.data?.name}
-      </Typography>
-      <Typography variant="body1" gutterBottom className={classes.description}>
-        This is where you can record the rituals for your team. These can be
-        viewed by the rest of the organisation, inspiring them to create ones of
-        their own. Science also shows that recording and sharing commitments
-        will help to make them stick.
-      </Typography>
-      <Box className={classes.descriptionWithLink}>
-        <Link href={`/${companyId}/ideas`} className={classes.link}>
-          <Typography variant="body1" className={classes.link}>
-            Click here
-          </Typography>
-        </Link>
+      <Card>
+        <Typography variant="h2" gutterBottom>
+          {rituals?.data?.name}
+        </Typography>
         <Typography
           variant="body1"
-          style={{
-            display: "inline-block",
-            marginLeft: theme.spacing(1),
-          }}
+          gutterBottom
+          className={classes.description}
         >
-          to spark ideas about triggers and actions suitable for your team.
+          This is where you can record the rituals for your team. These can be
+          viewed by the rest of the organisation, inspiring them to create ones
+          of their own. Science also shows that recording and sharing
+          commitments will help to make them stick.
         </Typography>
-      </Box>
-
-      <ButtonDiv>
-        <Button
-          variant="contained"
-          className={classes.button}
-          onClick={() => history.push(`/${companyId}/${teamId}/ritual/add`)}
-        >
-          Create a new ritual
-        </Button>
-        <Button
-          className={classes.buttonMore}
-          variant="contained"
-          onClick={() => setHelpModal(true)}
-        >
-          <Box
-            width={70}
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <HelpOutlineIcon color={"primary"} />
-            <Typography variant="h5" className={classes.link}>
-              More
+        <Box className={classes.descriptionWithLink}>
+          <Link href={`/${companyId}/ideas`} className={classes.link}>
+            <Typography variant="body1" className={classes.link}>
+              Click here
             </Typography>
-          </Box>
-        </Button>
-        {/* <Link
+          </Link>
+          <Typography
+            variant="body1"
+            style={{
+              display: "inline-block",
+              marginLeft: theme.spacing(1),
+            }}
+          >
+            to spark ideas about triggers and actions suitable for your team.
+          </Typography>
+        </Box>
+
+        <ButtonDiv>
+          <Button
+            variant="contained"
+            className={classes.button}
+            onClick={() => history.push(`/${companyId}/${teamId}/ritual/add`)}
+          >
+            Create a new ritual
+          </Button>
+          <Button
+            className={classes.buttonMore}
+            variant="contained"
+            onClick={() => setHelpModal(true)}
+          >
+            <Box
+              width={70}
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <HelpOutlineIcon color={"primary"} />
+              <Typography variant="h5" className={classes.link}>
+                More
+              </Typography>
+            </Box>
+          </Button>
+          {/* <Link
           startIcon={<HelpOutlineIcon color={'primary'} />}
           onClick={() => setHelpModal(true)}
         >
@@ -246,9 +251,8 @@ const Rituals = (props: Props) => {
             More
           </Typography>
         </Link> */}
-      </ButtonDiv>
+        </ButtonDiv>
 
-      <Card>
         <Grid
           container
           direction="row"
@@ -256,43 +260,49 @@ const Rituals = (props: Props) => {
           className={classes.cardHeader}
         >
           <Typography variant="h2" gutterBottom>
-            Commited Rituals
+            Commited rituals
           </Typography>
         </Grid>
         {rituals.data &&
         rituals.data.rituals &&
         rituals.data.rituals.length > 0 ? (
-          // {rituals?.data?.length > 0 ? (
-          <Grid container>
-            <Grid item xs={2}>
-              <Box display="flex">
-                <Typography variant="h4" style={{ marginRight: 10 }}>
-                  {` Sort `}
-                  <SelectMenu
-                    value={orderBy}
-                    onChange={handleOrderBy}
-                    items={[
-                      { label: "A - Z", value: "asc" },
-                      { label: "Z - A", value: "desc" },
-                    ]}
-                  />
-                </Typography>
-              </Box>
+          <>
+            <Grid container>
+              <Grid item xs={3}>
+                <Box display="flex">
+                  <Typography variant="h4" style={{ marginRight: 10 }}>
+                    {` Sort `}
+                    <SelectMenu
+                      value={orderBy}
+                      onChange={handleOrderBy}
+                      items={[
+                        { label: "A - Z", value: "asc" },
+                        { label: "Z - A", value: "desc" },
+                      ]}
+                    />
+                  </Typography>
+                </Box>
+              </Grid>
             </Grid>
-            <Grid item xs={3} className={classes.listHeading}>
-              <Typography variant="h4"> Triggers</Typography>
-            </Grid>
-            <Grid item xs={6} className={classes.listHeading}>
-              <Typography variant="h4">Actions</Typography>
-            </Grid>
-            {rituals?.data?.rituals.map((items: any, index: number) =>
-              renderListItem(items, index)
-            )}
+            <Grid container>
+              <Grid item xs={3} className={classes.listHeading}>
+                <Typography variant="h4">Check-in frequency</Typography>
+              </Grid>
+              <Grid item xs={3} className={classes.listHeading}>
+                <Typography variant="h4">Triggers</Typography>
+              </Grid>
+              <Grid item xs={6} className={classes.listHeading}>
+                <Typography variant="h4">Actions</Typography>
+              </Grid>
+              {rituals?.data?.rituals.map((items: any, index: number) =>
+                renderListItem(items, index)
+              )}
 
-            {/* {rituals?.data?.map((items: any, index: number) =>
+              {/* {rituals?.data?.map((items: any, index: number) =>
               renderListItem(items, index)
             )} */}
-          </Grid>
+            </Grid>
+          </>
         ) : (
           <>
             {rituals.loading ? (
