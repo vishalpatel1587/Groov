@@ -9,20 +9,13 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Link as NavLink } from "react-router-dom";
-import { useHistory, useParams, useRouteMatch } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { deleteRitual, getRituals } from "../../store/actions/actions";
 
-import {
-  Loader,
-  Card,
-  Button,
-  SelectMenu,
-  ModalComponent,
-  Link,
-} from "../../components";
+import { Loader, Card, Button, ModalComponent, Link } from "../../components";
 import { colors } from "../../styling/styles/colors";
 import theme from "../../styling/theme";
 
@@ -108,12 +101,10 @@ const Rituals = (props: Props) => {
   const [helpModal, setHelpModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState("");
-  const [orderBy, setOrderBy] = useState("asc");
 
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const match = useRouteMatch();
   const { companyId, teamId } = useParams<ParamTypes>();
 
   const rituals = useSelector((state: RootStateOrAny) => state.rituals);
@@ -121,10 +112,6 @@ const Rituals = (props: Props) => {
   useEffect(() => {
     dispatch(getRituals(teamId));
   }, []);
-
-  const handleOrderBy = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setOrderBy(event.target.value as string);
-  };
 
   const handleDelete = () => {
     dispatch(deleteRitual(deleteId));
@@ -243,14 +230,6 @@ const Rituals = (props: Props) => {
               </Typography>
             </Box>
           </Button>
-          {/* <Link
-          startIcon={<HelpOutlineIcon color={'primary'} />}
-          onClick={() => setHelpModal(true)}
-        >
-          <Typography variant='h4' className={classes.link}>
-            More
-          </Typography>
-        </Link> */}
         </ButtonDiv>
 
         <Grid
@@ -266,43 +245,20 @@ const Rituals = (props: Props) => {
         {rituals.data &&
         rituals.data.rituals &&
         rituals.data.rituals.length > 0 ? (
-          <>
-            <Grid container>
-              <Grid item xs={3}>
-                <Box display="flex">
-                  <Typography variant="h4" style={{ marginRight: 10 }}>
-                    {` Sort `}
-                    <SelectMenu
-                      value={orderBy}
-                      onChange={handleOrderBy}
-                      items={[
-                        { label: "A - Z", value: "asc" },
-                        { label: "Z - A", value: "desc" },
-                      ]}
-                    />
-                  </Typography>
-                </Box>
-              </Grid>
+          <Grid container>
+            <Grid item xs={3} className={classes.listHeading}>
+              <Typography variant="h4">Check-in frequency</Typography>
             </Grid>
-            <Grid container>
-              <Grid item xs={3} className={classes.listHeading}>
-                <Typography variant="h4">Check-in frequency</Typography>
-              </Grid>
-              <Grid item xs={3} className={classes.listHeading}>
-                <Typography variant="h4">Triggers</Typography>
-              </Grid>
-              <Grid item xs={6} className={classes.listHeading}>
-                <Typography variant="h4">Actions</Typography>
-              </Grid>
-              {rituals?.data?.rituals.map((items: any, index: number) =>
-                renderListItem(items, index)
-              )}
-
-              {/* {rituals?.data?.map((items: any, index: number) =>
+            <Grid item xs={3} className={classes.listHeading}>
+              <Typography variant="h4">Triggers</Typography>
+            </Grid>
+            <Grid item xs={6} className={classes.listHeading}>
+              <Typography variant="h4">Actions</Typography>
+            </Grid>
+            {rituals?.data?.rituals.map((items: any, index: number) =>
               renderListItem(items, index)
-            )} */}
-            </Grid>
-          </>
+            )}
+          </Grid>
         ) : (
           <>
             {rituals.loading ? (
