@@ -1,4 +1,4 @@
-import { takeLatest, all } from 'redux-saga/effects';
+import { takeLatest, all } from "redux-saga/effects";
 import {
   CREATE_TEAM_BEGIN,
   GET_COMPANY_BY_ID_BEGIN,
@@ -7,26 +7,34 @@ import {
   UPDATE_RITUAL_BEGIN,
   DELETE_RITUAL_BEGIN,
   GET_RITUALS_BEGIN,
-  GET_COMPANY_RITUAL_BY_COMPANY_ID_BEGIN
-} from '../actions/actions';
-import { company } from './CompanySaga';
-import { TeamsByCompanyId, CreateTeam, CompanyRitualByCompanyId } from './TeamsSaga';
+  GET_COMPANY_RITUAL_BY_COMPANY_ID_BEGIN,
+} from "../actions/actions";
+import { company } from "./CompanySaga";
+import {
+  TeamsByCompanyId,
+  CreateTeam,
+  CompanyRitualByCompanyId,
+} from "./TeamsSaga";
 import {
   GetRituals,
   CreateRitual,
   UpdateRitual,
-  DeleteRitual
-} from './RitualSaga';
+  DeleteRitual,
+  GetRitualById,
+} from "./RitualSaga";
 
 export default function* rootSaga() {
   yield all([
     takeLatest(CREATE_TEAM_BEGIN, CreateTeam),
     takeLatest(GET_COMPANY_BY_ID_BEGIN, company),
     takeLatest(GET_TEAMS_BY_COMPANY_ID_BEGIN, TeamsByCompanyId),
-    takeLatest(GET_COMPANY_RITUAL_BY_COMPANY_ID_BEGIN, CompanyRitualByCompanyId),
+    takeLatest(
+      GET_COMPANY_RITUAL_BY_COMPANY_ID_BEGIN,
+      CompanyRitualByCompanyId
+    ),
     takeLatest(GET_RITUALS_BEGIN, GetRituals),
     takeLatest(CREATE_RITUAL_BEGIN, CreateRitual),
     takeLatest(UPDATE_RITUAL_BEGIN, UpdateRitual),
-    takeLatest(DELETE_RITUAL_BEGIN, DeleteRitual)
+    takeLatest(DELETE_RITUAL_BEGIN, DeleteRitual),
   ]);
 }

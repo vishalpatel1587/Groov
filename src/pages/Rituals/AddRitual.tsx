@@ -17,6 +17,7 @@ import {
   FullSelectMenu,
 } from "../../components";
 import { colors } from "../../styling/styles/colors";
+import { GetRitualByIdApi } from "../../services/api";
 
 interface Props {}
 
@@ -80,14 +81,36 @@ const AddRitual = () => {
   const classes = useStyles();
   const history = useHistory();
   const ritual = useSelector((state: RootStateOrAny) => state.rituals);
-
   useEffect(() => {
     if (id) {
-      setTriggers(location.state.trigger);
-      setActions(location.state.action);
-      setFrequency(location.state.checkinFrequency);
+      if (location.state) {
+        setTriggers(location.state.trigger);
+        setActions(location.state.action);
+        setFrequency(location.state.checkinFrequency);
+        return;
+      }
+
+      const getRitual = async () => {
+        const ritual = (await GetRitualByIdApi(id)).data;
+        setTriggers(ritual.ritual.trigger);
+        setActions(ritual.ritual.action);
+        setFrequency(ritual.ritual.checkinFrequency);
+      };
+
+      getRitual();
     }
   }, []);
+
+  const onClosePage = () => {
+    if (location.state) {
+      // we came here from in app navigation
+      history.goBack();
+    } else {
+      // we came from outside the app, no state
+      const companyName = location.pathname.split("/")[1];
+      history.push(`/${companyName}`);
+    }
+  };
 
   const handleSubmit = () => {
     const createData = {
@@ -104,7 +127,7 @@ const AddRitual = () => {
 
     if (actions !== "" && triggers !== "") {
       id
-        ? dispatch(updateRitual(updateData, id))
+        ? dispatch(updateRitual(updateData, id, onClosePage))
         : dispatch(createRitual(createData));
     } else {
       ToasterUtils.error(`Action or trigger can't be empty!!`);
@@ -227,7 +250,7 @@ const AddRitual = () => {
           </Button>
         </ButtonDiv>
         <ButtonDiv>
-          <Button className={classes.linkButton} onClick={history.goBack}>
+          <Button className={classes.linkButton} onClick={onClosePage}>
             <Typography variant="h4" className={classes.link}>
               Cancel
             </Typography>
