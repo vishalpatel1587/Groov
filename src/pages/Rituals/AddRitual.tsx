@@ -91,10 +91,10 @@ const AddRitual = () => {
       }
 
       const getRitual = async () => {
-        const ritual = (await GetRitualByIdApi(id)).data;
-        setTriggers(ritual.ritual.trigger);
-        setActions(ritual.ritual.action);
-        setFrequency(ritual.ritual.checkinFrequency);
+        const data = (await GetRitualByIdApi(id)).data;
+        setTriggers(data?.ritual.trigger);
+        setActions(data?.ritual.action);
+        setFrequency(data?.ritual.checkinFrequency);
       };
 
       getRitual();
