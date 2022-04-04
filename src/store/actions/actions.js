@@ -75,9 +75,9 @@ export const createRitual = (data) => ({
   payload: data,
 });
 
-export const updateRitual = (data, id, callback) => ({
+export const updateRitual = (data, id, onClosePageCallback) => ({
   type: UPDATE_RITUAL_BEGIN,
-  payload: { data, id, callback },
+  payload: { data, id, onClosePageCallback },
 });
 
 export const deleteRitual = (id) => ({

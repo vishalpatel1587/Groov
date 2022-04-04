@@ -62,7 +62,7 @@ export function* CreateRitual(action) {
 
 export function* UpdateRitual(action) {
   try {
-    const { data, id, callback } = action.payload;
+    const { data, id, onClosePageCallback } = action.payload;
     const response = yield call(UpdateRitualApi, { data, id });
     if (response) {
       yield put({
@@ -70,8 +70,8 @@ export function* UpdateRitual(action) {
         payload: response.data,
       });
 
-      if (callback) {
-        callback();
+      if (onClosePageCallback) {
+        onClosePageCallback();
       }
     } else {
       throw response;
