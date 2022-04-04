@@ -20,7 +20,6 @@ import {
   CreateRitual,
   UpdateRitual,
   DeleteRitual,
-  GetRitualById,
 } from "./RitualSaga";
 
 export default function* rootSaga() {
