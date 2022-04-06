@@ -55,6 +55,15 @@ export const GetRitualsApi = async (teamId) => {
   return result;
 };
 
+export const GetRitualByIdApi = async (ritualId) => {
+  const config = {
+    url: `/ritual/${ritualId}`,
+    method: "GET",
+  };
+  const result = await ApiRequest(config);
+  return result;
+};
+
 export const CreateRitualApi = async ({
   trigger,
   action,
