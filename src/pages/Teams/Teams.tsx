@@ -31,6 +31,7 @@ import {
   getCompanyById,
 } from "../../store/actions/actions";
 import theme from "../../styling/theme";
+import { formatDate } from "../../utils/dateUtils";
 
 interface Props {}
 
@@ -75,6 +76,7 @@ const useStyles = makeStyles((theme) => ({
   },
   sponserRole: {
     color: colors.slateGrey2,
+    padding: theme.spacing(0, 2, 2, 4),
   },
   executiveSponser: {
     color: colors.slateGrey2,
@@ -91,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
   },
   listContainer: {
-    padding: theme.spacing(4, 6, 4, 4),
+    paddingBottom: theme.spacing(4),
     marginTop: theme.spacing(2),
     borderRadius: theme.spacing(3),
     backgroundColor: colors.whisperWhite,
@@ -108,11 +110,12 @@ const useStyles = makeStyles((theme) => ({
     color: colors.darkGrey,
     overflow: "hidden",
     textOverflow: "ellipsis",
+    padding: theme.spacing(4, 2, 0, 4),
   },
   listHeading: {
     display: "flex",
     alignItems: "center",
-    padding: theme.spacing(0, 0.5),
+    padding: theme.spacing(4, 2, 2, 4),
   },
   listItemBorder: {
     width: "100%",
@@ -132,7 +135,6 @@ const useStyles = makeStyles((theme) => ({
       borderBottom: "2px solid",
       borderBottomColor: colors.mysticGrey,
       paddingBottom: theme.spacing(3),
-      marginBottom: theme.spacing(3),
     },
   },
   tabBar: {
@@ -238,7 +240,6 @@ const Teams = (props: Props) => {
         item
         xs={12}
         className={classes.listContainer}
-        // onClick={() => history.push(`/${companyId}/${id}/rituals`)}
       >
         <Grid item xs={3}>
           <Typography variant="h4" className={classes.listTitle}>
@@ -251,27 +252,34 @@ const Teams = (props: Props) => {
           )}
         </Grid>
         <Grid container item xs={9} className={classes.ritualsContainer}>
-          {rituals.map(({ id, trigger, action }: any, index: number) => (
-            <Box
-              display="flex"
-              flexDirection="row"
-              justifyContent="space-between"
-              className={classes.listItemBorder}
-              key={"ritual" + index}
-            >
-              <Grid item xs={5}>
-                <Typography variant="h4" className={classes.listTitle}>
-                  {trigger}
-                </Typography>
-              </Grid>
+          {rituals.map(
+            ({ id, trigger, action, lastUpdateTime }: any, index: number) => (
+              <Box
+                display="flex"
+                flexDirection="row"
+                justifyContent="space-between"
+                className={classes.listItemBorder}
+                key={"ritual" + index}
+              >
+                <Grid item xs={4}>
+                  <Typography variant="h4" className={classes.listTitle}>
+                    {trigger}
+                  </Typography>
+                </Grid>
 
-              <Grid item xs={5}>
-                <Typography variant="h4" className={classes.listTitle}>
-                  {action}
-                </Typography>
-              </Grid>
-            </Box>
-          ))}
+                <Grid item xs={4}>
+                  <Typography variant="h4" className={classes.listTitle}>
+                    {action}
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography variant="h4" className={classes.listTitle}>
+                    {formatDate(lastUpdateTime)}
+                  </Typography>
+                </Grid>
+              </Box>
+            )
+          )}
         </Grid>
       </Grid>
     );
@@ -302,11 +310,14 @@ const Teams = (props: Props) => {
                   />
                 </Typography>
               </Grid>
-              <Grid container item xs={5} className={classes.listHeading}>
+              <Grid container item xs={3} className={classes.listHeading}>
                 <Typography variant="h4">Triggers</Typography>
               </Grid>
-              <Grid container item xs={4} className={classes.listHeading}>
+              <Grid container item xs={3} className={classes.listHeading}>
                 <Typography variant="h4">Actions</Typography>
+              </Grid>
+              <Grid container item xs={3} className={classes.listHeading}>
+                <Typography variant="h4">Last updated</Typography>
               </Grid>
 
               {teams?.data?.teams?.map((items: any, index: number) => {
@@ -358,11 +369,14 @@ const Teams = (props: Props) => {
               <Grid container item xs={3} className={classes.listHeading}>
                 <Typography variant="h4">Executive Sponser</Typography>
               </Grid>
-              <Grid container item xs={5} className={classes.listHeading}>
+              <Grid container item xs={3} className={classes.listHeading}>
                 <Typography variant="h4">Triggers</Typography>
               </Grid>
-              <Grid container item xs={4} className={classes.listHeading}>
+              <Grid container item xs={3} className={classes.listHeading}>
                 <Typography variant="h4">Actions</Typography>
+              </Grid>
+              <Grid container item xs={3} className={classes.listHeading}>
+                <Typography variant="h4">Last updated</Typography>
               </Grid>
 
               {teams?.companyRituals?.companyRituals?.map(

@@ -18,6 +18,7 @@ import { deleteRitual, getRituals } from "../../store/actions/actions";
 import { Loader, Card, Button, ModalComponent, Link } from "../../components";
 import { colors } from "../../styling/styles/colors";
 import theme from "../../styling/theme";
+import { formatDate } from "../../utils/dateUtils";
 
 interface ParamTypes {
   companyId: string;
@@ -118,7 +119,7 @@ const Rituals = (props: Props) => {
     setDeleteModal(false);
   };
   const renderListItem = (
-    { id, action, trigger, checkinFrequency, teamId }: any,
+    { id, action, trigger, checkinFrequency, teamId, lastUpdateTime }: any,
     index: number
   ) => {
     return (
@@ -129,44 +130,55 @@ const Rituals = (props: Props) => {
         className={classes.centerVertical}
       >
         <Grid container direction="row" item className={classes.listContainer}>
-          <Grid item xs={3} className={classes.centerVertical}>
+          <Grid item xs={2} className={classes.centerVertical}>
             <Typography variant="h4" className={classes.listTitle}>
               {checkinFrequency}
             </Typography>
           </Grid>
-          <Grid item xs={3} className={classes.centerVertical}>
+          <Grid item xs={2} className={classes.centerVertical}>
             <Typography variant="h4" className={classes.listTitle}>
               {trigger}
             </Typography>
           </Grid>
-          <Grid container item xs={6} className={classes.centerVertical}>
-            <Grid item xs={8}>
-              <Typography variant="h4" className={classes.listTitle}>
-                {action}
-              </Typography>
-            </Grid>
-            <Grid item xs={2} className={classes.editIcon}>
-              <NavLink
-                to={{
-                  pathname: `/${companyId}/ritual/edit/${id}`,
-                  state: { id, action, trigger, checkinFrequency, teamId },
-                }}
-              >
-                <IconButton>
-                  <CreateOutlinedIcon style={{ color: colors.royalBlue }} />
-                </IconButton>
-              </NavLink>
-            </Grid>
-            <Grid item xs={2} className={classes.iconWrapper}>
-              <IconButton
-                onClick={() => {
-                  setDeleteId(id);
-                  setDeleteModal(true);
-                }}
-              >
-                <DeleteIcon />
+          <Grid item xs={4} className={classes.centerVertical}>
+            <Typography variant="h4" className={classes.listTitle}>
+              {action}
+            </Typography>
+          </Grid>
+          <Grid item xs={2} className={classes.centerVertical}>
+            <Typography variant="h4" className={classes.listTitle}>
+              {formatDate(lastUpdateTime)}
+            </Typography>
+          </Grid>
+          <Grid
+            item
+            xs={1}
+            className={`${classes.editIcon} ${classes.centerVertical}`}
+          >
+            <NavLink
+              to={{
+                pathname: `/${companyId}/ritual/edit/${id}`,
+                state: { id, action, trigger, checkinFrequency, teamId },
+              }}
+            >
+              <IconButton>
+                <CreateOutlinedIcon style={{ color: colors.royalBlue }} />
               </IconButton>
-            </Grid>
+            </NavLink>
+          </Grid>
+          <Grid
+            item
+            xs={1}
+            className={`${classes.iconWrapper} ${classes.centerVertical}`}
+          >
+            <IconButton
+              onClick={() => {
+                setDeleteId(id);
+                setDeleteModal(true);
+              }}
+            >
+              <DeleteIcon />
+            </IconButton>
           </Grid>
         </Grid>
       </Grid>
@@ -246,18 +258,24 @@ const Rituals = (props: Props) => {
         rituals.data.rituals &&
         rituals.data.rituals.length > 0 ? (
           <Grid container>
-            <Grid item xs={3} className={classes.listHeading}>
+            <Grid item xs={2} className={classes.listHeading}>
               <Typography variant="h4">Check-in frequency</Typography>
             </Grid>
-            <Grid item xs={3} className={classes.listHeading}>
+            <Grid item xs={2} className={classes.listHeading}>
               <Typography variant="h4">Triggers</Typography>
             </Grid>
-            <Grid item xs={6} className={classes.listHeading}>
+            <Grid item xs={4} className={classes.listHeading}>
               <Typography variant="h4">Actions</Typography>
             </Grid>
-            {rituals?.data?.rituals.map((items: any, index: number) =>
-              renderListItem(items, index)
-            )}
+            <Grid item xs={2} className={classes.listHeading}>
+              <Typography variant="h4">Last updated</Typography>
+            </Grid>
+            <Grid item xs={2} className={classes.listHeading}>
+              {}
+            </Grid>
+            {rituals?.data?.rituals.map((ritual: any, index: number) => {
+              return renderListItem(ritual, index);
+            })}
           </Grid>
         ) : (
           <>
