@@ -77,8 +77,8 @@ let theme = createTheme({
     },
     subtitle1: {
       fontFamily: getFontFamily(),
-      fontSize: "1rem",
-      lineHeight: 1.5,
+      fontSize: "14px",
+      lineHeight: "21px",
     },
     subtitle2: {
       fontFamily: getFontFamily(),
