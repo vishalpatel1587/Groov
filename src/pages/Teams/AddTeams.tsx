@@ -73,6 +73,7 @@ const AddTeams = (props: Props) => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [leaderEmail, setLeaderEmail] = useState("");
+  const [teamDescription, setTeamDescription] = useState("");
   const [confirmLeaderEmail, setConfirmLeaderEmail] = useState("");
   const [action, setAction] = useState("");
   const [trigger, setTrigger] = useState("");
@@ -89,7 +90,7 @@ const AddTeams = (props: Props) => {
   const { companyId } = useParams<ParamTypes>();
 
   const handleSubmit = () => {
-    const team = { name, leaderEmail, companyId };
+    const team = { name, leaderEmail, companyId, teamDescription };
     const ritual = { action, trigger, checkinFrequency };
     const data = { ...team, ritual };
 
@@ -158,6 +159,15 @@ const AddTeams = (props: Props) => {
             setName(e.target.value)
           }
           placeholder="Team name"
+        />
+        <Input
+          fullWidth={true}
+          name="team_description"
+          value={teamDescription}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setTeamDescription(e.target.value)
+          }
+          placeholder="Team description (optional)"
         />
         <Input
           fullWidth={true}
