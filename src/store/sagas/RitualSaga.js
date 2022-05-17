@@ -8,8 +8,6 @@ import {
   DELETE_RITUAL_FAILURE,
   GET_RITUALS_FAILURE,
   GET_RITUALS_SUCCESS,
-  EDIT_TEAM_SUCCESS,
-  EDIT_TEAM_FAILURE,
 } from "../actions/actions";
 import {
   CreateRitualApi,
@@ -17,7 +15,6 @@ import {
   GetRitualsApi,
   UpdateRitualApi,
   GetRitualByIdApi,
-  EditTeamApi,
 } from "../../services/api";
 import history from "../../utils/history";
 import { ToasterUtils } from "../../components/Toaster/ToasterUtils";
@@ -103,26 +100,6 @@ export function* DeleteRitual(action) {
     ToasterUtils.error(error.response?.data.message);
     yield put({
       type: DELETE_RITUAL_FAILURE,
-      payload: error.response?.data,
-    });
-  }
-}
-
-export function* EditTeam(action) {
-  try {
-    const response = yield call(EditTeamApi, action.payload);
-    if (response) {
-      yield put({
-        type: EDIT_TEAM_SUCCESS,
-        payload: response.data,
-      });
-    } else {
-      throw response;
-    }
-  } catch (error) {
-    ToasterUtils.error(error.response?.data.message);
-    yield put({
-      type: EDIT_TEAM_FAILURE,
       payload: error.response?.data,
     });
   }

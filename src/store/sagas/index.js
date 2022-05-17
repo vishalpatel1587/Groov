@@ -15,13 +15,13 @@ import {
   TeamsByCompanyId,
   CreateTeam,
   CompanyRitualByCompanyId,
+  EditTeam,
 } from "./TeamsSaga";
 import {
   GetRituals,
   CreateRitual,
   UpdateRitual,
   DeleteRitual,
-  EditTeam,
 } from "./RitualSaga";
 
 export default function* rootSaga() {
