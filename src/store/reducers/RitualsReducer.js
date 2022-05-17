@@ -10,12 +10,15 @@ import {
   DELETE_RITUAL_SUCCESS,
   UPDATE_RITUAL_BEGIN,
   UPDATE_RITUAL_FAILURE,
-  UPDATE_RITUAL_SUCCESS
-} from '../actions/actions';
+  UPDATE_RITUAL_SUCCESS,
+  EDIT_TEAM_BEGIN,
+  EDIT_TEAM_SUCCESS,
+  EDIT_TEAM_FAILURE,
+} from "../actions/actions";
 
 const initialState = {
   loading: false,
-  error: '',
+  error: "",
   data: {},
 };
 
@@ -23,13 +26,13 @@ const RitualsReducer = (state = initialState, action) => {
   switch (action.type) {
     // GET_RITUALS
     case GET_RITUALS_BEGIN:
-      return { ...state, loading:true,};
+      return { ...state, loading: true };
 
     case GET_RITUALS_SUCCESS:
       return {
         ...state,
         loading: false,
-        data: { ...action.payload, loading: false } //...action.payload,
+        data: { ...action.payload, loading: false }, //...action.payload,
       };
 
     case GET_RITUALS_FAILURE:
@@ -37,20 +40,20 @@ const RitualsReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         data: [],
-        error: action.payload
+        error: action.payload,
       };
 
     // CREATE_RITUALS
     case CREATE_RITUAL_BEGIN:
       return {
         ...state,
-        loading:true,
+        loading: true,
       };
 
     case CREATE_RITUAL_SUCCESS:
       return {
         ...state,
-        loading:false,
+        loading: false,
       };
 
     case CREATE_RITUAL_FAILURE:
@@ -93,13 +96,13 @@ const RitualsReducer = (state = initialState, action) => {
       );
       const data = {
         ...state.data,
-        rituals: deletedData
-      }
-      
+        rituals: deletedData,
+      };
+
       return {
         ...state,
         loading: false,
-        data
+        data,
       };
 
     case DELETE_RITUAL_FAILURE:
@@ -107,7 +110,25 @@ const RitualsReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload,
-      }
+      };
+
+    case EDIT_TEAM_BEGIN:
+      return { ...state, loading: true };
+    case EDIT_TEAM_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          ...action.payload.team,
+        },
+        loading: false,
+      };
+    case EDIT_TEAM_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
     default:
       return state;
   }
