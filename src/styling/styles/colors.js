@@ -20,8 +20,13 @@ export const colors = {
     5: "#f8fcff",
     20: "#E6EBF3",
     40: "#A5ABB7",
+    60: "#565E74",
   },
   groovBlue: {
     100: "#006AFF",
+  },
+  groovRed: {
+    5: "#FDE5D8",
+    110: "#B82B38",
   },
 };

@@ -1,24 +1,40 @@
 import { useEffect, useState } from "react";
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
 import styled from "styled-components";
+
 import {
   Box,
+  CardHeader,
   Grid,
   IconButton,
   makeStyles,
+  Menu,
+  MenuItem,
   Typography,
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import { Link as NavLink } from "react-router-dom";
-import { useHistory, useParams } from "react-router-dom";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
-import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
-import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import { deleteRitual, getRituals } from "../../store/actions/actions";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 
-import { Loader, Card, Button, ModalComponent, Link } from "../../components";
+import { Button, Card, Loader, ModalComponent } from "../../components";
+import AddTeamMemberModal from "../../components/modals/AddTeamMemberModal";
+import DeleteRitualModal from "../../components/modals/DeleteRitualModal";
+import EditTeamInfoModal from "../../components/modals/EditTeamInfoModal";
+import RemoveTeamMemberModal from "../../components/modals/RemoveTeamMemberModal";
+import RitualComponent from "../../components/RitualComponent";
+import Avatar from "../../components/svg/Avatar";
+import RemoveUser from "../../components/svg/RemoveUser";
+import { FeatureFlag } from "../../constants/featureFlags";
+import { Menus } from "../../constants/menus";
+import { Modals } from "../../constants/modals";
+import {
+  deleteRitual,
+  editTeam,
+  getRituals,
+} from "../../store/actions/actions";
 import { colors } from "../../styling/styles/colors";
-import theme from "../../styling/theme";
-import { formatDate } from "../../utils/dateUtils";
+import appTheme from "../../styling/theme";
+import { Ritual } from "../../types/Ritual";
 
 interface ParamTypes {
   companyId: string;
@@ -27,7 +43,7 @@ interface ParamTypes {
 
 interface Props {}
 const RootDiv = styled.div`
-  margin: 0 20%;
+  width: 60vw;
 `;
 
 const ButtonDiv = styled.div`
@@ -84,7 +100,10 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
   },
-  cardHeader: { marginBottom: theme.spacing(4) },
+  cardHeader: {
+    marginBottom: theme.spacing(4),
+    justifyContent: "space-between",
+  },
   listHeading: {
     display: "flex",
     alignItems: "center",
@@ -96,12 +115,26 @@ const useStyles = makeStyles((theme) => ({
   },
   centerVertical: { display: "flex", alignItems: "center" },
   iconWrapper: { display: "flex", justifyContent: "center" },
+  iconButtonWrapper: {
+    width: "70px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  modalLabel: {
+    marginTop: theme.spacing(3),
+    textAlign: "left",
+  },
 }));
 
-const Rituals = (props: Props) => {
+const Rituals = (_: Props) => {
   const [helpModal, setHelpModal] = useState(false);
-  const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState("");
+  const [menuAnchors, setAnchors] = useState<{ [menuName: string]: any }>({});
+  const [openModals, setOpenModals] = useState<{
+    [modalName: string]: boolean;
+  }>({});
+  const [memberHover, setMemberHover] = useState<string | null>(null);
 
   const classes = useStyles();
   const history = useHistory();
@@ -109,191 +142,256 @@ const Rituals = (props: Props) => {
   const { companyId, teamId } = useParams<ParamTypes>();
 
   const rituals = useSelector((state: RootStateOrAny) => state.rituals);
+  const [teamMemberToRemove, setTeamMemberToRemove] = useState("");
 
   useEffect(() => {
     dispatch(getRituals(teamId));
   }, []);
 
+  const saveTeamInfo = (teamName: string, teamDescription: string): void => {
+    dispatch(
+      editTeam(teamId, {
+        name: teamName,
+        teamDescription: teamDescription,
+      })
+    );
+
+    toggleModalOpen(Menus.TEAM_INFO, false);
+  };
+
   const handleDelete = () => {
     dispatch(deleteRitual(deleteId));
-    setDeleteModal(false);
+    toggleModalOpen(Modals.DELETE_RITUAL, false);
   };
-  const renderListItem = (
-    { id, action, trigger, checkinFrequency, teamId, lastUpdateTime }: any,
-    index: number
+
+  const toggleContextMenuOpen = (
+    event: any,
+    menuName: string,
+    open: boolean
   ) => {
+    setAnchors((prevState) => ({
+      ...prevState,
+      [menuName]: open ? event.currentTarget : null,
+    }));
+  };
+
+  const toggleModalOpen = (modalName: string, open: boolean): void => {
+    setOpenModals((prevState) => ({
+      ...prevState,
+      [modalName]: open,
+    }));
+  };
+
+  const handleAddMemberClick = (event: any) => {
+    toggleContextMenuOpen(event, Menus.MEMBERS, false);
+    toggleModalOpen(Menus.MEMBERS, true);
+  };
+
+  const handleEditTeamInfoClick = ($event: any) => {
+    toggleContextMenuOpen($event, Menus.TEAM_INFO, false);
+    toggleModalOpen(Menus.TEAM_INFO, true);
+  };
+
+  const handleRemoveMemberClick = (teamMember: string) => {
+    setTeamMemberToRemove(teamMember);
+    toggleModalOpen(Modals.REMOVE_MEMBER, true);
+  };
+
+  const renderListItem = (ritual: Ritual, index: number) => {
     return (
-      <Grid
-        container
-        item
-        key={"rt" + index}
-        className={classes.centerVertical}
-      >
-        <Grid container direction="row" item className={classes.listContainer}>
-          <Grid item xs={2} className={classes.centerVertical}>
-            <Typography variant="h4" className={classes.listTitle}>
-              {checkinFrequency}
-            </Typography>
-          </Grid>
-          <Grid item xs={2} className={classes.centerVertical}>
-            <Typography variant="h4" className={classes.listTitle}>
-              {trigger}
-            </Typography>
-          </Grid>
-          <Grid item xs={4} className={classes.centerVertical}>
-            <Typography variant="h4" className={classes.listTitle}>
-              {action}
-            </Typography>
-          </Grid>
-          <Grid item xs={2} className={classes.centerVertical}>
-            <Typography variant="h4" className={classes.listTitle}>
-              {formatDate(lastUpdateTime)}
-            </Typography>
-          </Grid>
-          <Grid
-            item
-            xs={1}
-            className={`${classes.editIcon} ${classes.centerVertical}`}
-          >
-            <NavLink
-              to={{
-                pathname: `/${companyId}/ritual/edit/${id}`,
-                state: { id, action, trigger, checkinFrequency, teamId },
-              }}
-            >
-              <IconButton>
-                <CreateOutlinedIcon style={{ color: colors.royalBlue }} />
-              </IconButton>
-            </NavLink>
-          </Grid>
-          <Grid
-            item
-            xs={1}
-            className={`${classes.iconWrapper} ${classes.centerVertical}`}
-          >
-            <IconButton
-              onClick={() => {
-                setDeleteId(id);
-                setDeleteModal(true);
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </Grid>
-        </Grid>
+      <Grid item xs={6} key={"rt" + index}>
+        <RitualComponent
+          ritual={ritual}
+          companyId={companyId}
+          anchor={menuAnchors[Menus.RITUALS]}
+          showContextMenu
+          onCloseMenu={(e) => toggleContextMenuOpen(e, Menus.RITUALS, false)}
+          onContextMenuClick={(e) =>
+            toggleContextMenuOpen(e, Menus.RITUALS, true)
+          }
+          onRemoveRitualClick={(e) => {
+            setDeleteId(ritual.id);
+            toggleContextMenuOpen(e, Menus.RITUALS, false);
+            toggleModalOpen(Modals.DELETE_RITUAL, true);
+          }}
+        />
       </Grid>
     );
   };
   return (
     <RootDiv>
-      <Card>
-        <Typography variant="h2" gutterBottom>
-          {rituals?.data?.name}
-        </Typography>
-        <Typography
-          variant="body1"
-          gutterBottom
-          className={classes.description}
-        >
-          This is where you can record the rituals for your team. These can be
-          viewed by the rest of the organisation, inspiring them to create ones
-          of their own. Science also shows that recording and sharing
-          commitments will help to make them stick.
-        </Typography>
-        <Box className={classes.descriptionWithLink}>
-          <Link href={`/${companyId}/ideas`} className={classes.link}>
-            <Typography variant="body1" className={classes.link}>
-              Click here
-            </Typography>
-          </Link>
-          <Typography
-            variant="body1"
-            style={{
-              display: "inline-block",
-              marginLeft: theme.spacing(1),
-            }}
-          >
-            to spark ideas about triggers and actions suitable for your team.
-          </Typography>
-        </Box>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Card>
+            <CardHeader
+              style={{ padding: 0 }}
+              action={
+                <>
+                  <IconButton
+                    aria-label="menu"
+                    onClick={(e) =>
+                      toggleContextMenuOpen(e, Menus.TEAM_INFO, true)
+                    }
+                  >
+                    <MoreVertIcon />
+                  </IconButton>
 
-        <ButtonDiv>
-          <Button
-            variant="contained"
-            className={classes.button}
-            onClick={() => history.push(`/${companyId}/${teamId}/ritual/add`)}
-          >
-            Create a new ritual
-          </Button>
-          <Button
-            className={classes.buttonMore}
-            variant="contained"
-            onClick={() => setHelpModal(true)}
-          >
-            <Box
-              width={70}
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <HelpOutlineIcon color={"primary"} />
-              <Typography variant="h5" className={classes.link}>
-                More
+                  <Menu
+                    anchorEl={menuAnchors[Menus.TEAM_INFO]}
+                    open={Boolean(menuAnchors[Menus.TEAM_INFO])}
+                    onClose={(e) =>
+                      toggleContextMenuOpen(e, Menus.TEAM_INFO, true)
+                    }
+                  >
+                    <MenuItem onClick={handleEditTeamInfoClick}>
+                      Edit team info
+                    </MenuItem>
+                  </Menu>
+                </>
+              }
+              title={
+                <>
+                  <Typography variant="h2" gutterBottom>
+                    {rituals?.data?.name}
+                  </Typography>
+                  <Typography variant="body1" gutterBottom>
+                    {rituals?.data?.teamDescription}
+                  </Typography>
+                </>
+              }
+            />
+            <ButtonDiv>
+              <Button
+                variant="contained"
+                className={classes.button}
+                onClick={() =>
+                  history.push(`/${companyId}/${teamId}/ritual/add`)
+                }
+              >
+                Create a new ritual
+              </Button>
+              <Button
+                className={classes.buttonMore}
+                variant="contained"
+                onClick={() => setHelpModal(true)}
+              >
+                <Box className={classes.iconButtonWrapper}>
+                  <HelpOutlineIcon color={"primary"} />
+                  <Typography variant="h5" className={classes.link}>
+                    More
+                  </Typography>
+                </Box>
+              </Button>
+            </ButtonDiv>
+
+            <Grid container direction="row" className={classes.cardHeader}>
+              <Typography variant="h2" gutterBottom>
+                Commited rituals
               </Typography>
-            </Box>
-          </Button>
-        </ButtonDiv>
-
-        <Grid
-          container
-          direction="row"
-          justifyContent="space-between"
-          className={classes.cardHeader}
-        >
-          <Typography variant="h2" gutterBottom>
-            Commited rituals
-          </Typography>
+            </Grid>
+            <Grid container spacing={2}>
+              {rituals.data &&
+              rituals.data.rituals &&
+              rituals.data.rituals.length > 0 ? (
+                <Grid container spacing={10}>
+                  {rituals?.data?.rituals.map((ritual: any, index: number) => {
+                    return renderListItem(ritual, index);
+                  })}
+                </Grid>
+              ) : (
+                <>
+                  {rituals.loading ? (
+                    <Box p={10} display="flex" justifyContent="center">
+                      <Loader
+                        color={colors.royalBlue}
+                        size={50}
+                        thickness={4}
+                      />
+                    </Box>
+                  ) : (
+                    <Box p={10}>
+                      <Typography variant="h3" align="center">
+                        No data
+                      </Typography>
+                    </Box>
+                  )}
+                </>
+              )}
+            </Grid>
+          </Card>
         </Grid>
-        {rituals.data &&
-        rituals.data.rituals &&
-        rituals.data.rituals.length > 0 ? (
-          <Grid container>
-            <Grid item xs={2} className={classes.listHeading}>
-              <Typography variant="h4">Check-in frequency</Typography>
-            </Grid>
-            <Grid item xs={2} className={classes.listHeading}>
-              <Typography variant="h4">Triggers</Typography>
-            </Grid>
-            <Grid item xs={4} className={classes.listHeading}>
-              <Typography variant="h4">Actions</Typography>
-            </Grid>
-            <Grid item xs={2} className={classes.listHeading}>
-              <Typography variant="h4">Last updated</Typography>
-            </Grid>
-            <Grid item xs={2} className={classes.listHeading}>
-              {}
-            </Grid>
-            {rituals?.data?.rituals.map((ritual: any, index: number) => {
-              return renderListItem(ritual, index);
-            })}
+        {FeatureFlag.renderMembers && (
+          <Grid item xs={4}>
+            <Card>
+              <CardHeader
+                style={{ padding: 0 }}
+                action={
+                  <div>
+                    <IconButton
+                      onClick={(e) =>
+                        toggleContextMenuOpen(e, Menus.MEMBERS, true)
+                      }
+                    >
+                      <MoreVertIcon />
+                    </IconButton>
+                    <Menu
+                      id="simple-menu"
+                      anchorEl={menuAnchors[Menus.MEMBERS]}
+                      open={Boolean(menuAnchors[Menus.MEMBERS])}
+                      onClose={(e) =>
+                        toggleContextMenuOpen(e, Menus.MEMBERS, false)
+                      }
+                    >
+                      <MenuItem onClick={handleAddMemberClick}>
+                        {"Add team member"}
+                      </MenuItem>
+                    </Menu>
+                  </div>
+                }
+                title={
+                  <Typography variant="h2" gutterBottom>
+                    Members
+                  </Typography>
+                }
+              />
+              <Box>
+                {[].map((teamMember) => {
+                  return (
+                    <Box
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        marginBottom: appTheme.spacing(3),
+                      }}
+                      onMouseOver={() => setMemberHover(teamMember)}
+                      onMouseOut={() => setMemberHover(null)}
+                    >
+                      <Avatar color={teamMember} />
+                      <Typography
+                        variant="body1"
+                        style={{ marginLeft: appTheme.spacing(4) }}
+                      >
+                        {teamMember}
+                      </Typography>
+                      <IconButton
+                        onClick={() => handleRemoveMemberClick(teamMember)}
+                        style={{
+                          marginLeft: "auto",
+                          padding: 0,
+                          visibility:
+                            memberHover === teamMember ? "visible" : "hidden",
+                        }}
+                      >
+                        <RemoveUser />
+                      </IconButton>
+                    </Box>
+                  );
+                })}
+              </Box>
+            </Card>
           </Grid>
-        ) : (
-          <>
-            {rituals.loading ? (
-              <Box p={10} display="flex" justifyContent="center">
-                <Loader color={colors.royalBlue} size={50} thickness={4} />
-              </Box>
-            ) : (
-              <Box p={10}>
-                <Typography variant="h3" align="center">
-                  No data
-                </Typography>
-              </Box>
-            )}
-          </>
         )}
-      </Card>
-
+      </Grid>
       <ModalComponent
         open={helpModal}
         icon={true}
@@ -303,17 +401,31 @@ const Rituals = (props: Props) => {
         onClose={() => setHelpModal(false)}
       />
 
-      <ModalComponent
-        open={deleteModal}
-        // open={true}
-        icon={false}
-        type="confirm"
-        title="Do you really want to delete this ritual?"
-        onClose={() => setDeleteModal(false)}
-        yesClickTitle="Yes"
-        noClickTitle="No"
-        onYesClick={handleDelete}
-        onNoClick={() => setDeleteModal(false)}
+      <DeleteRitualModal
+        ritual={rituals?.data?.rituals?.find((r: Ritual) => r.id === deleteId)}
+        companyId={companyId}
+        open={openModals[Modals.DELETE_RITUAL]}
+        onClose={() => toggleModalOpen(Modals.DELETE_RITUAL, false)}
+        handleDelete={handleDelete}
+      />
+
+      <AddTeamMemberModal
+        open={openModals[Menus.MEMBERS]}
+        onClose={() => toggleModalOpen(Modals.MEMBERS, false)}
+      />
+
+      <EditTeamInfoModal
+        open={openModals[Menus.TEAM_INFO]}
+        teamName={rituals?.data?.name}
+        teamDescription={rituals?.data?.teamDescription}
+        onClose={() => toggleModalOpen(Menus.TEAM_INFO, false)}
+        saveTeamInfo={saveTeamInfo}
+      />
+
+      <RemoveTeamMemberModal
+        teamMemberEmailAddress={teamMemberToRemove}
+        open={openModals[Modals.REMOVE_MEMBER]}
+        onClose={() => toggleModalOpen(Modals.REMOVE_MEMBER, false)}
       />
     </RootDiv>
   );
