@@ -45,7 +45,7 @@ const Success = (props: Props) => {
   const { companyId } = useParams<ParamTypes>();
   const { location } = props;
 
-  let teamId =
+  const teamId =
     location.search &&
     location.search.substring(location.search.indexOf("=") + 1);
 

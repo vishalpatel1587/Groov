@@ -1,5 +1,5 @@
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { colors } from '../styling/styles/colors';
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { colors } from "../styling/styles/colors";
 
 interface Props {
   color?: string;
@@ -16,5 +16,3 @@ export const Loader = (props: Props) => {
     />
   );
 };
-
-

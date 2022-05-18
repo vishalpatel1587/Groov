@@ -1,0 +1,28 @@
+image: node:14
+
+definitions:
+  steps:
+    - step: &build_and_test
+        name: Build and test
+        caches:
+          - node
+        script:
+          - npm install
+          - CI=false && npm run build
+          - npm run test
+    - step: &linting
+        name: "Code linting"
+        script:
+          - "npm install eslint"
+          - "npm run lint ."
+        caches:
+          - node
+
+pipelines:
+  branches:
+      main:
+        - step: *build_and_test
+  pull-requests:
+    '**':
+      - step: *build_and_test
+

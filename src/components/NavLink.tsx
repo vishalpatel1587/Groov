@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const NavLink = (props: NavLinkProps) => {
   const classes = useStyles(props);
-  let match = useRouteMatch(props.to as string);
+  const match = useRouteMatch(props.to as string);
 
   return (
     <RCTNavLink

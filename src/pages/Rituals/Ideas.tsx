@@ -4,8 +4,6 @@ import { Box, Grid, makeStyles, Typography } from "@material-ui/core";
 import { Card } from "../../components";
 import { ritualsIdeas } from "../../utils/data";
 
-interface Props {}
-
 const RootDiv = styled.div`
   padding-bottom: 30px;
   max-width: 900px;
@@ -18,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   rowList: { marginBottom: theme.spacing(6) },
 }));
 
-const Ideas = (props: Props) => {
+const Ideas = () => {
   const classes = useStyles();
 
   return (

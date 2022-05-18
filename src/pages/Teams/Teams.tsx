@@ -30,10 +30,8 @@ import {
   getCompanyRitualByCompanyId,
   getCompanyById,
 } from "../../store/actions/actions";
-import theme from "../../styling/theme";
+import appTheme from "../../styling/theme";
 import { formatDate } from "../../utils/dateUtils";
-
-interface Props {}
 
 interface ParamTypes {
   companyId: string;
@@ -154,22 +152,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const pageLimit = 5;
-const Teams = (props: Props) => {
+const Teams = () => {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(1);
   const [offset, setOffset] = useState(0);
   const [companyPage, setCompanyPage] = useState(1);
   const [compnayOffset, setCompanyOffset] = useState(0);
   const [orderBy, setOrderBy] = useState("asc");
-  const [orderCompanyBy, setCompanyOrderBy] = useState("asc");
+  const [orderCompanyBy] = useState("asc");
   const [activeTab, setActiveTab] = useState("CompanyRitual");
-  let { url } = useRouteMatch();
-  const classes = useStyles(props);
+  const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
   const { companyId } = useParams<ParamTypes>();
   const teams = useSelector((state: RootStateOrAny) => state.teams);
-  const company = useSelector((state: RootStateOrAny) => state.company);
   const location = useLocation();
 
   useEffect(() => {
@@ -293,7 +289,7 @@ const Teams = (props: Props) => {
 
   const teamRituals = () => {
     return (
-      <Box mt={theme.spacing(2)}>
+      <Box mt={appTheme.spacing(2)}>
         {teams?.data?.teams?.length > 0 ? (
           <>
             <Grid container>
@@ -362,7 +358,7 @@ const Teams = (props: Props) => {
   };
   const companyRituals = () => {
     return (
-      <Box mt={theme.spacing(2)}>
+      <Box mt={appTheme.spacing(2)}>
         {teams?.companyRituals?.companyRituals?.length > 0 ? (
           <>
             <Grid container>
@@ -453,7 +449,7 @@ const Teams = (props: Props) => {
                 className={`${classes.description}`}
                 style={{
                   display: "inline-block",
-                  marginLeft: theme.spacing(1),
+                  marginLeft: appTheme.spacing(1),
                 }}
               >
                 to spark ideas about triggers and actions suitable for your
@@ -473,7 +469,7 @@ const Teams = (props: Props) => {
               Click below to create some for your team.
             </Typography>
           </Grid>
-          <Box mt={theme.spacing(2)} mb={theme.spacing(1)}>
+          <Box mt={appTheme.spacing(2)} mb={appTheme.spacing(1)}>
             <Button
               className={classes.button}
               onClick={() => history.push(`/${companyId}/teams/add`)}
@@ -537,6 +533,3 @@ const Teams = (props: Props) => {
 };
 
 export default Teams;
-function setSelectedTab(newValue: number) {
-  throw new Error("Function not implemented.");
-}

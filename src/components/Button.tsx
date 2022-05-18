@@ -1,4 +1,3 @@
-import React from "react";
 import MaterialButton from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
 import { colors } from "../styling/styles/colors";
@@ -9,7 +8,7 @@ interface ButtonProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   children: React.ReactNode;
   variant?: "outlined" | "contained";
-  style?: object;
+  style?: any;
   iconComponent?: JSX.Element;
 }
 
