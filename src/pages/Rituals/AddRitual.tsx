@@ -19,8 +19,6 @@ import {
 import { colors } from "../../styling/styles/colors";
 import { GetRitualByIdApi } from "../../services/api";
 
-interface Props {}
-
 interface ParamTypes {
   id: string;
   companyId: string;
@@ -75,7 +73,7 @@ const AddRitual = () => {
     CHECKIN_FREQUENCY.EVERY_MONTH.toString()
   );
   const [triggers, setTriggers] = useState("");
-  let { id, teamId, companyId } = useParams<ParamTypes>();
+  const { id, teamId, companyId } = useParams<ParamTypes>();
   const location = useLocation<any>();
   const dispatch = useDispatch();
   const classes = useStyles();

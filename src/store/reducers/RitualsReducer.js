@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import {
   GET_RITUALS_BEGIN,
   GET_RITUALS_FAILURE,

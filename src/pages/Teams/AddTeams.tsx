@@ -19,8 +19,6 @@ import { validateEmail, validateName } from "../../utils/validation";
 import theme from "../../styling/theme";
 import { CHECKIN_FREQUENCY } from "../../types/CheckinFrequency";
 
-interface Props {}
-
 interface ParamTypes {
   companyId: string;
 }
@@ -29,12 +27,6 @@ const RootDiv = styled.div`
   margin: 0 0%;
   padding-bottom: 30px;
   max-width: 750px;
-`;
-
-const ButtonDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 10px;
 `;
 
 const InputDiv = styled.div`
@@ -69,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
   description: { marginBottom: theme.spacing(6) },
   withLink: { display: "flex", justifyContent: "center" },
 }));
-const AddTeams = (props: Props) => {
+const AddTeams = () => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [leaderEmail, setLeaderEmail] = useState("");
@@ -134,9 +126,9 @@ const AddTeams = (props: Props) => {
           gutterBottom
           className={classes.description}
         >
-          When you save the first ritual, you'll receive an email with a unique
+          {`When you save the first ritual, you'll receive an email with a unique
           link to this page so that you can view and update these rituals. You
-          can share this link with your team.
+          can share this link with your team.`}
         </Typography>
         <Typography
           variant="body1"

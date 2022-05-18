@@ -41,7 +41,6 @@ interface ParamTypes {
   teamId: string;
 }
 
-interface Props {}
 const RootDiv = styled.div`
   width: 60vw;
 `;
@@ -127,7 +126,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Rituals = (_: Props) => {
+const Rituals = () => {
   const [helpModal, setHelpModal] = useState(false);
   const [deleteId, setDeleteId] = useState("");
   const [menuAnchors, setAnchors] = useState<{ [menuName: string]: any }>({});
@@ -358,6 +357,7 @@ const Rituals = (_: Props) => {
                 {[].map((teamMember) => {
                   return (
                     <Box
+                      key={teamMember}
                       style={{
                         display: "flex",
                         alignItems: "center",
