@@ -24,6 +24,7 @@ import RemoveTeamMemberModal from "../../components/modals/RemoveTeamMemberModal
 import RitualComponent from "../../components/Ritual";
 import Avator from "../../components/svg/Avator";
 import RemoveUser from "../../components/svg/RemoveUser";
+import { FeatureFlag } from "../../constants/featureFlags";
 import { Menus } from "../../constants/menus";
 import { Modals } from "../../constants/modals";
 import {
@@ -35,8 +36,6 @@ import { colors } from "../../styling/styles/colors";
 import theme from "../../styling/theme";
 import { Ritual } from "../../types/Ritual";
 
-const ADD_TEAM_MEMBER = "Add team member";
-
 interface ParamTypes {
   companyId: string;
   teamId: string;
@@ -44,7 +43,7 @@ interface ParamTypes {
 
 interface Props {}
 const RootDiv = styled.div`
-  max-width: 60vw;
+  width: 60vw;
 `;
 
 const ButtonDiv = styled.div`
@@ -128,7 +127,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Rituals = (props: Props) => {
+const Rituals = (_: Props) => {
   const [helpModal, setHelpModal] = useState(false);
   const [deleteId, setDeleteId] = useState("");
   const [menuAnchors, setAnchors] = useState<{ [menuName: string]: any }>({});
@@ -222,7 +221,7 @@ const Rituals = (props: Props) => {
   return (
     <RootDiv>
       <Grid container spacing={3}>
-        <Grid item xs={8}>
+        <Grid item xs={12}>
           <Card>
             <CardHeader
               style={{ padding: 0 }}
@@ -321,42 +320,42 @@ const Rituals = (props: Props) => {
             </Grid>
           </Card>
         </Grid>
-        <Grid item xs={4}>
-          <Card>
-            <CardHeader
-              style={{ padding: 0 }}
-              action={
-                <div>
-                  <IconButton
-                    onClick={(e) =>
-                      toggleContextMenuOpen(e, Menus.MEMBERS, true)
-                    }
-                  >
-                    <MoreVertIcon />
-                  </IconButton>
-                  <Menu
-                    id="simple-menu"
-                    anchorEl={menuAnchors[Menus.MEMBERS]}
-                    open={Boolean(menuAnchors[Menus.MEMBERS])}
-                    onClose={(e) =>
-                      toggleContextMenuOpen(e, Menus.MEMBERS, false)
-                    }
-                  >
-                    <MenuItem onClick={handleAddMemberClick}>
-                      {ADD_TEAM_MEMBER}
-                    </MenuItem>
-                  </Menu>
-                </div>
-              }
-              title={
-                <Typography variant="h2" gutterBottom>
-                  Members
-                </Typography>
-              }
-            />
-            <Box>
-              {["#E8B186", "#AF9AFF", "#D2FDE6", "#99D0FF"].map(
-                (teamMember) => {
+        {FeatureFlag.renderMembers && (
+          <Grid item xs={4}>
+            <Card>
+              <CardHeader
+                style={{ padding: 0 }}
+                action={
+                  <div>
+                    <IconButton
+                      onClick={(e) =>
+                        toggleContextMenuOpen(e, Menus.MEMBERS, true)
+                      }
+                    >
+                      <MoreVertIcon />
+                    </IconButton>
+                    <Menu
+                      id="simple-menu"
+                      anchorEl={menuAnchors[Menus.MEMBERS]}
+                      open={Boolean(menuAnchors[Menus.MEMBERS])}
+                      onClose={(e) =>
+                        toggleContextMenuOpen(e, Menus.MEMBERS, false)
+                      }
+                    >
+                      <MenuItem onClick={handleAddMemberClick}>
+                        {"Add team member"}
+                      </MenuItem>
+                    </Menu>
+                  </div>
+                }
+                title={
+                  <Typography variant="h2" gutterBottom>
+                    Members
+                  </Typography>
+                }
+              />
+              <Box>
+                {[].map((teamMember) => {
                   return (
                     <Box
                       style={{
@@ -387,11 +386,11 @@ const Rituals = (props: Props) => {
                       </IconButton>
                     </Box>
                   );
-                }
-              )}
-            </Box>
-          </Card>
-        </Grid>
+                })}
+              </Box>
+            </Card>
+          </Grid>
+        )}
       </Grid>
       <ModalComponent
         open={helpModal}
