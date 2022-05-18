@@ -2,7 +2,6 @@ import { IconButton, makeStyles, Menu, MenuItem } from "@material-ui/core";
 import CardHeader from "@material-ui/core/CardHeader";
 import Typography from "@material-ui/core/Typography";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import { useHistory } from "react-router-dom";
 import { colors } from "../styling/styles/colors";
 
 import appTheme from "../styling/theme";
@@ -12,12 +11,12 @@ import { Card } from "./Card";
 
 interface Props {
   ritual: Ritual;
-  companyId: string;
   showContextMenu: boolean;
   anchor?: any;
   onCloseMenu?: (e: any) => void;
-  onContextMenuClick?: (e: any) => void;
+  onContextMenuClick?: (e: any, ritual: Ritual) => void;
   onRemoveRitualClick?: (e: any) => void;
+  onEditRitualClick?: (e: any) => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -33,15 +32,15 @@ const useStyles = makeStyles((theme) => ({
 
 const RitualComponent: React.FC<Props> = ({
   ritual,
-  companyId,
   showContextMenu,
   onCloseMenu,
   onContextMenuClick,
   anchor,
   onRemoveRitualClick,
+  onEditRitualClick,
 }) => {
-  const history = useHistory();
   const classes = useStyles();
+
   return (
     <Card className={classes.container}>
       <CardHeader
@@ -50,7 +49,12 @@ const RitualComponent: React.FC<Props> = ({
         action={
           <>
             {showContextMenu && (
-              <IconButton aria-label="more" onClick={onContextMenuClick}>
+              <IconButton
+                aria-label="more"
+                onClick={(e) => {
+                  if (onContextMenuClick) onContextMenuClick(e, ritual);
+                }}
+              >
                 <MoreVertIcon />
               </IconButton>
             )}
@@ -60,22 +64,7 @@ const RitualComponent: React.FC<Props> = ({
               open={Boolean(anchor)}
               onClose={onCloseMenu}
             >
-              <MenuItem
-                onClick={() => {
-                  history.push({
-                    pathname: `/${companyId}/ritual/edit/${ritual.id}`,
-                    state: {
-                      id: ritual.id,
-                      action: ritual.action,
-                      trigger: ritual.trigger,
-                      checkinFrequency: ritual.checkinFrequency,
-                      teamId: ritual.teamId,
-                    },
-                  });
-                }}
-              >
-                Edit ritual
-              </MenuItem>
+              <MenuItem onClick={onEditRitualClick}>Edit ritual</MenuItem>
               <MenuItem onClick={onRemoveRitualClick}>Remove ritual</MenuItem>
             </Menu>
           </>

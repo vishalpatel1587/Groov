@@ -3,8 +3,7 @@ import BasicModal from "../BasicModal";
 import RitualComponent from "../RitualComponent";
 
 interface Props {
-  ritual: Ritual;
-  companyId: string;
+  ritual?: Ritual;
   open: boolean;
   onClose: () => void;
   handleDelete: () => void;
@@ -15,9 +14,8 @@ const DeleteRitualModal: React.FC<Props> = ({
   onClose,
   handleDelete,
   ritual,
-  companyId,
 }) => {
-  if (!open) return null;
+  if (!open || !ritual) return null;
 
   return (
     <BasicModal
@@ -31,11 +29,7 @@ const DeleteRitualModal: React.FC<Props> = ({
       primaryActionClick={handleDelete}
       secondaryActionClick={onClose}
     >
-      <RitualComponent
-        ritual={ritual}
-        showContextMenu={false}
-        companyId={companyId}
-      />
+      <RitualComponent ritual={ritual} showContextMenu={false} />
     </BasicModal>
   );
 };
