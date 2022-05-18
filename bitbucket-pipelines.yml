@@ -25,5 +25,4 @@ pipelines:
   pull-requests:
     '**':
       - step: *build_and_test
-      - step: *linting
 
