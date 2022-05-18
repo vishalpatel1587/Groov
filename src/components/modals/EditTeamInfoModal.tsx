@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
+import { useState } from "react";
 import BasicModal from "../BasicModal";
 import { Input } from "../TextInput";
 
@@ -8,8 +9,7 @@ interface Props {
   teamName: string;
   teamDescription: string;
   onClose: () => void;
-  onTeamNameChanged: (teamName: string) => void;
-  onTeamDescriptionChanged: (teamDescription: string) => void;
+  saveTeamInfo: (teamName: string, teamDescription: string) => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -23,11 +23,12 @@ const EditTeamInfoModal: React.FC<Props> = ({
   onClose,
   open,
   teamName,
-  onTeamNameChanged,
   teamDescription,
-  onTeamDescriptionChanged,
+  saveTeamInfo,
 }) => {
   const classes = useStyles();
+  const [newTeamName, setNewTeamName] = useState(teamName);
+  const [newTeamDescription, setNewTeamDescription] = useState(teamDescription);
 
   return (
     <BasicModal
@@ -38,6 +39,7 @@ const EditTeamInfoModal: React.FC<Props> = ({
       primaryActionTitle="Continue"
       secondaryActionTitle="Cancel"
       secondaryActionClick={onClose}
+      primaryActionClick={() => saveTeamInfo(newTeamName, newTeamDescription)}
     >
       <>
         <Typography variant="h5" className={classes.modalLabel}>
@@ -46,9 +48,9 @@ const EditTeamInfoModal: React.FC<Props> = ({
         <Input
           fullWidth={true}
           name="teamName"
-          value={teamName}
+          value={newTeamName}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            onTeamNameChanged(e.target.value)
+            setNewTeamName(e.target.value)
           }
         />
         <Typography variant="h5" className={classes.modalLabel}>
@@ -57,9 +59,9 @@ const EditTeamInfoModal: React.FC<Props> = ({
         <Input
           fullWidth={true}
           name="teamName"
-          value={teamDescription}
+          value={newTeamDescription}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            onTeamDescriptionChanged(e.target.value)
+            setNewTeamDescription(e.target.value)
           }
         />
       </>

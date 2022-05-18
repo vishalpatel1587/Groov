@@ -16,7 +16,7 @@ import {
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
-import { Button, Card, Link, Loader, ModalComponent } from "../../components";
+import { Button, Card, Loader, ModalComponent } from "../../components";
 import AddTeamMemberModal from "../../components/modals/AddTeamMemberModal";
 import DeleteRitualModal from "../../components/modals/DeleteRitualModal";
 import EditTeamInfoModal from "../../components/modals/EditTeamInfoModal";
@@ -26,7 +26,11 @@ import Avator from "../../components/svg/Avator";
 import RemoveUser from "../../components/svg/RemoveUser";
 import { Menus } from "../../constants/menus";
 import { Modals } from "../../constants/modals";
-import { deleteRitual, getRituals } from "../../store/actions/actions";
+import {
+  deleteRitual,
+  editTeam,
+  getRituals,
+} from "../../store/actions/actions";
 import { colors } from "../../styling/styles/colors";
 import theme from "../../styling/theme";
 import { Ritual } from "../../types/Ritual";
@@ -40,7 +44,7 @@ interface ParamTypes {
 
 interface Props {}
 const RootDiv = styled.div`
-  margin: 0 15%;
+  max-width: 60vw;
 `;
 
 const ButtonDiv = styled.div`
@@ -139,13 +143,22 @@ const Rituals = (props: Props) => {
   const { companyId, teamId } = useParams<ParamTypes>();
 
   const rituals = useSelector((state: RootStateOrAny) => state.rituals);
-  const [teamName, setTeamName] = useState(rituals?.data?.name);
-  const [teamDescription, setTeamDescription] = useState(
-    rituals?.data?.teamDescription
-  );
+  const [teamMemberToRemove, setTeamMemberToRemove] = useState("");
+
   useEffect(() => {
     dispatch(getRituals(teamId));
   }, []);
+
+  const saveTeamInfo = (teamName: string, teamDescription: string): void => {
+    dispatch(
+      editTeam(teamId, {
+        name: teamName,
+        teamDescription: teamDescription,
+      })
+    );
+
+    toggleModalOpen(Menus.TEAM_INFO, false);
+  };
 
   const handleDelete = () => {
     dispatch(deleteRitual(deleteId));
@@ -181,6 +194,7 @@ const Rituals = (props: Props) => {
   };
 
   const handleRemoveMemberClick = (teamMember: string) => {
+    setTeamMemberToRemove(teamMember);
     toggleModalOpen(Modals.REMOVE_MEMBER, true);
   };
 
@@ -247,34 +261,6 @@ const Rituals = (props: Props) => {
                 </>
               }
             />
-            <Typography
-              variant="body1"
-              gutterBottom
-              className={classes.description}
-            >
-              This is where you can record the rituals for your team. These can
-              be viewed by the rest of the organisation, inspiring them to
-              create ones of their own. Science also shows that recording and
-              sharing commitments will help to make them stick.
-            </Typography>
-            <Box className={classes.descriptionWithLink}>
-              <Link href={`/${companyId}/ideas`} className={classes.link}>
-                <Typography variant="body1" className={classes.link}>
-                  Click here
-                </Typography>
-              </Link>
-              <Typography
-                variant="body1"
-                style={{
-                  display: "inline-block",
-                  marginLeft: theme.spacing(1),
-                }}
-              >
-                to spark ideas about triggers and actions suitable for your
-                team.
-              </Typography>
-            </Box>
-
             <ButtonDiv>
               <Button
                 variant="contained"
@@ -417,7 +403,7 @@ const Rituals = (props: Props) => {
       />
 
       <DeleteRitualModal
-        ritual={rituals?.data?.rituals.find((r: Ritual) => r.id === deleteId)}
+        ritual={rituals?.data?.rituals?.find((r: Ritual) => r.id === deleteId)}
         companyId={companyId}
         open={openModals[Modals.DELETE_RITUAL]}
         onClose={() => toggleModalOpen(Modals.DELETE_RITUAL, false)}
@@ -431,14 +417,14 @@ const Rituals = (props: Props) => {
 
       <EditTeamInfoModal
         open={openModals[Menus.TEAM_INFO]}
-        teamName={teamName}
-        onTeamNameChanged={setTeamName}
-        teamDescription={teamDescription}
-        onTeamDescriptionChanged={setTeamDescription}
+        teamName={rituals?.data?.name}
+        teamDescription={rituals?.data?.teamDescription}
         onClose={() => toggleModalOpen(Menus.TEAM_INFO, false)}
+        saveTeamInfo={saveTeamInfo}
       />
 
       <RemoveTeamMemberModal
+        teamMemberEmailAddress={teamMemberToRemove}
         open={openModals[Modals.REMOVE_MEMBER]}
         onClose={() => toggleModalOpen(Modals.REMOVE_MEMBER, false)}
       />

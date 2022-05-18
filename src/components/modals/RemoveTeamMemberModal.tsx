@@ -5,6 +5,7 @@ import BasicModal from "../BasicModal";
 interface Props {
   open: boolean;
   onClose: () => void;
+  teamMemberEmailAddress: string;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -14,7 +15,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RemoveTeamMemberModal: React.FC<Props> = ({ open, onClose }) => {
+const RemoveTeamMemberModal: React.FC<Props> = ({
+  open,
+  onClose,
+  teamMemberEmailAddress,
+}) => {
   const classes = useStyles();
 
   return (
@@ -29,8 +34,7 @@ const RemoveTeamMemberModal: React.FC<Props> = ({ open, onClose }) => {
       secondaryActionClick={onClose}
     >
       <Typography variant="h5" className={classes.modalLabel}>
-        dean.kaila@icloud.com
-        {/*todo: remove*/}
+        {teamMemberEmailAddress}
       </Typography>
     </BasicModal>
   );
