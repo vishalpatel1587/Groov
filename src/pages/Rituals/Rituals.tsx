@@ -128,7 +128,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Rituals = () => {
   const [helpModal, setHelpModal] = useState(false);
-  const [deleteId, setDeleteId] = useState("");
   const [menuAnchors, setAnchors] = useState<{ [menuName: string]: any }>({});
   const [openModals, setOpenModals] = useState<{
     [modalName: string]: boolean;
@@ -142,6 +141,7 @@ const Rituals = () => {
 
   const rituals = useSelector((state: RootStateOrAny) => state.rituals);
   const [teamMemberToRemove, setTeamMemberToRemove] = useState("");
+  const [contextRitual, setContextRitual] = useState<Ritual>();
 
   useEffect(() => {
     dispatch(getRituals(teamId));
@@ -158,8 +158,22 @@ const Rituals = () => {
     toggleModalOpen(Menus.TEAM_INFO, false);
   };
 
+  const onEditRitualClick = () => {
+    if (!contextRitual) return;
+    history.push({
+      pathname: `/${companyId}/ritual/edit/${contextRitual.id}`,
+      state: {
+        id: contextRitual.id,
+        action: contextRitual.action,
+        trigger: contextRitual.trigger,
+        checkinFrequency: contextRitual.checkinFrequency,
+        teamId: contextRitual.teamId,
+      },
+    });
+  };
+
   const handleDelete = () => {
-    dispatch(deleteRitual(deleteId));
+    dispatch(deleteRitual(contextRitual?.id));
     toggleModalOpen(Modals.DELETE_RITUAL, false);
   };
 
@@ -201,15 +215,15 @@ const Rituals = () => {
       <Grid item xs={6} key={"rt" + index}>
         <RitualComponent
           ritual={ritual}
-          companyId={companyId}
           anchor={menuAnchors[Menus.RITUALS]}
           showContextMenu
           onCloseMenu={(e) => toggleContextMenuOpen(e, Menus.RITUALS, false)}
-          onContextMenuClick={(e) =>
-            toggleContextMenuOpen(e, Menus.RITUALS, true)
-          }
+          onContextMenuClick={(e, ritual) => {
+            toggleContextMenuOpen(e, Menus.RITUALS, true);
+            setContextRitual(ritual);
+          }}
+          onEditRitualClick={onEditRitualClick}
           onRemoveRitualClick={(e) => {
-            setDeleteId(ritual.id);
             toggleContextMenuOpen(e, Menus.RITUALS, false);
             toggleModalOpen(Modals.DELETE_RITUAL, true);
           }}
@@ -402,20 +416,19 @@ const Rituals = () => {
       />
 
       <DeleteRitualModal
-        ritual={rituals?.data?.rituals?.find((r: Ritual) => r.id === deleteId)}
-        companyId={companyId}
-        open={openModals[Modals.DELETE_RITUAL]}
+        ritual={contextRitual}
+        open={Boolean(openModals[Modals.DELETE_RITUAL])}
         onClose={() => toggleModalOpen(Modals.DELETE_RITUAL, false)}
         handleDelete={handleDelete}
       />
 
       <AddTeamMemberModal
-        open={openModals[Menus.MEMBERS]}
+        open={Boolean(openModals[Menus.MEMBERS])}
         onClose={() => toggleModalOpen(Modals.MEMBERS, false)}
       />
 
       <EditTeamInfoModal
-        open={openModals[Menus.TEAM_INFO]}
+        open={Boolean(openModals[Menus.TEAM_INFO])}
         teamName={rituals?.data?.name}
         teamDescription={rituals?.data?.teamDescription}
         onClose={() => toggleModalOpen(Menus.TEAM_INFO, false)}
@@ -424,7 +437,7 @@ const Rituals = () => {
 
       <RemoveTeamMemberModal
         teamMemberEmailAddress={teamMemberToRemove}
-        open={openModals[Modals.REMOVE_MEMBER]}
+        open={Boolean(openModals[Modals.REMOVE_MEMBER])}
         onClose={() => toggleModalOpen(Modals.REMOVE_MEMBER, false)}
       />
     </RootDiv>
