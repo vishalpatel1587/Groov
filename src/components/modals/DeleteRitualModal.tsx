@@ -15,7 +15,7 @@ const DeleteRitualModal: React.FC<Props> = ({
   handleDelete,
   ritual,
 }) => {
-  if (!(open && ritual)) return null;
+  if (!open || !ritual) return null;
 
   return (
     <BasicModal
