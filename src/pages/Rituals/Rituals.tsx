@@ -21,8 +21,8 @@ import AddTeamMemberModal from "../../components/modals/AddTeamMemberModal";
 import DeleteRitualModal from "../../components/modals/DeleteRitualModal";
 import EditTeamInfoModal from "../../components/modals/EditTeamInfoModal";
 import RemoveTeamMemberModal from "../../components/modals/RemoveTeamMemberModal";
-import RitualComponent from "../../components/Ritual";
-import Avator from "../../components/svg/Avator";
+import RitualComponent from "../../components/RitualComponent";
+import Avatar from "../../components/svg/Avatar";
 import RemoveUser from "../../components/svg/RemoveUser";
 import { FeatureFlag } from "../../constants/featureFlags";
 import { Menus } from "../../constants/menus";
@@ -33,7 +33,7 @@ import {
   getRituals,
 } from "../../store/actions/actions";
 import { colors } from "../../styling/styles/colors";
-import theme from "../../styling/theme";
+import appTheme from "../../styling/theme";
 import { Ritual } from "../../types/Ritual";
 
 interface ParamTypes {
@@ -361,15 +361,15 @@ const Rituals = (_: Props) => {
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        marginBottom: theme.spacing(3),
+                        marginBottom: appTheme.spacing(3),
                       }}
                       onMouseOver={() => setMemberHover(teamMember)}
                       onMouseOut={() => setMemberHover(null)}
                     >
-                      <Avator color={teamMember} />
+                      <Avatar color={teamMember} />
                       <Typography
                         variant="body1"
-                        style={{ marginLeft: theme.spacing(4) }}
+                        style={{ marginLeft: appTheme.spacing(4) }}
                       >
                         {teamMember}
                       </Typography>

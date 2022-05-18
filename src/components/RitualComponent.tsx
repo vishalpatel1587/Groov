@@ -5,7 +5,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { useHistory } from "react-router-dom";
 import { colors } from "../styling/styles/colors";
 
-import theme from "../styling/theme";
+import appTheme from "../styling/theme";
 import { Ritual } from "../types/Ritual";
 import { formatDate } from "../utils/dateUtils";
 import { Card } from "./Card";
@@ -82,13 +82,19 @@ const RitualComponent: React.FC<Props> = ({
         }
       />
 
-      <Typography variant="body1" style={{ marginTop: theme.spacing(3) }}>
+      <Typography variant="body1" style={{ marginTop: appTheme.spacing(3) }}>
         {ritual.action}
       </Typography>
-      <Typography variant="subtitle1" style={{ marginTop: theme.spacing(6) }}>
+      <Typography
+        variant="subtitle1"
+        style={{ marginTop: appTheme.spacing(6) }}
+      >
         Checkin frequency: {ritual.checkinFrequency}
       </Typography>
-      <Typography variant="subtitle1" style={{ marginTop: theme.spacing(2) }}>
+      <Typography
+        variant="subtitle1"
+        style={{ marginTop: appTheme.spacing(2) }}
+      >
         Last updated: {formatDate(ritual.lastUpdateTime)}
       </Typography>
     </Card>

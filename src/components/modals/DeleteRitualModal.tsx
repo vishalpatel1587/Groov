@@ -1,6 +1,6 @@
 import { Ritual } from "../../types/Ritual";
 import BasicModal from "../BasicModal";
-import RitualComponent from "../Ritual";
+import RitualComponent from "../RitualComponent";
 
 interface Props {
   ritual: Ritual;

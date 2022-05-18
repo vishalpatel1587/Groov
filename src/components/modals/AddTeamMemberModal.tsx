@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Typography from "@material-ui/core/Typography";
-import theme from "../../styling/theme";
+import appTheme from "../../styling/theme";
 import BasicModal from "../BasicModal";
 import Person from "../svg/Person";
 import { Input } from "../TextInput";
@@ -32,27 +32,25 @@ const AddTeamMemberModal: React.FC<Props> = ({ open, onClose }) => {
       secondaryActionTitle="Cancel"
       secondaryActionClick={onClose}
     >
-      <>
-        <Input
-          fullWidth={true}
-          name="triggers"
-          type="email"
-          value={""}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => console.log(e)}
-          style={{ marginTop: theme.spacing(6) }}
-          placeholder="Email address"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Person />
-              </InputAdornment>
-            ),
-          }}
-        />
-        <Typography variant="subtitle1" className={classes.modalLabel}>
-          Use comma to seperate multiple email addresses
-        </Typography>
-      </>
+      <Input
+        fullWidth={true}
+        name="triggers"
+        type="email"
+        value={""}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => console.log(e)}
+        style={{ marginTop: appTheme.spacing(6) }}
+        placeholder="Email address"
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Person />
+            </InputAdornment>
+          ),
+        }}
+      />
+      <Typography variant="subtitle1" className={classes.modalLabel}>
+        Use comma to seperate multiple email addresses
+      </Typography>
     </BasicModal>
   );
 };

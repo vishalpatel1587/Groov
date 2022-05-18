@@ -41,30 +41,28 @@ const EditTeamInfoModal: React.FC<Props> = ({
       secondaryActionClick={onClose}
       primaryActionClick={() => saveTeamInfo(newTeamName, newTeamDescription)}
     >
-      <>
-        <Typography variant="h5" className={classes.modalLabel}>
-          Team name
-        </Typography>
-        <Input
-          fullWidth={true}
-          name="teamName"
-          value={newTeamName}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setNewTeamName(e.target.value)
-          }
-        />
-        <Typography variant="h5" className={classes.modalLabel}>
-          Description
-        </Typography>
-        <Input
-          fullWidth={true}
-          name="teamName"
-          value={newTeamDescription}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setNewTeamDescription(e.target.value)
-          }
-        />
-      </>
+      <Typography variant="h5" className={classes.modalLabel}>
+        Team name
+      </Typography>
+      <Input
+        fullWidth={true}
+        name="teamName"
+        value={newTeamName}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setNewTeamName(e.target.value)
+        }
+      />
+      <Typography variant="h5" className={classes.modalLabel}>
+        Description
+      </Typography>
+      <Input
+        fullWidth={true}
+        name="teamName"
+        value={newTeamDescription}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setNewTeamDescription(e.target.value)
+        }
+      />
     </BasicModal>
   );
 };

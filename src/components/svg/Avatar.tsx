@@ -1,4 +1,4 @@
-const Avator = ({ color }: any) => {
+const Avatar = ({ color }: any) => {
   return (
     <svg
       width="48"
@@ -19,4 +19,4 @@ const Avator = ({ color }: any) => {
   );
 };
 
-export default Avator;
+export default Avatar;

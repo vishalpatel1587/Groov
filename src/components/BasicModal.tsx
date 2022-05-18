@@ -17,7 +17,7 @@ interface Props {
   secondaryActionTitle: string;
   primaryActionClick?: VoidFunction;
   secondaryActionClick?: VoidFunction;
-  children: React.ReactElement;
+  children: JSX.Element | JSX.Element[];
 }
 
 const useStyles = (style: string, size: string) =>
