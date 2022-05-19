@@ -67,7 +67,7 @@ let theme = createTheme({
       fontFamily: getFontFamily(),
       fontSize: 16,
       fontWeight: 600,
-      lineHeight: "30px",
+      lineHeight: "24px",
     },
     h6: {
       fontFamily: getFontFamily(),
