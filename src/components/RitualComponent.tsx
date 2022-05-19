@@ -6,6 +6,7 @@ import { colors } from "../styling/styles/colors";
 
 import appTheme from "../styling/theme";
 import { Ritual } from "../types/Ritual";
+import { getCheckinFrequencylabel } from "../utils/commonUtils";
 import { formatDate } from "../utils/dateUtils";
 import { Card } from "./Card";
 
@@ -27,6 +28,13 @@ const useStyles = makeStyles((theme) => ({
   },
   cardHeader: {
     padding: 0,
+  },
+  menu: {
+    color: "black",
+  },
+  lastUpdated: {
+    marginTop: appTheme.spacing(2),
+    color: colors.grey[60],
   },
 }));
 
@@ -55,7 +63,7 @@ const RitualComponent: React.FC<Props> = ({
                   if (onContextMenuClick) onContextMenuClick(e, ritual);
                 }}
               >
-                <MoreVertIcon />
+                <MoreVertIcon className={classes.menu} />
               </IconButton>
             )}
 
@@ -70,7 +78,6 @@ const RitualComponent: React.FC<Props> = ({
           </>
         }
       />
-
       <Typography variant="body1" style={{ marginTop: appTheme.spacing(3) }}>
         {ritual.action}
       </Typography>
@@ -78,13 +85,10 @@ const RitualComponent: React.FC<Props> = ({
         variant="subtitle1"
         style={{ marginTop: appTheme.spacing(6) }}
       >
-        Checkin frequency: {ritual.checkinFrequency}
+        {getCheckinFrequencylabel(ritual)}
       </Typography>
-      <Typography
-        variant="subtitle1"
-        style={{ marginTop: appTheme.spacing(2) }}
-      >
-        Last updated: {formatDate(ritual.lastUpdateTime)}
+      <Typography variant="subtitle1" className={classes.lastUpdated}>
+        Last updated {formatDate(ritual.lastUpdateTime)}
       </Typography>
     </Card>
   );
