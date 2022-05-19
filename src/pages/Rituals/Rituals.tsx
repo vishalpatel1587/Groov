@@ -297,11 +297,6 @@ const Rituals = () => {
               </Button>
             </ButtonDiv>
 
-            <Grid
-              container
-              direction="row"
-              className={classes.cardHeader}
-            ></Grid>
             <Grid container spacing={2}>
               {rituals.data &&
               rituals.data.rituals &&
