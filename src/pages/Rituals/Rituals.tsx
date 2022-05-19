@@ -253,7 +253,7 @@ const Rituals = () => {
                     anchorEl={menuAnchors[Menus.TEAM_INFO]}
                     open={Boolean(menuAnchors[Menus.TEAM_INFO])}
                     onClose={(e) =>
-                      toggleContextMenuOpen(e, Menus.TEAM_INFO, true)
+                      toggleContextMenuOpen(e, Menus.TEAM_INFO, false)
                     }
                   >
                     <MenuItem onClick={handleEditTeamInfoClick}>
@@ -297,11 +297,11 @@ const Rituals = () => {
               </Button>
             </ButtonDiv>
 
-            <Grid container direction="row" className={classes.cardHeader}>
-              <Typography variant="h2" gutterBottom>
-                Commited rituals
-              </Typography>
-            </Grid>
+            <Grid
+              container
+              direction="row"
+              className={classes.cardHeader}
+            ></Grid>
             <Grid container spacing={2}>
               {rituals.data &&
               rituals.data.rituals &&
