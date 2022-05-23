@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -66,7 +66,7 @@ const AddRitualModal: React.FC<Props> = ({
 }) => {
   if (!open) return null;
   const ritualsRoot = useSelector((state: RootStateOrAny) => state.rituals);
-  const ritual = ritualsRoot?.data?.rituals.find(
+  const ritual = ritualsRoot?.data?.rituals?.find(
     (r: Ritual) => r.id === ritualId
   );
   const editMode = !!ritualId;
@@ -82,6 +82,13 @@ const AddRitualModal: React.FC<Props> = ({
   const title = editMode ? "Edit ritual" : "Create new ritual";
   const primaryActionTitle = editMode ? "Commit" : "Create";
 
+  useEffect(() => {
+    if (ritual) {
+      setTrigger(ritual?.trigger);
+      setAction(ritual?.action);
+      setCheckinFrequency(ritual?.checkinFrequency);
+    }
+  }, [ritual?.trigger, ritual?.action, ritual?.checkinFrequency]);
   const handleRitualSave = (): void => {
     const data = {
       action,
