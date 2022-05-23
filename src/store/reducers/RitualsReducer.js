@@ -72,8 +72,17 @@ const RitualsReducer = (state = initialState, action) => {
       };
 
     case UPDATE_RITUAL_SUCCESS:
+      const unchangedRituals = (state.data.rituals || []).filter(
+        (r) => r.id !== action.payload.ritual.id
+      );
+      const newRitualsStore = [...unchangedRituals, action.payload.ritual];
+
       return {
         ...state,
+        data: {
+          ...state.data,
+          rituals: newRitualsStore,
+        },
         loading: false,
       };
 
