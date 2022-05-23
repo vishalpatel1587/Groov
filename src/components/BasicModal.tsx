@@ -6,6 +6,7 @@ import CloseIcon from "@material-ui/icons/Close";
 
 import { colors } from "../styling/styles/colors";
 import { Button } from "./Button";
+import { Loader } from "./Loader";
 
 interface Props {
   title: string;
@@ -18,6 +19,7 @@ interface Props {
   primaryActionClick?: VoidFunction;
   secondaryActionClick?: VoidFunction;
   children: JSX.Element | JSX.Element[];
+  primaryActionLoading?: boolean;
 }
 
 const useStyles = (style: string, size: string) =>
@@ -54,6 +56,7 @@ const useStyles = (style: string, size: string) =>
       position: "absolute",
       top: theme.spacing(4),
       right: theme.spacing(4),
+      color: colors.grey[60],
     },
   }));
 
@@ -68,6 +71,7 @@ const BasicModal = ({
   onClose,
   modalStyle: style = "blue",
   modalSize: size,
+  primaryActionLoading,
 }: Props) => {
   const classes = useStyles(style, size)();
   return (
@@ -94,7 +98,7 @@ const BasicModal = ({
             onClick={primaryActionClick}
             className={classes.primaryAction}
           >
-            {primaryActionTitle}
+            {primaryActionLoading ? <Loader /> : primaryActionTitle}
           </Button>
         </Box>
       </Box>

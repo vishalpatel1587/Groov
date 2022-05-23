@@ -15,6 +15,7 @@ export const colors = {
   redWarn: "#ff7d78",
   snow: "#fbfbfd",
   black: "#000000",
+  silverSand: "#BDC1C5",
   whisperWhiteDark: "#f6f6f6",
   grey: {
     5: "#f8fcff",
