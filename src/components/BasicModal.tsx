@@ -50,7 +50,7 @@ const useStyles = (style: string, size: string) =>
       color: style === "red" ? colors.groovRed[110] : colors.white,
     },
     secondaryAction: {
-      color: style === "red" ? colors.grey[60] : colors.groovBlue[100],
+      color: colors.grey[60],
     },
     closeButton: {
       position: "absolute",
@@ -97,6 +97,7 @@ const BasicModal = ({
           <Button
             onClick={primaryActionClick}
             className={classes.primaryAction}
+            variant="contained"
           >
             {primaryActionLoading ? <Loader /> : primaryActionTitle}
           </Button>

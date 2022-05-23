@@ -2,7 +2,12 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputBase from "@material-ui/core/InputBase";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { createStyles, withStyles, Theme } from "@material-ui/core/styles";
+import {
+  createStyles,
+  withStyles,
+  Theme,
+  makeStyles,
+} from "@material-ui/core/styles";
 import { colors } from "../styling/styles/colors";
 
 interface Props {
@@ -48,7 +53,6 @@ const CustomSelect = withStyles((theme: Theme) =>
 export const SelectMenu = (props: Props) => {
   return (
     <CustomSelect
-      // autoWidth={true}
       value={props.value}
       onChange={props.onChange}
       input={<Input />}
@@ -63,7 +67,14 @@ export const SelectMenu = (props: Props) => {
   );
 };
 
+const useStyles = makeStyles((theme: Theme) => ({
+  select: {
+    borderRadius: theme.spacing(3),
+  },
+}));
+
 export const FullSelectMenu = (props: Props) => {
+  const classes = useStyles();
   return (
     <Select
       fullWidth
@@ -71,6 +82,7 @@ export const FullSelectMenu = (props: Props) => {
       onChange={props.onChange}
       IconComponent={ExpandMoreIcon}
       variant="outlined"
+      className={classes.select}
     >
       {props.items.map(({ label, value }: any, index: number) => (
         <MenuItem value={value} key={"menu" + index}>
