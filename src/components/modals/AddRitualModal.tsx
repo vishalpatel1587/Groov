@@ -101,8 +101,6 @@ const AddRitualModal: React.FC<Props> = ({
       };
       dispatch(createRitual(createData));
     }
-
-    // find a way to reload data
   };
 
   return (
