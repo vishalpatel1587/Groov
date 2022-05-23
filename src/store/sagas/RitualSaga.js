@@ -14,7 +14,6 @@ import {
   DeleteRitualApi,
   GetRitualsApi,
   UpdateRitualApi,
-  GetRitualByIdApi,
 } from "../../services/api";
 import history from "../../utils/history";
 import { ToasterUtils } from "../../components/Toaster/ToasterUtils";

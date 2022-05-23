@@ -330,9 +330,15 @@ These can be viewed by the rest of the organisation, inspiring them to create on
               rituals.data.rituals &&
               rituals.data.rituals.length > 0 ? (
                 <Grid container spacing={10}>
-                  {rituals?.data?.rituals.map((ritual: any, index: number) => {
-                    return renderListItem(ritual, index);
-                  })}
+                  {rituals?.data?.rituals
+                    .sort(
+                      (a: Ritual, b: Ritual) =>
+                        new Date(b.lastUpdateTime).getTime() -
+                        new Date(a.lastUpdateTime).getTime()
+                    )
+                    .map((ritual: any, index: number) => {
+                      return renderListItem(ritual, index);
+                    })}
                 </Grid>
               ) : (
                 <>
