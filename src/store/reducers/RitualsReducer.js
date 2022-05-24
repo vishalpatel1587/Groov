@@ -52,8 +52,13 @@ const RitualsReducer = (state = initialState, action) => {
       };
 
     case CREATE_RITUAL_SUCCESS:
+      const rituals = (state.data.rituals || []).concat(action.payload.ritual);
       return {
         ...state,
+        data: {
+          ...state.data,
+          rituals,
+        },
         loading: false,
       };
 
