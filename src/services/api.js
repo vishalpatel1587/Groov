@@ -56,6 +56,16 @@ export const EditTeamApi = async ({ teamId, data }) => {
   return result;
 };
 
+export const GetTeamMembersApi = async (teamId) => {
+  const config = {
+    url: `/team/${teamId}/members`,
+    method: "GET",
+  };
+
+  const result = await ApiRequest(config);
+  return result;
+};
+
 export const GetRitualsApi = async (teamId) => {
   const config = {
     url: `/team/${teamId}`,

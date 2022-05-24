@@ -4,17 +4,19 @@ import {
   GET_TEAMS_BY_COMPANY_ID_FAILURE,
   CREATE_TEAM_SUCCESS,
   CREATE_TEAM_FAILURE,
-  CREATE_RITUAL_BEGIN,
   GET_COMPANY_RITUAL_BY_COMPANY_ID_FAILURE,
   GET_COMPANY_RITUAL_BY_COMPANY_ID_SUCCESS,
   EDIT_TEAM_SUCCESS,
   EDIT_TEAM_FAILURE,
+  GET_TEAM_MEMBERS_SUCCESS,
+  GET_TEAM_MEMBERS_FAILURE,
 } from "../actions/actions";
 import {
   TeamsByCompanyIdApi,
   CreateTeamApi,
   CompanyRitualByCompanyIdApi,
   EditTeamApi,
+  GetTeamMembersApi,
 } from "../../services/api";
 import { ToasterUtils } from "../../components/Toaster/ToasterUtils";
 import history from "../../utils/history";
@@ -95,6 +97,26 @@ export function* EditTeam(action) {
     ToasterUtils.error(error.response?.data.message);
     yield put({
       type: EDIT_TEAM_FAILURE,
+      payload: error.response?.data,
+    });
+  }
+}
+
+export function* GetTeamMembers(action) {
+  try {
+    const response = yield call(GetTeamMembersApi, action.payload);
+    if (response) {
+      yield put({
+        type: GET_TEAM_MEMBERS_SUCCESS,
+        payload: response.data,
+      });
+    } else {
+      throw response;
+    }
+  } catch (error) {
+    ToasterUtils.error(error.response?.data.message);
+    yield put({
+      type: GET_TEAM_MEMBERS_FAILURE,
       payload: error.response?.data,
     });
   }

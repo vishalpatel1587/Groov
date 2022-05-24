@@ -15,6 +15,9 @@ import {
   EDIT_TEAM_BEGIN,
   EDIT_TEAM_SUCCESS,
   EDIT_TEAM_FAILURE,
+  GET_TEAM_MEMBERS_BEGIN,
+  GET_TEAM_MEMBERS_SUCCESS,
+  GET_TEAM_MEMBERS_FAILURE,
 } from "../actions/actions";
 
 const initialState = {
@@ -33,7 +36,7 @@ const RitualsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        data: { ...action.payload, loading: false }, //...action.payload,
+        data: { ...state.data, ...action.payload, loading: false },
       };
 
     case GET_RITUALS_FAILURE:
@@ -139,6 +142,25 @@ const RitualsReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       };
+
+    case GET_TEAM_MEMBERS_BEGIN:
+      return { ...state, loading: true };
+    case GET_TEAM_MEMBERS_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          ...action.payload,
+        },
+        loading: false,
+      };
+    case GET_TEAM_MEMBERS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
     default:
       return state;
   }

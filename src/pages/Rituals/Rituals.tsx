@@ -32,6 +32,7 @@ import {
   deleteRitual,
   editTeam,
   getRituals,
+  getTeamMembers,
 } from "../../store/actions/actions";
 import { colors } from "../../styling/styles/colors";
 import appTheme from "../../styling/theme";
@@ -154,10 +155,10 @@ const Rituals = (props: any): JSX.Element => {
   const rituals = useSelector((state: RootStateOrAny) => state.rituals);
   const [teamMemberToRemove, setTeamMemberToRemove] = useState("");
   const [selectedRitualId, setSelectedRitualId] = useState(ritualId);
-  const [teamMembers, setTeamMembers] = useState([]); //todo retrieve team members
 
   useEffect(() => {
     dispatch(getRituals(teamId));
+    dispatch(getTeamMembers(teamId));
   }, []);
 
   const saveTeamInfo = (teamName: string, teamDescription: string): void => {
@@ -182,7 +183,7 @@ const Rituals = (props: any): JSX.Element => {
     toggleModalOpen(Modals.DELETE_RITUAL, false);
   };
 
-  const handleAddTeamMember = (emailAddresses: string[]) => {
+  const handleAddTeamMembers = (emailAddresses: string[]) => {
     //todo save team members
     console.log(
       "🚀 ~ file: Rituals.tsx ~ line 186 ~ handleAddTeamMember ~ email",
@@ -407,39 +408,46 @@ These can be viewed by the rest of the organisation, inspiring them to create on
                 }
               />
               <Box>
-                {teamMembers.map((teamMember) => {
-                  return (
-                    <Box
-                      key={teamMember}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        marginBottom: appTheme.spacing(3),
-                      }}
-                      onMouseOver={() => setMemberHover(teamMember)}
-                      onMouseOut={() => setMemberHover(null)}
-                    >
-                      <Avatar color={teamMember} />
-                      <Typography
-                        variant="body1"
-                        style={{ marginLeft: appTheme.spacing(4) }}
-                      >
-                        {teamMember}
-                      </Typography>
-                      <IconButton
-                        onClick={() => handleRemoveMemberClick(teamMember)}
-                        style={{
-                          marginLeft: "auto",
-                          padding: 0,
-                          visibility:
-                            memberHover === teamMember ? "visible" : "hidden",
-                        }}
-                      >
-                        <RemoveUser />
-                      </IconButton>
-                    </Box>
-                  );
-                })}
+                {rituals?.data?.teamMembers &&
+                  rituals?.data?.teamMembers
+                    .map((teamMember: any) => teamMember.emailAddress)
+                    .map((emailAddress: string) => {
+                      return (
+                        <Box
+                          key={emailAddress}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            marginBottom: appTheme.spacing(3),
+                          }}
+                          onMouseOver={() => setMemberHover(emailAddress)}
+                          onMouseOut={() => setMemberHover(null)}
+                        >
+                          <Avatar color={emailAddress} />
+                          <Typography
+                            variant="body1"
+                            style={{ marginLeft: appTheme.spacing(4) }}
+                          >
+                            {emailAddress}
+                          </Typography>
+                          <IconButton
+                            onClick={() =>
+                              handleRemoveMemberClick(emailAddress)
+                            }
+                            style={{
+                              marginLeft: "auto",
+                              padding: 0,
+                              visibility:
+                                memberHover === emailAddress
+                                  ? "visible"
+                                  : "hidden",
+                            }}
+                          >
+                            <RemoveUser />
+                          </IconButton>
+                        </Box>
+                      );
+                    })}
               </Box>
             </Card>
           </Grid>
@@ -464,7 +472,7 @@ These can be viewed by the rest of the organisation, inspiring them to create on
       <AddTeamMemberModal
         open={Boolean(openModals[Menus.MEMBERS])}
         onClose={() => toggleModalOpen(Modals.MEMBERS, false)}
-        handleAddTeamMember={handleAddTeamMember}
+        handleAddTeamMember={handleAddTeamMembers}
       />
 
       <EditTeamInfoModal
