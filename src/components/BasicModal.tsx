@@ -24,6 +24,9 @@ interface Props {
 
 const useStyles = (style: string, size: string) =>
   makeStyles((theme) => ({
+    modal: {
+      overflow: "scroll",
+    },
     container: {
       backgroundColor: theme.palette.background.paper,
       width: getModalWidth(size),
@@ -75,7 +78,7 @@ const BasicModal = ({
 }: Props) => {
   const classes = useStyles(style, size)();
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} className={classes.modal}>
       <Box className={classes.container}>
         <Typography variant="h3">{title}</Typography>
         <IconButton
