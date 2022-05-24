@@ -26,6 +26,8 @@ const EditTeamInfoModal: React.FC<Props> = ({
   teamDescription,
   saveTeamInfo,
 }) => {
+  if (!open) return null;
+
   const classes = useStyles();
   const [newTeamName, setNewTeamName] = useState(teamName);
   const [newTeamDescription, setNewTeamDescription] = useState(teamDescription);
