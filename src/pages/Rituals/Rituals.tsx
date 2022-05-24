@@ -154,6 +154,7 @@ const Rituals = (props: any): JSX.Element => {
   const rituals = useSelector((state: RootStateOrAny) => state.rituals);
   const [teamMemberToRemove, setTeamMemberToRemove] = useState("");
   const [selectedRitualId, setSelectedRitualId] = useState(ritualId);
+  const [teamMembers, setTeamMembers] = useState([]); //todo retrieve team members
 
   useEffect(() => {
     dispatch(getRituals(teamId));
@@ -179,6 +180,14 @@ const Rituals = (props: any): JSX.Element => {
   const handleDelete = () => {
     dispatch(deleteRitual(selectedRitualId));
     toggleModalOpen(Modals.DELETE_RITUAL, false);
+  };
+
+  const handleAddTeamMember = (emailAddresses: string[]) => {
+    //todo save team members
+    console.log(
+      "🚀 ~ file: Rituals.tsx ~ line 186 ~ handleAddTeamMember ~ email",
+      emailAddresses
+    );
   };
 
   const toggleContextMenuOpen = (
@@ -247,10 +256,11 @@ const Rituals = (props: any): JSX.Element => {
       </Grid>
     );
   };
+
   return (
     <RootDiv>
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid item xs={8}>
           <Card>
             <CardHeader
               style={{ padding: 0 }}
@@ -397,7 +407,7 @@ These can be viewed by the rest of the organisation, inspiring them to create on
                 }
               />
               <Box>
-                {[].map((teamMember) => {
+                {teamMembers.map((teamMember) => {
                   return (
                     <Box
                       key={teamMember}
@@ -454,6 +464,7 @@ These can be viewed by the rest of the organisation, inspiring them to create on
       <AddTeamMemberModal
         open={Boolean(openModals[Menus.MEMBERS])}
         onClose={() => toggleModalOpen(Modals.MEMBERS, false)}
+        handleAddTeamMember={handleAddTeamMember}
       />
 
       <EditTeamInfoModal
