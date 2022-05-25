@@ -29,6 +29,7 @@ import { FeatureFlag } from "../../constants/featureFlags";
 import { Menus } from "../../constants/menus";
 import { Modals } from "../../constants/modals";
 import {
+  createTeamMember,
   deleteRitual,
   deleteTeamMember,
   editTeam,
@@ -187,11 +188,13 @@ const Rituals = (props: any): JSX.Element => {
   };
 
   const handleAddTeamMembers = (emailAddresses: string[]) => {
-    //todo save team members
-    console.log(
-      "🚀 ~ file: Rituals.tsx ~ line 186 ~ handleAddTeamMember ~ email",
-      emailAddresses
-    );
+    const newTeamMembers = emailAddresses.map((e) => {
+      return {
+        emailAddress: e,
+      };
+    });
+
+    dispatch(createTeamMember(teamId, { teamMembers: newTeamMembers }));
   };
 
   const handleRemoveTeamMember = (memberId: string) => {

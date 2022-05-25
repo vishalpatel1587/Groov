@@ -21,6 +21,9 @@ import {
   DELETE_TEAM_MEMBER_BEGIN,
   DELETE_TEAM_MEMBER_SUCCESS,
   DELETE_TEAM_MEMBER_FAILURE,
+  CREATE_TEAM_MEMBER_BEGIN,
+  CREATE_TEAM_MEMBER_SUCCESS,
+  CREATE_TEAM_MEMBER_FAILURE,
 } from "../actions/actions";
 
 const initialState = {
@@ -179,6 +182,26 @@ const RitualsReducer = (state = initialState, action) => {
         loading: false,
       };
     case DELETE_TEAM_MEMBER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case CREATE_TEAM_MEMBER_BEGIN:
+      return { ...state, loading: true };
+    case CREATE_TEAM_MEMBER_SUCCESS:
+      const members = state.data.teamMembers.concat(action.payload.teamMembers);
+
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          teamMembers: members,
+        },
+        loading: false,
+      };
+    case CREATE_TEAM_MEMBER_FAILURE:
       return {
         ...state,
         loading: false,

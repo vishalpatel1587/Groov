@@ -12,6 +12,8 @@ import {
   GET_TEAM_MEMBERS_FAILURE,
   DELETE_TEAM_MEMBER_SUCCESS,
   DELETE_TEAM_MEMBER_FAILURE,
+  CREATE_TEAM_MEMBER_SUCCESS,
+  CREATE_TEAM_MEMBER_FAILURE,
 } from "../actions/actions";
 import {
   TeamsByCompanyIdApi,
@@ -20,6 +22,7 @@ import {
   EditTeamApi,
   GetTeamMembersApi,
   DeleteTeamMemberApi,
+  CreateTeamMemberApi,
 } from "../../services/api";
 import { ToasterUtils } from "../../components/Toaster/ToasterUtils";
 import history from "../../utils/history";
@@ -120,6 +123,26 @@ export function* GetTeamMembers(action) {
     ToasterUtils.error(error.response?.data.message);
     yield put({
       type: GET_TEAM_MEMBERS_FAILURE,
+      payload: error.response?.data,
+    });
+  }
+}
+
+export function* CreateTeamMember(action) {
+  try {
+    const response = yield call(CreateTeamMemberApi, action.payload);
+    if (response) {
+      yield put({
+        type: CREATE_TEAM_MEMBER_SUCCESS,
+        payload: response.data,
+      });
+    } else {
+      throw response;
+    }
+  } catch (error) {
+    ToasterUtils.error(error.response?.data.message);
+    yield put({
+      type: CREATE_TEAM_MEMBER_FAILURE,
       payload: error.response?.data,
     });
   }

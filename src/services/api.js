@@ -66,6 +66,17 @@ export const GetTeamMembersApi = async (teamId) => {
   return result;
 };
 
+export const CreateTeamMemberApi = async ({ teamId, data }) => {
+  const config = {
+    url: `/team/${teamId}/members`,
+    method: "POST",
+    data: data,
+  };
+
+  const result = await ApiRequest(config);
+  return result;
+};
+
 export const DeleteTeamMemberApi = async ({ teamId, memberId }) => {
   const config = {
     url: `/team/${teamId}/members/${memberId}`,
