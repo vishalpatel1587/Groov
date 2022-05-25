@@ -1,3 +1,1 @@
-export const FeatureFlag = {
-  renderMembers: false,
-};
+export const FeatureFlag = {};
