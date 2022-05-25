@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BasicModal from "../BasicModal";
 import { Input } from "../TextInput";
 
@@ -26,19 +26,37 @@ const EditTeamInfoModal: React.FC<Props> = ({
   teamDescription,
   saveTeamInfo,
 }) => {
+  if (!open) return null;
+
   const classes = useStyles();
   const [newTeamName, setNewTeamName] = useState(teamName);
   const [newTeamDescription, setNewTeamDescription] = useState(teamDescription);
 
+  useEffect(() => {
+    if (!!teamName && !!teamDescription) {
+      resetTeamInfo();
+    }
+  }, [teamName, teamDescription]);
+
+  const resetTeamInfo = (): void => {
+    setNewTeamName(teamName);
+    setNewTeamDescription(teamDescription);
+  };
+
+  const onModalClose = (): void => {
+    resetTeamInfo();
+    onClose();
+  };
+
   return (
     <BasicModal
       title="Edit team info"
-      onClose={onClose}
+      onClose={onModalClose}
       open={open}
       modalSize="md"
       primaryActionTitle="Continue"
       secondaryActionTitle="Cancel"
-      secondaryActionClick={onClose}
+      secondaryActionClick={onModalClose}
       primaryActionClick={() => saveTeamInfo(newTeamName, newTeamDescription)}
     >
       <Typography variant="h5" className={classes.modalLabel}>
