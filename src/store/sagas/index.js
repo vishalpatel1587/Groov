@@ -10,6 +10,7 @@ import {
   GET_COMPANY_RITUAL_BY_COMPANY_ID_BEGIN,
   EDIT_TEAM_BEGIN,
   GET_TEAM_MEMBERS_BEGIN,
+  DELETE_TEAM_MEMBER_BEGIN,
 } from "../actions/actions";
 import { company } from "./CompanySaga";
 import {
@@ -18,6 +19,7 @@ import {
   CompanyRitualByCompanyId,
   EditTeam,
   GetTeamMembers,
+  DeleteTeamMember,
 } from "./TeamsSaga";
 import {
   GetRituals,
@@ -31,6 +33,7 @@ export default function* rootSaga() {
     takeLatest(CREATE_TEAM_BEGIN, CreateTeam),
     takeLatest(EDIT_TEAM_BEGIN, EditTeam),
     takeLatest(GET_TEAM_MEMBERS_BEGIN, GetTeamMembers),
+    takeLatest(DELETE_TEAM_MEMBER_BEGIN, DeleteTeamMember),
     takeLatest(GET_COMPANY_BY_ID_BEGIN, company),
     takeLatest(GET_TEAMS_BY_COMPANY_ID_BEGIN, TeamsByCompanyId),
     takeLatest(

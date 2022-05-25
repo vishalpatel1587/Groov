@@ -30,6 +30,7 @@ import { Menus } from "../../constants/menus";
 import { Modals } from "../../constants/modals";
 import {
   deleteRitual,
+  deleteTeamMember,
   editTeam,
   getRituals,
   getTeamMembers,
@@ -39,6 +40,7 @@ import appTheme from "../../styling/theme";
 import { Ritual } from "../../types/Ritual";
 import AddRitualModal from "../../components/modals/AddRitualModal";
 import { LightTooltip } from "../../components/LightTooltip";
+import { TeamMember } from "../../types/Team";
 
 interface ParamTypes {
   companyId: string;
@@ -153,7 +155,8 @@ const Rituals = (props: any): JSX.Element => {
   const { companyId, teamId } = useParams<ParamTypes>();
 
   const rituals = useSelector((state: RootStateOrAny) => state.rituals);
-  const [teamMemberToRemove, setTeamMemberToRemove] = useState("");
+  const [teamMemberToRemove, setTeamMemberToRemove] =
+    useState<TeamMember | null>(null);
   const [selectedRitualId, setSelectedRitualId] = useState(ritualId);
 
   useEffect(() => {
@@ -189,6 +192,10 @@ const Rituals = (props: any): JSX.Element => {
       "🚀 ~ file: Rituals.tsx ~ line 186 ~ handleAddTeamMember ~ email",
       emailAddresses
     );
+  };
+
+  const handleRemoveTeamMember = (memberId: string) => {
+    dispatch(deleteTeamMember(teamId, memberId));
   };
 
   const toggleContextMenuOpen = (
@@ -231,7 +238,7 @@ const Rituals = (props: any): JSX.Element => {
     toggleModalOpen(Menus.TEAM_INFO, true);
   };
 
-  const handleRemoveMemberClick = (teamMember: string) => {
+  const handleRemoveMemberClick = (teamMember: TeamMember) => {
     setTeamMemberToRemove(teamMember);
     toggleModalOpen(Modals.REMOVE_MEMBER, true);
   };
@@ -409,45 +416,43 @@ These can be viewed by the rest of the organisation, inspiring them to create on
               />
               <Box>
                 {rituals?.data?.teamMembers &&
-                  rituals?.data?.teamMembers
-                    .map((teamMember: any) => teamMember.emailAddress)
-                    .map((emailAddress: string) => {
-                      return (
-                        <Box
-                          key={emailAddress}
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            marginBottom: appTheme.spacing(3),
-                          }}
-                          onMouseOver={() => setMemberHover(emailAddress)}
-                          onMouseOut={() => setMemberHover(null)}
+                  rituals?.data?.teamMembers.map((teamMember: TeamMember) => {
+                    return (
+                      <Box
+                        key={teamMember.id}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          marginBottom: appTheme.spacing(3),
+                        }}
+                        onMouseOver={() =>
+                          setMemberHover(teamMember.emailAddress)
+                        }
+                        onMouseOut={() => setMemberHover(null)}
+                      >
+                        <Avatar color={teamMember.emailAddress} />
+                        <Typography
+                          variant="body1"
+                          style={{ marginLeft: appTheme.spacing(4) }}
                         >
-                          <Avatar color={emailAddress} />
-                          <Typography
-                            variant="body1"
-                            style={{ marginLeft: appTheme.spacing(4) }}
-                          >
-                            {emailAddress}
-                          </Typography>
-                          <IconButton
-                            onClick={() =>
-                              handleRemoveMemberClick(emailAddress)
-                            }
-                            style={{
-                              marginLeft: "auto",
-                              padding: 0,
-                              visibility:
-                                memberHover === emailAddress
-                                  ? "visible"
-                                  : "hidden",
-                            }}
-                          >
-                            <RemoveUser />
-                          </IconButton>
-                        </Box>
-                      );
-                    })}
+                          {teamMember.emailAddress}
+                        </Typography>
+                        <IconButton
+                          onClick={() => handleRemoveMemberClick(teamMember)}
+                          style={{
+                            marginLeft: "auto",
+                            padding: 0,
+                            visibility:
+                              memberHover === teamMember.emailAddress
+                                ? "visible"
+                                : "hidden",
+                          }}
+                        >
+                          <RemoveUser />
+                        </IconButton>
+                      </Box>
+                    );
+                  })}
               </Box>
             </Card>
           </Grid>
@@ -483,11 +488,14 @@ These can be viewed by the rest of the organisation, inspiring them to create on
         saveTeamInfo={saveTeamInfo}
       />
 
-      <RemoveTeamMemberModal
-        teamMemberEmailAddress={teamMemberToRemove}
-        open={Boolean(openModals[Modals.REMOVE_MEMBER])}
-        onClose={() => toggleModalOpen(Modals.REMOVE_MEMBER, false)}
-      />
+      {teamMemberToRemove && (
+        <RemoveTeamMemberModal
+          teamMember={teamMemberToRemove}
+          open={Boolean(openModals[Modals.REMOVE_MEMBER])}
+          onClose={() => toggleModalOpen(Modals.REMOVE_MEMBER, false)}
+          handleRemoveTeamMember={handleRemoveTeamMember}
+        />
+      )}
 
       <AddRitualModal
         open={Boolean(openModals[Modals.EDIT_RITUAL])}

@@ -1,11 +1,13 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import { TeamMember } from "../../types/Team";
 import BasicModal from "../BasicModal";
 
 interface Props {
   open: boolean;
   onClose: () => void;
-  teamMemberEmailAddress: string;
+  teamMember: TeamMember;
+  handleRemoveTeamMember: (id: string) => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -18,9 +20,15 @@ const useStyles = makeStyles((theme) => ({
 const RemoveTeamMemberModal: React.FC<Props> = ({
   open,
   onClose,
-  teamMemberEmailAddress,
+  teamMember,
+  handleRemoveTeamMember,
 }) => {
   const classes = useStyles();
+
+  const onPrimaryActionClick = () => {
+    handleRemoveTeamMember(teamMember.id);
+    onClose();
+  };
 
   return (
     <BasicModal
@@ -30,11 +38,12 @@ const RemoveTeamMemberModal: React.FC<Props> = ({
       modalSize="md"
       modalStyle="red"
       primaryActionTitle="Remove"
+      primaryActionClick={onPrimaryActionClick}
       secondaryActionTitle="Cancel"
       secondaryActionClick={onClose}
     >
       <Typography variant="h5" className={classes.modalLabel}>
-        {teamMemberEmailAddress}
+        {teamMember?.emailAddress}
       </Typography>
     </BasicModal>
   );
