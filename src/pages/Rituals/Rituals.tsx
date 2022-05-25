@@ -54,7 +54,7 @@ const RootDiv = styled.div`
 
 const ButtonDiv = styled.div`
   display: flex;
-  margin: 2em 0;
+  margin: 1em 0;
 `;
 
 const useStyles = makeStyles((theme) => ({
