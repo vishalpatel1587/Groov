@@ -46,7 +46,6 @@ export function* CreateRitual(action) {
         type: CREATE_RITUAL_SUCCESS,
         payload: response.data,
       });
-      history.goBack();
     } else {
       throw response;
     }

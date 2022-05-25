@@ -89,7 +89,8 @@ const AddRitualModal: React.FC<Props> = ({
       setCheckinFrequency(ritual?.checkinFrequency);
     }
   }, [ritual?.trigger, ritual?.action, ritual?.checkinFrequency]);
-  const handleRitualSave = (): void => {
+
+  const onSaveClicked = (): void => {
     const data = {
       action,
       trigger,
@@ -97,6 +98,7 @@ const AddRitualModal: React.FC<Props> = ({
     };
     if (!data.action || !data.trigger) {
       ToasterUtils.error(`Action or trigger can't be empty!!`);
+      return;
     }
 
     if (ritualId) {
@@ -108,6 +110,7 @@ const AddRitualModal: React.FC<Props> = ({
       };
       dispatch(createRitual(createData));
     }
+    onClose();
   };
 
   return (
@@ -119,7 +122,7 @@ const AddRitualModal: React.FC<Props> = ({
       onClose={onClose}
       modalSize="sm"
       modalStyle="blue"
-      primaryActionClick={handleRitualSave}
+      primaryActionClick={onSaveClicked}
       secondaryActionClick={onClose}
       primaryActionLoading={ritualsRoot?.loading}
     >
