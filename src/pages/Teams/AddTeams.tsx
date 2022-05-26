@@ -98,10 +98,14 @@ const AddTeams = () => {
           ToasterUtils.error("The email address does not match");
         }
       } else {
-        ToasterUtils.error("Check email format");
+        if (leaderEmail === "") {
+          ToasterUtils.error("Enter leader email");
+        } else {
+          ToasterUtils.error("Check email format");
+        }
       }
     } else {
-      ToasterUtils.error("Enter Team Name");
+      ToasterUtils.error("Enter team name");
     }
   };
 
