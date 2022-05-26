@@ -42,7 +42,7 @@ const RitualsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        data: { ...state.data, ...action.payload, loading: false },
+        data: { ...state.data, ...action.payload },
       };
 
     case GET_RITUALS_FAILURE:
