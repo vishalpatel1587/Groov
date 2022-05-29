@@ -4,17 +4,25 @@ import {
   GET_TEAMS_BY_COMPANY_ID_FAILURE,
   CREATE_TEAM_SUCCESS,
   CREATE_TEAM_FAILURE,
-  CREATE_RITUAL_BEGIN,
   GET_COMPANY_RITUAL_BY_COMPANY_ID_FAILURE,
   GET_COMPANY_RITUAL_BY_COMPANY_ID_SUCCESS,
   EDIT_TEAM_SUCCESS,
   EDIT_TEAM_FAILURE,
+  GET_TEAM_MEMBERS_SUCCESS,
+  GET_TEAM_MEMBERS_FAILURE,
+  DELETE_TEAM_MEMBER_SUCCESS,
+  DELETE_TEAM_MEMBER_FAILURE,
+  CREATE_TEAM_MEMBER_SUCCESS,
+  CREATE_TEAM_MEMBER_FAILURE,
 } from "../actions/actions";
 import {
   TeamsByCompanyIdApi,
   CreateTeamApi,
   CompanyRitualByCompanyIdApi,
   EditTeamApi,
+  GetTeamMembersApi,
+  DeleteTeamMemberApi,
+  CreateTeamMemberApi,
 } from "../../services/api";
 import { ToasterUtils } from "../../components/Toaster/ToasterUtils";
 import history from "../../utils/history";
@@ -95,6 +103,95 @@ export function* EditTeam(action) {
     ToasterUtils.error(error.response?.data.message);
     yield put({
       type: EDIT_TEAM_FAILURE,
+      payload: error.response?.data,
+    });
+  }
+}
+
+export function* GetTeamMembers(action) {
+  try {
+    const response = yield call(GetTeamMembersApi, action.payload);
+    if (response) {
+      yield put({
+        type: GET_TEAM_MEMBERS_SUCCESS,
+        payload: response.data,
+      });
+    } else {
+      throw response;
+    }
+  } catch (error) {
+    ToasterUtils.error(error.response?.data.message);
+    yield put({
+      type: GET_TEAM_MEMBERS_FAILURE,
+      payload: error.response?.data,
+    });
+  }
+}
+
+export function* CreateTeamMember(action) {
+  try {
+    const response = yield call(CreateTeamMemberApi, action.payload);
+    if (response) {
+      yield put({
+        type: CREATE_TEAM_MEMBER_SUCCESS,
+        payload: response.data,
+      });
+
+      if (response.data.teamMembers) {
+        ToasterUtils.toast(
+          `${response.data.teamMembers.length} member(s) added.`,
+          "success",
+          "Yay! Everything worked"
+        );
+      }
+
+      if (response.data.failedMessages.duplicate !== "") {
+        ToasterUtils.toast(
+          response.data.failedMessages.duplicate,
+          "warning",
+          "Whoa whoa, slow down"
+        );
+      }
+
+      if (response.data.failedMessages.generic !== "") {
+        ToasterUtils.toast(
+          response.data.failedMessages.generic,
+          "default",
+          "Whoa whoa, slow down"
+        );
+      }
+    } else {
+      throw response;
+    }
+  } catch (error) {
+    ToasterUtils.error(error.response?.data.message);
+    yield put({
+      type: CREATE_TEAM_MEMBER_FAILURE,
+      payload: error.response?.data,
+    });
+  }
+}
+
+export function* DeleteTeamMember(action) {
+  try {
+    const response = yield call(DeleteTeamMemberApi, action.payload);
+    if (response) {
+      yield put({
+        type: DELETE_TEAM_MEMBER_SUCCESS,
+        payload: action.payload,
+      });
+      ToasterUtils.toast(
+        "Member removed.",
+        "success",
+        "Yay! Everything worked"
+      );
+    } else {
+      throw response;
+    }
+  } catch (error) {
+    ToasterUtils.error(error.response?.data.message);
+    yield put({
+      type: DELETE_TEAM_MEMBER_FAILURE,
       payload: error.response?.data,
     });
   }

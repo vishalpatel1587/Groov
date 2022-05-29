@@ -15,6 +15,15 @@ import {
   EDIT_TEAM_BEGIN,
   EDIT_TEAM_SUCCESS,
   EDIT_TEAM_FAILURE,
+  GET_TEAM_MEMBERS_BEGIN,
+  GET_TEAM_MEMBERS_SUCCESS,
+  GET_TEAM_MEMBERS_FAILURE,
+  DELETE_TEAM_MEMBER_BEGIN,
+  DELETE_TEAM_MEMBER_SUCCESS,
+  DELETE_TEAM_MEMBER_FAILURE,
+  CREATE_TEAM_MEMBER_BEGIN,
+  CREATE_TEAM_MEMBER_SUCCESS,
+  CREATE_TEAM_MEMBER_FAILURE,
 } from "../actions/actions";
 
 const initialState = {
@@ -33,7 +42,7 @@ const RitualsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        data: { ...action.payload, loading: false }, //...action.payload,
+        data: { ...state.data, ...action.payload },
       };
 
     case GET_RITUALS_FAILURE:
@@ -144,6 +153,66 @@ const RitualsReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       };
+
+    case GET_TEAM_MEMBERS_BEGIN:
+      return { ...state, loading: true };
+    case GET_TEAM_MEMBERS_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          ...action.payload,
+        },
+        loading: false,
+      };
+    case GET_TEAM_MEMBERS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case DELETE_TEAM_MEMBER_BEGIN:
+      return { ...state, loading: true };
+    case DELETE_TEAM_MEMBER_SUCCESS:
+      const teamMembers = state.data.teamMembers.filter(
+        (t) => t.id !== action.payload.memberId
+      );
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          teamMembers: teamMembers,
+        },
+        loading: false,
+      };
+    case DELETE_TEAM_MEMBER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case CREATE_TEAM_MEMBER_BEGIN:
+      return { ...state, loading: true };
+    case CREATE_TEAM_MEMBER_SUCCESS:
+      const members = state.data.teamMembers.concat(action.payload.teamMembers);
+
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          teamMembers: members,
+        },
+        loading: false,
+      };
+    case CREATE_TEAM_MEMBER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
     default:
       return state;
   }

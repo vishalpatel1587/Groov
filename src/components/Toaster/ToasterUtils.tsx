@@ -1,8 +1,8 @@
-import React from 'react';
-import { useSnackbar, VariantType, WithSnackbarProps } from 'notistack';
+import React from "react";
+import { useSnackbar, VariantType, WithSnackbarProps } from "notistack";
 
-import { Toaster } from './Toaster';
-import { ConfirmActionToaster } from './ConfirmActionToaster';
+import { Toaster } from "./Toaster";
+import { ConfirmActionToaster } from "./ConfirmActionToaster";
 
 let snackbarRef: WithSnackbarProps;
 
@@ -19,25 +19,24 @@ const autoHideDuration = 5000;
 
 export const ToasterUtils = {
   success(msg: string) {
-    this.toast(msg, 'success');
+    this.toast(msg, "success");
   },
   warning(msg: string) {
-    this.toast(msg, 'warning');
+    this.toast(msg, "warning");
   },
   info(msg: string) {
-    this.toast(msg, 'info');
+    this.toast(msg, "info");
   },
   error(msg: string) {
-    this.toast(msg || 'Contact Administrator', 'error');
+    this.toast(msg || "Contact Administrator", "error");
   },
-  toast(msg: string, variant: VariantType = 'default', title?: string) {
-    snackbarRef.closeSnackbar();
+  toast(msg: string, variant: VariantType = "default", title?: string) {
     snackbarRef.enqueueSnackbar(msg, {
       variant,
       autoHideDuration,
       content: (key, message) => (
         <Toaster id={key} message={message} variant={variant} title={title} />
-      )
+      ),
     });
   },
   close() {
@@ -45,15 +44,15 @@ export const ToasterUtils = {
   },
   confirm({ onConfirm }: ConfirmActionProps) {
     snackbarRef.closeSnackbar();
-    snackbarRef.enqueueSnackbar('', {
+    snackbarRef.enqueueSnackbar("", {
       autoHideDuration,
       content: (key, _) => (
         <ConfirmActionToaster
           id={key}
-          variant={'confirm'}
+          variant={"confirm"}
           onConfirm={onConfirm}
         />
-      )
+      ),
     });
-  }
+  },
 };

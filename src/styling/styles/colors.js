@@ -30,4 +30,10 @@ export const colors = {
     5: "#FDE5D8",
     110: "#B82B38",
   },
+  groovGreen: {
+    100: "#50E092",
+  },
+  groovMustard: {
+    10: "#F3E9A6",
+  },
 };

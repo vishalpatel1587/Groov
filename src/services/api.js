@@ -56,6 +56,37 @@ export const EditTeamApi = async ({ teamId, data }) => {
   return result;
 };
 
+export const GetTeamMembersApi = async (teamId) => {
+  const config = {
+    url: `/team/${teamId}/members`,
+    method: "GET",
+  };
+
+  const result = await ApiRequest(config);
+  return result;
+};
+
+export const CreateTeamMemberApi = async ({ teamId, data }) => {
+  const config = {
+    url: `/team/${teamId}/members`,
+    method: "POST",
+    data: data,
+  };
+
+  const result = await ApiRequest(config);
+  return result;
+};
+
+export const DeleteTeamMemberApi = async ({ teamId, memberId }) => {
+  const config = {
+    url: `/team/${teamId}/members/${memberId}`,
+    method: "DELETE",
+  };
+
+  const result = await ApiRequest(config);
+  return result;
+};
+
 export const GetRitualsApi = async (teamId) => {
   const config = {
     url: `/team/${teamId}`,

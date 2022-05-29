@@ -16,6 +16,18 @@ export const EDIT_TEAM_BEGIN = "EDIT_TEAM_BEGIN";
 export const EDIT_TEAM_SUCCESS = "EDIT_TEAM_SUCCESS";
 export const EDIT_TEAM_FAILURE = "EDIT_TEAM_FAILURE";
 
+export const GET_TEAM_MEMBERS_BEGIN = "GET_TEAM_MEMBERS_BEGIN";
+export const GET_TEAM_MEMBERS_SUCCESS = "GET_TEAM_MEMBERS_SUCCESS";
+export const GET_TEAM_MEMBERS_FAILURE = "GET_TEAM_MEMBERS_FAILURE";
+
+export const CREATE_TEAM_MEMBER_BEGIN = "CREATE_TEAM_MEMBER_BEGIN";
+export const CREATE_TEAM_MEMBER_SUCCESS = "CREATE_TEAM_MEMBER_SUCCESS";
+export const CREATE_TEAM_MEMBER_FAILURE = "CREATE_TEAM_MEMBER_FAILURE";
+
+export const DELETE_TEAM_MEMBER_BEGIN = "DELETE_TEAM_MEMBER_BEGIN";
+export const DELETE_TEAM_MEMBER_SUCCESS = "DELETE_TEAM_MEMBER_SUCCESS";
+export const DELETE_TEAM_MEMBER_FAILURE = "DELETE_TEAM_MEMBER_FAILURE";
+
 export const GET_RITUALS_BEGIN = "GET_RITUALS_BEGIN";
 export const GET_RITUALS_SUCCESS = "GET_RITUALS_SUCCESS";
 export const GET_RITUALS_FAILURE = "GET_RITUALS_FAILURE";
@@ -72,6 +84,21 @@ export const createTeam = (data) => ({
 export const editTeam = (teamId, data) => ({
   type: EDIT_TEAM_BEGIN,
   payload: { teamId, data },
+});
+
+export const getTeamMembers = (teamId) => ({
+  type: GET_TEAM_MEMBERS_BEGIN,
+  payload: teamId,
+});
+
+export const createTeamMember = (teamId, data) => ({
+  type: CREATE_TEAM_MEMBER_BEGIN,
+  payload: { teamId, data },
+});
+
+export const deleteTeamMember = (teamId, memberId) => ({
+  type: DELETE_TEAM_MEMBER_BEGIN,
+  payload: { teamId, memberId },
 });
 
 export const getRituals = (teamId) => ({

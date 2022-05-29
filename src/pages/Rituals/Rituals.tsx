@@ -29,15 +29,19 @@ import { FeatureFlag } from "../../constants/featureFlags";
 import { Menus } from "../../constants/menus";
 import { Modals } from "../../constants/modals";
 import {
+  createTeamMember,
   deleteRitual,
+  deleteTeamMember,
   editTeam,
   getRituals,
+  getTeamMembers,
 } from "../../store/actions/actions";
 import { colors } from "../../styling/styles/colors";
 import appTheme from "../../styling/theme";
 import { Ritual } from "../../types/Ritual";
 import AddRitualModal from "../../components/modals/AddRitualModal";
 import { LightTooltip } from "../../components/LightTooltip";
+import { TeamMember } from "../../types/Team";
 
 interface ParamTypes {
   companyId: string;
@@ -50,7 +54,7 @@ const RootDiv = styled.div`
 
 const ButtonDiv = styled.div`
   display: flex;
-  margin: 2em 0;
+  margin: 1em 0;
 `;
 
 const useStyles = makeStyles((theme) => ({
@@ -152,11 +156,13 @@ const Rituals = (props: any): JSX.Element => {
   const { companyId, teamId } = useParams<ParamTypes>();
 
   const rituals = useSelector((state: RootStateOrAny) => state.rituals);
-  const [teamMemberToRemove, setTeamMemberToRemove] = useState("");
+  const [teamMemberToRemove, setTeamMemberToRemove] =
+    useState<TeamMember | null>(null);
   const [selectedRitualId, setSelectedRitualId] = useState(ritualId);
 
   useEffect(() => {
     dispatch(getRituals(teamId));
+    dispatch(getTeamMembers(teamId));
   }, []);
 
   const saveTeamInfo = (teamName: string, teamDescription: string): void => {
@@ -179,6 +185,20 @@ const Rituals = (props: any): JSX.Element => {
   const handleDelete = () => {
     dispatch(deleteRitual(selectedRitualId));
     toggleModalOpen(Modals.DELETE_RITUAL, false);
+  };
+
+  const handleAddTeamMembers = (emailAddresses: string[]) => {
+    const newTeamMembers = emailAddresses.map((e) => {
+      return {
+        emailAddress: e,
+      };
+    });
+
+    dispatch(createTeamMember(teamId, { teamMembers: newTeamMembers }));
+  };
+
+  const handleRemoveTeamMember = (memberId: string) => {
+    dispatch(deleteTeamMember(teamId, memberId));
   };
 
   const toggleContextMenuOpen = (
@@ -221,7 +241,7 @@ const Rituals = (props: any): JSX.Element => {
     toggleModalOpen(Menus.TEAM_INFO, true);
   };
 
-  const handleRemoveMemberClick = (teamMember: string) => {
+  const handleRemoveMemberClick = (teamMember: TeamMember) => {
     setTeamMemberToRemove(teamMember);
     toggleModalOpen(Modals.REMOVE_MEMBER, true);
   };
@@ -247,10 +267,11 @@ const Rituals = (props: any): JSX.Element => {
       </Grid>
     );
   };
+
   return (
     <RootDiv>
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid item xs={8}>
           <Card>
             <CardHeader
               style={{ padding: 0 }}
@@ -362,59 +383,61 @@ These can be viewed by the rest of the organisation, inspiring them to create on
             </Grid>
           </Card>
         </Grid>
-        {FeatureFlag.renderMembers && (
-          <Grid item xs={4}>
-            <Card>
-              <CardHeader
-                style={{ padding: 0 }}
-                action={
-                  <div>
-                    <IconButton
-                      onClick={(e) =>
-                        toggleContextMenuOpen(e, Menus.MEMBERS, true)
-                      }
-                    >
-                      <MoreVertIcon />
-                    </IconButton>
-                    <Menu
-                      id="simple-menu"
-                      anchorEl={menuAnchors[Menus.MEMBERS]}
-                      open={Boolean(menuAnchors[Menus.MEMBERS])}
-                      onClose={(e) =>
-                        toggleContextMenuOpen(e, Menus.MEMBERS, false)
-                      }
-                    >
-                      <MenuItem onClick={handleAddMemberClick}>
-                        {"Add team member"}
-                      </MenuItem>
-                    </Menu>
-                  </div>
-                }
-                title={
-                  <Typography variant="h2" gutterBottom>
-                    Members
-                  </Typography>
-                }
-              />
-              <Box>
-                {[].map((teamMember) => {
+        <Grid item xs={4}>
+          <Card>
+            <CardHeader
+              style={{ padding: 0 }}
+              action={
+                <div>
+                  <IconButton
+                    onClick={(e) =>
+                      toggleContextMenuOpen(e, Menus.MEMBERS, true)
+                    }
+                  >
+                    <MoreVertIcon />
+                  </IconButton>
+                  <Menu
+                    id="simple-menu"
+                    anchorEl={menuAnchors[Menus.MEMBERS]}
+                    open={Boolean(menuAnchors[Menus.MEMBERS])}
+                    onClose={(e) =>
+                      toggleContextMenuOpen(e, Menus.MEMBERS, false)
+                    }
+                  >
+                    <MenuItem onClick={handleAddMemberClick}>
+                      {"Add team member"}
+                    </MenuItem>
+                  </Menu>
+                </div>
+              }
+              title={
+                <Typography variant="h2" gutterBottom>
+                  Members
+                </Typography>
+              }
+            />
+            <Box>
+              {rituals?.data?.teamMembers &&
+                rituals?.data?.teamMembers.map((teamMember: TeamMember) => {
                   return (
                     <Box
-                      key={teamMember}
+                      key={teamMember.id}
                       style={{
                         display: "flex",
                         alignItems: "center",
                         marginBottom: appTheme.spacing(3),
                       }}
-                      onMouseOver={() => setMemberHover(teamMember)}
+                      onMouseOver={() =>
+                        setMemberHover(teamMember.emailAddress)
+                      }
                       onMouseOut={() => setMemberHover(null)}
                     >
-                      <Avatar color={teamMember} />
+                      <Avatar color={teamMember.emailAddress} />
                       <Typography
                         variant="body1"
                         style={{ marginLeft: appTheme.spacing(4) }}
                       >
-                        {teamMember}
+                        {teamMember.emailAddress}
                       </Typography>
                       <IconButton
                         onClick={() => handleRemoveMemberClick(teamMember)}
@@ -422,7 +445,9 @@ These can be viewed by the rest of the organisation, inspiring them to create on
                           marginLeft: "auto",
                           padding: 0,
                           visibility:
-                            memberHover === teamMember ? "visible" : "hidden",
+                            memberHover === teamMember.emailAddress
+                              ? "visible"
+                              : "hidden",
                         }}
                       >
                         <RemoveUser />
@@ -430,10 +455,9 @@ These can be viewed by the rest of the organisation, inspiring them to create on
                     </Box>
                   );
                 })}
-              </Box>
-            </Card>
-          </Grid>
-        )}
+            </Box>
+          </Card>
+        </Grid>
       </Grid>
       <ModalComponent
         open={helpModal}
@@ -454,6 +478,7 @@ These can be viewed by the rest of the organisation, inspiring them to create on
       <AddTeamMemberModal
         open={Boolean(openModals[Menus.MEMBERS])}
         onClose={() => toggleModalOpen(Modals.MEMBERS, false)}
+        handleAddTeamMember={handleAddTeamMembers}
       />
 
       <EditTeamInfoModal
@@ -464,11 +489,14 @@ These can be viewed by the rest of the organisation, inspiring them to create on
         saveTeamInfo={saveTeamInfo}
       />
 
-      <RemoveTeamMemberModal
-        teamMemberEmailAddress={teamMemberToRemove}
-        open={Boolean(openModals[Modals.REMOVE_MEMBER])}
-        onClose={() => toggleModalOpen(Modals.REMOVE_MEMBER, false)}
-      />
+      {teamMemberToRemove && (
+        <RemoveTeamMemberModal
+          teamMember={teamMemberToRemove}
+          open={Boolean(openModals[Modals.REMOVE_MEMBER])}
+          onClose={() => toggleModalOpen(Modals.REMOVE_MEMBER, false)}
+          handleRemoveTeamMember={handleRemoveTeamMember}
+        />
+      )}
 
       <AddRitualModal
         open={Boolean(openModals[Modals.EDIT_RITUAL])}
