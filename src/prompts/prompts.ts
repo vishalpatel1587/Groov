@@ -8,6 +8,7 @@ export const confirmAlertPrompts = {
 export const toasterPrompts = {
   titles: {
     success: `Yay, all done`,
+    warning: `Whoa whoa, slow down`,
     error: `Uh oh, something went wrong`,
   },
   messages: {

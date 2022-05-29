@@ -34,11 +34,19 @@ export const toasterStyles = {
   icon: {
     width: 20,
     height: 20,
-    backgroundColor: colors.orange,
     padding: 10,
     borderRadius: 50,
     display: "flex",
     justifyContent: "center",
+  },
+  iconSuccess: {
+    backgroundColor: colors.groovGreen[100],
+  },
+  iconWarning: {
+    backgroundColor: colors.groovMustard[10],
+  },
+  iconError: {
+    backgroundColor: colors.orange,
   },
   close: { margin: 16 },
 };
