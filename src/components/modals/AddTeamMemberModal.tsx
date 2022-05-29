@@ -33,9 +33,12 @@ const AddTeamMemberModal: React.FC<Props> = ({
   const [newMembers, setNewMembers] = useState("");
   const [emailError, setEmailError] = useState("");
   const getEmailAddresses = (newMembers: string): string[] => {
-    const emailAddresses = newMembers.split(",").map((e) => e.trim());
+    const emailAddresses = newMembers
+      .split(",")
+      .filter((e) => e)
+      .map((a) => a.trim());
     emailAddresses.forEach((email) => {
-      if (!validateEmail(email.trim()))
+      if (!validateEmail(email))
         throw new InvalidEmailError(`Email is invalid: ${email.trim()}`);
     });
 
