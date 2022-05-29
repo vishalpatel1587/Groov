@@ -32,7 +32,7 @@ export const Toaster = React.forwardRef((props: Props, ref: any) => {
 
   let title = "";
   let icon = lightningIcon;
-  let iconColor = classes.iconError;
+  let iconColor = classes.iconDefault;
   switch (variant) {
     case "success":
       title = toasterPrompts.titles.success;

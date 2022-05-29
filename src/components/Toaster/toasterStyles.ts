@@ -45,7 +45,7 @@ export const toasterStyles = {
   iconWarning: {
     backgroundColor: colors.groovMustard[10],
   },
-  iconError: {
+  iconDefault: {
     backgroundColor: colors.orange,
   },
   close: { margin: 16 },
