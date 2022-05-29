@@ -136,6 +136,30 @@ export function* CreateTeamMember(action) {
         type: CREATE_TEAM_MEMBER_SUCCESS,
         payload: response.data,
       });
+
+      if (response.data.teamMembers) {
+        ToasterUtils.toast(
+          `${response.data.teamMembers.length} member(s) added.`,
+          "success",
+          "Yay! Everything worked"
+        );
+      }
+
+      if (response.data.failedMessages.duplicate !== "") {
+        ToasterUtils.toast(
+          response.data.failedMessages.duplicate,
+          "warning",
+          "Whoa whoa, slow down"
+        );
+      }
+
+      if (response.data.failedMessages.generic !== "") {
+        ToasterUtils.toast(
+          response.data.failedMessages.generic,
+          "default",
+          "Whoa whoa, slow down"
+        );
+      }
     } else {
       throw response;
     }
@@ -156,6 +180,11 @@ export function* DeleteTeamMember(action) {
         type: DELETE_TEAM_MEMBER_SUCCESS,
         payload: action.payload,
       });
+      ToasterUtils.toast(
+        "Member removed.",
+        "success",
+        "Yay! Everything worked"
+      );
     } else {
       throw response;
     }
