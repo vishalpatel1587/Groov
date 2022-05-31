@@ -8,6 +8,8 @@ import { toasterStyles } from "./toasterStyles";
 import { toasterPrompts } from "../../prompts/prompts";
 import { CloseToasterButton } from "./CloseToasterButton";
 import lightningIcon from "../../assets/icons/ic-lightning.svg";
+import tick from "../../assets/icons/tick.svg";
+import alert from "../../assets/icons/alert.svg";
 
 const useStyles = makeStyles((theme: Theme) => toasterStyles);
 
@@ -29,9 +31,18 @@ export const Toaster = React.forwardRef((props: Props, ref: any) => {
   const { message, variant } = props;
 
   let title = "";
+  let icon = lightningIcon;
+  let iconColor = classes.iconDefault;
   switch (variant) {
     case "success":
       title = toasterPrompts.titles.success;
+      icon = tick;
+      iconColor = classes.iconSuccess;
+      break;
+    case "warning":
+      title = toasterPrompts.titles.warning;
+      icon = alert;
+      iconColor = classes.iconWarning;
       break;
     case "error":
       title = toasterPrompts.titles.error;
@@ -49,8 +60,8 @@ export const Toaster = React.forwardRef((props: Props, ref: any) => {
       <Grid container className={classes.snackbar}>
         <Box display="flex" flexDirection="row">
           <Grid className={classes.iconGrid}>
-            <div className={classes.icon}>
-              <img src={lightningIcon} alt="toastImg" />
+            <div className={`${classes.icon} ${iconColor}`}>
+              <img src={icon} alt="toastImg" />
             </div>
           </Grid>
           <Grid>

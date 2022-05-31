@@ -6,6 +6,7 @@ import CloseIcon from "@material-ui/icons/Close";
 
 import { colors } from "../styling/styles/colors";
 import { Button } from "./Button";
+import { Loader } from "./Loader";
 
 interface Props {
   title: string;
@@ -18,10 +19,14 @@ interface Props {
   primaryActionClick?: VoidFunction;
   secondaryActionClick?: VoidFunction;
   children: JSX.Element | JSX.Element[];
+  primaryActionLoading?: boolean;
 }
 
 const useStyles = (style: string, size: string) =>
   makeStyles((theme) => ({
+    modal: {
+      overflow: "scroll",
+    },
     container: {
       backgroundColor: theme.palette.background.paper,
       width: getModalWidth(size),
@@ -48,12 +53,13 @@ const useStyles = (style: string, size: string) =>
       color: style === "red" ? colors.groovRed[110] : colors.white,
     },
     secondaryAction: {
-      color: style === "red" ? colors.grey[60] : colors.groovBlue[100],
+      color: colors.grey[60],
     },
     closeButton: {
       position: "absolute",
       top: theme.spacing(4),
       right: theme.spacing(4),
+      color: colors.grey[60],
     },
   }));
 
@@ -68,10 +74,11 @@ const BasicModal = ({
   onClose,
   modalStyle: style = "blue",
   modalSize: size,
+  primaryActionLoading,
 }: Props) => {
   const classes = useStyles(style, size)();
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} className={classes.modal}>
       <Box className={classes.container}>
         <Typography variant="h3">{title}</Typography>
         <IconButton
@@ -93,8 +100,9 @@ const BasicModal = ({
           <Button
             onClick={primaryActionClick}
             className={classes.primaryAction}
+            variant="contained"
           >
-            {primaryActionTitle}
+            {primaryActionLoading ? <Loader /> : primaryActionTitle}
           </Button>
         </Box>
       </Box>

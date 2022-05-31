@@ -15,6 +15,7 @@ export const colors = {
   redWarn: "#ff7d78",
   snow: "#fbfbfd",
   black: "#000000",
+  silverSand: "#BDC1C5",
   whisperWhiteDark: "#f6f6f6",
   grey: {
     5: "#f8fcff",
@@ -28,5 +29,11 @@ export const colors = {
   groovRed: {
     5: "#FDE5D8",
     110: "#B82B38",
+  },
+  groovGreen: {
+    100: "#50E092",
+  },
+  groovMustard: {
+    10: "#F3E9A6",
   },
 };

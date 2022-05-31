@@ -14,7 +14,6 @@ import {
   DeleteRitualApi,
   GetRitualsApi,
   UpdateRitualApi,
-  GetRitualByIdApi,
 } from "../../services/api";
 import history from "../../utils/history";
 import { ToasterUtils } from "../../components/Toaster/ToasterUtils";
@@ -47,7 +46,6 @@ export function* CreateRitual(action) {
         type: CREATE_RITUAL_SUCCESS,
         payload: response.data,
       });
-      history.goBack();
     } else {
       throw response;
     }
