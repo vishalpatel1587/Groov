@@ -39,7 +39,7 @@ import {
 import { colors } from "../../styling/styles/colors";
 import appTheme from "../../styling/theme";
 import { Ritual } from "../../types/Ritual";
-import {TeamPage as TeamPage} from "../../test/constants/teamPageTestId"
+import {TeamPage} from "../../test/constants/teamPageTestId"
 import AddRitualModal from "../../components/modals/AddRitualModal";
 import { LightTooltip } from "../../components/LightTooltip";
 import { TeamMember } from "../../types/Team";
