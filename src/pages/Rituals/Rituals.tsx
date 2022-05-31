@@ -35,6 +35,7 @@ import {
 import { colors } from "../../styling/styles/colors";
 import appTheme from "../../styling/theme";
 import { Ritual } from "../../types/Ritual";
+import {TeamPage as TeamPage} from "../../test/constants/teamPageTestId"
 
 interface ParamTypes {
   companyId: string;
@@ -264,7 +265,7 @@ const Rituals = () => {
               }
               title={
                 <>
-                  <Typography variant="h2" gutterBottom>
+                  <Typography data-testid={TeamPage.TeamNameHeader} variant="h2" gutterBottom>
                     {rituals?.data?.name}
                   </Typography>
                   <Typography variant="body1" gutterBottom>

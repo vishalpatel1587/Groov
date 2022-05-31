@@ -4,6 +4,7 @@ import InputBase from "@material-ui/core/InputBase";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { createStyles, withStyles, Theme } from "@material-ui/core/styles";
 import { colors } from "../styling/styles/colors";
+import {addANewTeamPage as addANewTeamPage} from "../test/constants/addANewTeamPageTestId"
 
 interface Props {
   items: any;
@@ -66,6 +67,7 @@ export const SelectMenu = (props: Props) => {
 export const FullSelectMenu = (props: Props) => {
   return (
     <Select
+      data-testid = {addANewTeamPage.CheckInFrequencyDropDown}
       fullWidth
       value={props.value}
       onChange={props.onChange}
