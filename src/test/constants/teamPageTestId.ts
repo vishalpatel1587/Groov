@@ -1,3 +1,3 @@
 export const TeamPage = {
-    TeamNameHeader : "TeamNameHeader",
-}
+  TeamNameHeader: "TeamNameHeader"
+};

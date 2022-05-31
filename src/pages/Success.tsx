@@ -4,7 +4,7 @@ import { Link, Button } from "../components";
 import logo from "../assets/groov_logo.png";
 import { colors } from "../styling/styles/colors";
 import history from "../utils/history";
-import {TeamCreatedSuccessfullyPage as TeamCreatedSuccessfullyPage} from "../test/constants/teamCreatedSuccessfullyPageTestId"
+import {TeamCreatedSuccessfullyPage} from "../test/constants/teamCreatedSuccessfullyPageTestId"
 
 interface Props {
   location: any;
@@ -53,7 +53,7 @@ const Success = (props: Props) => {
   return (
     <div className={classes.content}>
       <img className={classes.icon} src={logo} alt={"logo"}></img>
-      <Typography data-testid={TeamCreatedSuccessfullyPage.CongratulationHeader} variant="h1">Congratulation!!</Typography>
+      <Typography data-testid={TeamCreatedSuccessfullyPage.CongratulationsHeader} variant="h1">Congratulations!!</Typography>
       <Typography data-testid={TeamCreatedSuccessfullyPage.SuccessMessageHeader} variant="h1">
         You have added a new team with the first ritual on your ritual page.
       </Typography>

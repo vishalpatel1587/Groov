@@ -5,6 +5,6 @@ Feature: Create and verify team details
         When I click on Add a new team
         Then I am presented with "Add a new team" page
         And I am able to provide all the values
-            | TeamName          | TeamDescription               | Trigger                         | Action         | Email                     | ConfirmEmail              | CheckinFrequency |
+            | TeamName          | TeamDescription                | Trigger                         | Action         | Email                     | ConfirmEmail              | CheckinFrequency |
             | AutomationTesting | Automation Testing Description | When you are running automation | All tests pass | vishal.patel@groovnow.com | vishal.patel@groovnow.com | Every 3 months   |
         And create a team

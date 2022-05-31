@@ -1,26 +1,26 @@
 import { TeamCreatedSuccessfullyPage as TeamCreatedSuccessfullyPageTestId } from "../../constants/teamCreatedSuccessfullyPageTestId";
 
 class TeamCreatedSuccessfullyPage {
-  private _congratulationHeader: string;
-  private _successMessageHeader: string;
-  private _goToTeamPageLink: string
+  private congratulationsHeader: string;
+  private successMessageHeader: string;
+  private goToTeamPageLink: string;
 
   constructor() {
-    this._congratulationHeader = `[data-testid="${TeamCreatedSuccessfullyPageTestId.CongratulationHeader}"]`;
-    this._successMessageHeader = `[data-testid="${TeamCreatedSuccessfullyPageTestId.SuccessMessageHeader}"]`;
-    this._goToTeamPageLink = `[data-testid="${TeamCreatedSuccessfullyPageTestId.GoToTeamPageLink}"]`;
+    this.congratulationsHeader = `[data-testid="${TeamCreatedSuccessfullyPageTestId.CongratulationsHeader}"]`;
+    this.successMessageHeader = `[data-testid="${TeamCreatedSuccessfullyPageTestId.SuccessMessageHeader}"]`;
+    this.goToTeamPageLink = `[data-testid="${TeamCreatedSuccessfullyPageTestId.GoToTeamPageLink}"]`;
   }
 
-  public verifyCongratulationHeader(congratulationHeader: string) {
-    cy.get(this._congratulationHeader).contains(congratulationHeader);
+  public verifyCongratulationsHeader(congratulationsHeader: string) {
+    cy.get(this.congratulationsHeader).contains(congratulationsHeader);
   }
 
   public verifySuccessMessageHeader(successMessageHeader: string) {
-    cy.get(this._successMessageHeader).contains(successMessageHeader);
+    cy.get(this.successMessageHeader).contains(successMessageHeader);
   }
 
   public clickOnGoToTeamPageButton() {
-    cy.get(this._goToTeamPageLink).click();
+    cy.get(this.goToTeamPageLink).click();
   }
 }
 // Export as Module for re-usability

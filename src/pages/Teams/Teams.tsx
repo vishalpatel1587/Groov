@@ -32,7 +32,7 @@ import {
 } from "../../store/actions/actions";
 import appTheme from "../../styling/theme";
 import { formatDate } from "../../utils/dateUtils";
-import {HomePage as HomePage} from "../../test/constants/homePageTestId"
+import {HomePage} from "../../test/constants/homePageTestId"
 interface ParamTypes {
   companyId: string;
 }

@@ -18,7 +18,7 @@ let homePage = new HomePage();
 let commonHelper = new CommonHelper();
 let addANewTeam = new AddANewTeam();
 let teamCreatedSuccessfullyPage = new TeamCreatedSuccessfullyPage();
-let teamPage = new TeamPage()
+let teamPage = new TeamPage();
 
 Before(() => {
   cy.visit("/", { failOnStatusCode: false });
@@ -46,15 +46,16 @@ Then(/^I am able to provide all the values$/, (datatable) => {
   addANewTeam.populateTrigger(datatable);
   addANewTeam.selectCheckinFrequency(datatable);
   addANewTeam.clickCommit();
-  cy.wrap(datatable).as('datatable')
-
-  
+  cy.wrap(datatable).as("datatable");
 });
 
-Then(/^create a team$/, function(this:any)  {
-	teamCreatedSuccessfullyPage.verifyCongratulationHeader(constants.congratulationHeader)
-	teamCreatedSuccessfullyPage.verifySuccessMessageHeader(constants.teamAddedSuccessfullyMessage)
-	teamCreatedSuccessfullyPage.clickOnGoToTeamPageButton()
-	teamPage.verifyTeamPageHeader(this.datatable.hashes()[0]['TeamName'])
+Then(/^create a team$/, function (this: any) {
+  teamCreatedSuccessfullyPage.verifyCongratulationsHeader(
+    constants.congratulationsHeader
+  );
+  teamCreatedSuccessfullyPage.verifySuccessMessageHeader(
+    constants.teamAddedSuccessfullyMessage
+  );
+  teamCreatedSuccessfullyPage.clickOnGoToTeamPageButton();
+  teamPage.verifyTeamPageHeader(this.datatable.hashes()[0]["TeamName"]);
 });
-

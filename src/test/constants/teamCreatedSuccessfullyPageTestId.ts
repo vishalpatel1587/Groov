@@ -1,5 +1,5 @@
 export const TeamCreatedSuccessfullyPage = {
-    CongratulationHeader : "CongratulationHeader",
-    SuccessMessageHeader : "SuccessMessageHeader",
-    GoToTeamPageLink : "GoToTeamPageLink"
-}
+  CongratulationsHeader: "CongratulationsHeader",
+  SuccessMessageHeader: "SuccessMessageHeader",
+  GoToTeamPageLink: "GoToTeamPageLink"
+};
