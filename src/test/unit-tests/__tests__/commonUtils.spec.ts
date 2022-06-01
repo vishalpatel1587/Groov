@@ -1,6 +1,6 @@
-import { CHECKIN_FREQUENCY } from "../types/CheckinFrequency";
-import { Ritual } from "../types/Ritual";
-import { getCheckinFrequencylabel } from "../utils/commonUtils";
+import { CHECKIN_FREQUENCY } from "../../../types/CheckinFrequency";
+import { Ritual } from "../../../types/Ritual";
+import { getCheckinFrequencylabel } from "../../../utils/commonUtils";
 
 describe("getCheckinFrequencylabel", () => {
   let ritual: Ritual;

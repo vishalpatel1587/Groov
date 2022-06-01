@@ -9,6 +9,7 @@ import {
   makeStyles,
 } from "@material-ui/core/styles";
 import { colors } from "../styling/styles/colors";
+import {AddANewTeamPageTestId} from "../test/constants/addANewTeamPageTestId"
 
 interface Props {
   items: any;
@@ -77,6 +78,7 @@ export const FullSelectMenu = (props: Props) => {
   const classes = useStyles();
   return (
     <Select
+      data-testid = {AddANewTeamPageTestId.SelectDropDown}
       fullWidth
       value={props.value}
       onChange={props.onChange}

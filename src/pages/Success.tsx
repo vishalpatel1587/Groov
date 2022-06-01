@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom";
-import { makeStyles, Typography } from "@material-ui/core";
+import { Box, makeStyles, Typography } from "@material-ui/core";
 import { Link, Button } from "../components";
 import logo from "../assets/groov_logo.png";
 import { colors } from "../styling/styles/colors";
 import history from "../utils/history";
+import {TeamCreatedSuccessfullyPageTestId} from "../test/constants/teamCreatedSuccessfullyPageTestId"
 
 interface Props {
   location: any;
@@ -52,8 +53,8 @@ const Success = (props: Props) => {
   return (
     <div className={classes.content}>
       <img className={classes.icon} src={logo} alt={"logo"}></img>
-      <Typography variant="h1">Congratulation!!</Typography>
-      <Typography variant="h1">
+      <Typography data-testid={TeamCreatedSuccessfullyPageTestId.CongratulationsHeader} variant="h1">Congratulations!!</Typography>
+      <Typography data-testid={TeamCreatedSuccessfullyPageTestId.SuccessMessageHeader} variant="h1">
         You have added a new team with the first ritual on your ritual page.
       </Typography>
       <Typography
@@ -75,7 +76,7 @@ const Success = (props: Props) => {
         className={classes.button}
         onClick={() => history.push(`/${companyId}/${teamId}/rituals`)}
       >
-        Go to the team page
+        <Box data-testid={TeamCreatedSuccessfullyPageTestId.GoToTeamPageLink}>Go to the team page</Box>
       </Button>
     </div>
   );

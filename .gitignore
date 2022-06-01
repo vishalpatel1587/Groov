@@ -49,3 +49,16 @@ Thumbs.db
 *.wmv
 .env
 build
+
+# Automation testing related files
+test/cypress/fixtures/example.json
+test/cypress/reports/
+test/cypress/screenshots/
+test/cypress/videos/
+test/cypress/cucumber-json/
+test/cypress/downloads/downloads.html
+test/cypress.env.json
+src/test/cypress/cucumber-json/
+src/test/cypress/fixtures/
+src/test/cypress/reports/
+src/test/cypress.env.json
