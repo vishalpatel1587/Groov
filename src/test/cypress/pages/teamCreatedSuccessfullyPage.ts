@@ -1,4 +1,4 @@
-import { TeamCreatedSuccessfullyPage as TeamCreatedSuccessfullyPageTestId } from "../../constants/teamCreatedSuccessfullyPageTestId";
+import { TeamCreatedSuccessfullyPageTestId } from "../../constants/teamCreatedSuccessfullyPageTestId";
 
 class TeamCreatedSuccessfullyPage {
   private congratulationsHeader: string;

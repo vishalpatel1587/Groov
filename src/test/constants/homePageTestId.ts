@@ -1,4 +1,5 @@
-export const HomePage = {
+export const HomePageTestId = {
   RitualBuilderHeader: "RitualBuilderHeader",
   AddNewTeamButton: "AddNewTeamButton"
 };
+ 

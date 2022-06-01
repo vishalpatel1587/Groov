@@ -1,4 +1,4 @@
-export const AddANewTeamPage = {
+export const AddANewTeamPageTestId = {
   AddANewTeamHeader: "AddANewTeamHeader",
   TeamNameTextBox: "TeamNameTextBox",
   TeamDescriptionTextBox: "TeamDescriptionTextBox",

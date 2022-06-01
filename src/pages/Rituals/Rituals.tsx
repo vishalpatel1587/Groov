@@ -39,7 +39,7 @@ import {
 import { colors } from "../../styling/styles/colors";
 import appTheme from "../../styling/theme";
 import { Ritual } from "../../types/Ritual";
-import {TeamPage} from "../../test/constants/teamPageTestId"
+import {TeamPageTestId} from "../../test/constants/teamPageTestId"
 import AddRitualModal from "../../components/modals/AddRitualModal";
 import { LightTooltip } from "../../components/LightTooltip";
 import { TeamMember } from "../../types/Team";
@@ -302,7 +302,7 @@ const Rituals = (props: any): JSX.Element => {
               }
               title={
                 <Box>
-                  <Box data-testid={TeamPage.TeamNameHeader} className={classes.headerContainer}>
+                  <Box data-testid={TeamPageTestId.TeamNameHeader} className={classes.headerContainer}>
                     <Typography variant="h2">{rituals?.data?.name}</Typography>
                     <LightTooltip
                       title="This is where you can record the rituals for your team. 

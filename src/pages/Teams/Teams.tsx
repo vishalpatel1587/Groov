@@ -32,7 +32,7 @@ import {
 } from "../../store/actions/actions";
 import appTheme from "../../styling/theme";
 import { formatDate } from "../../utils/dateUtils";
-import {HomePage} from "../../test/constants/homePageTestId"
+import {HomePageTestId} from "../../test/constants/homePageTestId"
 interface ParamTypes {
   companyId: string;
 }
@@ -424,7 +424,7 @@ const Teams = () => {
       <Card>
         <Grid container>
           <Grid item lg={12}>
-            <Typography variant="h1" component="h1" gutterBottom data-testid={HomePage.RitualBuilderHeader}>
+            <Typography variant="h1" component="h1" gutterBottom data-testid={HomePageTestId.RitualBuilderHeader}>
               Ritual Builder
             </Typography>
             <Typography
@@ -474,7 +474,7 @@ const Teams = () => {
               className={classes.button}
               onClick={() => history.push(`/${companyId}/teams/add`)}
               variant="contained">
-              <Box data-testid={HomePage.AddNewTeamButton}>Add a new team</Box>
+              <Box data-testid={HomePageTestId.AddNewTeamButton}>Add a new team</Box>
             </Button>
 
             <Button

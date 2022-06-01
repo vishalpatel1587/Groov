@@ -18,7 +18,7 @@ import { createTeam } from "../../store/actions/actions";
 import { validateEmail, validateName } from "../../utils/validation";
 import theme from "../../styling/theme";
 import { CHECKIN_FREQUENCY } from "../../types/CheckinFrequency";
-import {AddANewTeamPage} from "../../test/constants/addANewTeamPageTestId"
+import {AddANewTeamPageTestId} from "../../test/constants/addANewTeamPageTestId"
 interface ParamTypes {
   companyId: string;
 }
@@ -111,7 +111,7 @@ const AddTeams = () => {
   return (
     <RootDiv>
       <Card className={classes.card}>
-        <Typography variant="h2" gutterBottom data-testid={AddANewTeamPage.AddANewTeamHeader}>
+        <Typography variant="h2" gutterBottom data-testid={AddANewTeamPageTestId.AddANewTeamHeader}>
           Add a new team
         </Typography>
         <Typography
@@ -147,7 +147,7 @@ const AddTeams = () => {
           Team information
         </Typography>
         <Input
-          data-testid = {AddANewTeamPage.TeamNameTextBox}
+          data-testid = {AddANewTeamPageTestId.TeamNameTextBox}
           fullWidth={true}
           name="name"
           value={name}
@@ -157,7 +157,7 @@ const AddTeams = () => {
           placeholder="Team name"
         />
         <Input
-          data-testid = {AddANewTeamPage.TeamDescriptionTextBox}
+          data-testid = {AddANewTeamPageTestId.TeamDescriptionTextBox}
           fullWidth={true}
           name="team_description"
           value={teamDescription}
@@ -167,7 +167,7 @@ const AddTeams = () => {
           placeholder="Team description (optional)"
         />
         <Input
-          data-testid = {AddANewTeamPage.EmailTextBox}
+          data-testid = {AddANewTeamPageTestId.EmailTextBox}
           fullWidth={true}
           name="leader_email"
           value={leaderEmail}
@@ -177,7 +177,7 @@ const AddTeams = () => {
           placeholder="Your email"
         />
         <Input
-          data-testid = {AddANewTeamPage.ConfirmEmailTextBox}
+          data-testid = {AddANewTeamPageTestId.ConfirmEmailTextBox}
           fullWidth={true}
           name="confirm_leader_email"
           value={confirmLeaderEmail}
@@ -197,7 +197,7 @@ const AddTeams = () => {
           </Typography>
         </InputDiv>
         <Input
-          data-testid = {AddANewTeamPage.ActionTextBox}
+          data-testid = {AddANewTeamPageTestId.ActionTextBox}
           fullWidth={true}
           className={classes.input}
           name="trigger"
@@ -213,7 +213,7 @@ const AddTeams = () => {
           </Typography>
         </InputDiv>
         <Input 
-          data-testid = {AddANewTeamPage.TriggerTextBox}
+          data-testid = {AddANewTeamPageTestId.TriggerTextBox}
           fullWidth={true}
           className={classes.input}
           name="action"
@@ -255,7 +255,7 @@ const AddTeams = () => {
         )}
         <Button className={classes.linkButton} onClick={history.goBack}>
           <Typography variant="body1" className={classes.link}>
-          <Box data-testid = {AddANewTeamPage.CancelButton}> Cancel</Box>
+          <Box data-testid = {AddANewTeamPageTestId.CancelButton}> Cancel</Box>
           </Typography>
         </Button>
         <Button
@@ -263,7 +263,7 @@ const AddTeams = () => {
           onClick={handleSubmit}
           variant="contained"
         >
-          <Box data-testid = {AddANewTeamPage.CommitButton}>{team?.createTeam?.loading ? <Loader /> : `Commit`}</Box>
+          <Box data-testid = {AddANewTeamPageTestId.CommitButton}>{team?.createTeam?.loading ? <Loader /> : `Commit`}</Box>
         </Button>
       </Card>
     </RootDiv>

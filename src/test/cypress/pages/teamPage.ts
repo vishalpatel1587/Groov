@@ -1,4 +1,4 @@
-import { TeamPage as TeamPageTestId } from "../../constants/teamPageTestId";
+import { TeamPageTestId } from "../../constants/teamPageTestId";
 
 class TeamPage {
   private teamNameHeader: string;

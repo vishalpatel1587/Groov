@@ -1,3 +1,3 @@
-export const TeamPage = {
+export const TeamPageTestId = {
   TeamNameHeader: "TeamNameHeader"
 };

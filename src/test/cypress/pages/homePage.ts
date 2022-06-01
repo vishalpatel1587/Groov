@@ -1,4 +1,4 @@
-import { HomePage as HomePageTestId } from "../../constants/homePageTestId";
+import { HomePageTestId } from "../../constants/homePageTestId";
 
 class HomePage {
   private ritualBuilderHeader: string;

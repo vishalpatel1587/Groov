@@ -1,4 +1,4 @@
-import { AddANewTeamPage as addANewTeamPageTestId } from "../../constants/addANewTeamPageTestId";
+import { AddANewTeamPageTestId } from "../../constants/addANewTeamPageTestId";
 
 class AddANewTeam {
   private addANewTeamHeader: string;
@@ -13,16 +13,16 @@ class AddANewTeam {
   private cancelButton: string;
 
   constructor() {
-    this.addANewTeamHeader = `[data-testid="${addANewTeamPageTestId.AddANewTeamHeader}"]`;
-    this.teamNameTextBox = `[data-testid="${addANewTeamPageTestId.TeamNameTextBox}"]`;
-    this.teamDescriptionTextBox = `[data-testid="${addANewTeamPageTestId.TeamDescriptionTextBox}"]`;
-    this.emailTextBox = `[data-testid="${addANewTeamPageTestId.EmailTextBox}"]`;
-    this.confirmEmailTextBox = `[data-testid="${addANewTeamPageTestId.ConfirmEmailTextBox}"]`;
-    this.triggerTextBox = `[data-testid="${addANewTeamPageTestId.TriggerTextBox}"]`;
-    this.actionTextBox = `[data-testid="${addANewTeamPageTestId.ActionTextBox}"]`;
-    this.checkInFrequencyDropdown = `[data-testid="${addANewTeamPageTestId.SelectDropDown}"]`;
-    this.commitButton = `[data-testid="${addANewTeamPageTestId.CommitButton}"]`;
-    this.cancelButton = `[data-testid="${addANewTeamPageTestId.CancelButton}"]`;
+    this.addANewTeamHeader = `[data-testid="${AddANewTeamPageTestId.AddANewTeamHeader}"]`;
+    this.teamNameTextBox = `[data-testid="${AddANewTeamPageTestId.TeamNameTextBox}"]`;
+    this.teamDescriptionTextBox = `[data-testid="${AddANewTeamPageTestId.TeamDescriptionTextBox}"]`;
+    this.emailTextBox = `[data-testid="${AddANewTeamPageTestId.EmailTextBox}"]`;
+    this.confirmEmailTextBox = `[data-testid="${AddANewTeamPageTestId.ConfirmEmailTextBox}"]`;
+    this.triggerTextBox = `[data-testid="${AddANewTeamPageTestId.TriggerTextBox}"]`;
+    this.actionTextBox = `[data-testid="${AddANewTeamPageTestId.ActionTextBox}"]`;
+    this.checkInFrequencyDropdown = `[data-testid="${AddANewTeamPageTestId.SelectDropDown}"]`;
+    this.commitButton = `[data-testid="${AddANewTeamPageTestId.CommitButton}"]`;
+    this.cancelButton = `[data-testid="${AddANewTeamPageTestId.CancelButton}"]`;
   }
 
   public verifyAddANewTeamPageHeader(addANewTeamHeader: string) {
