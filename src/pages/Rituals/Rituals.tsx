@@ -25,7 +25,6 @@ import RemoveTeamMemberModal from "../../components/modals/RemoveTeamMemberModal
 import RitualComponent from "../../components/RitualComponent";
 import Avatar from "../../components/svg/Avatar";
 import RemoveUser from "../../components/svg/RemoveUser";
-import { FeatureFlag } from "../../constants/featureFlags";
 import { Menus } from "../../constants/menus";
 import { Modals } from "../../constants/modals";
 import {
@@ -39,7 +38,7 @@ import {
 import { colors } from "../../styling/styles/colors";
 import appTheme from "../../styling/theme";
 import { Ritual } from "../../types/Ritual";
-import {TeamPageTestId} from "../../test/constants/teamPageTestId"
+import { TeamPageTestId } from "../../test/constants/teamPageTestId";
 import AddRitualModal from "../../components/modals/AddRitualModal";
 import { LightTooltip } from "../../components/LightTooltip";
 import { TeamMember } from "../../types/Team";
@@ -135,6 +134,9 @@ const useStyles = makeStyles((theme) => ({
   tooltip: {
     color: colors.silverSand,
     marginLeft: appTheme.spacing(3),
+  },
+  menu: {
+    color: "black",
   },
 }));
 
@@ -284,7 +286,7 @@ const Rituals = (props: any): JSX.Element => {
                       toggleContextMenuOpen(e, Menus.TEAM_INFO, true)
                     }
                   >
-                    <MoreVertIcon />
+                    <MoreVertIcon className={classes.menu} />
                   </IconButton>
 
                   <Menu
@@ -302,7 +304,10 @@ const Rituals = (props: any): JSX.Element => {
               }
               title={
                 <Box>
-                  <Box data-testid={TeamPageTestId.TeamNameHeader} className={classes.headerContainer}>
+                  <Box
+                    data-testid={TeamPageTestId.TeamNameHeader}
+                    className={classes.headerContainer}
+                  >
                     <Typography variant="h2">{rituals?.data?.name}</Typography>
                     <LightTooltip
                       title="This is where you can record the rituals for your team. 
@@ -395,7 +400,7 @@ These can be viewed by the rest of the organisation, inspiring them to create on
                       toggleContextMenuOpen(e, Menus.MEMBERS, true)
                     }
                   >
-                    <MoreVertIcon />
+                    <MoreVertIcon className={classes.menu} />
                   </IconButton>
                   <Menu
                     id="simple-menu"
@@ -421,7 +426,8 @@ These can be viewed by the rest of the organisation, inspiring them to create on
               {rituals?.data?.teamMembers &&
                 rituals?.data?.teamMembers.map((teamMember: TeamMember) => {
                   return (
-                    <Box
+                    <Grid
+                      container
                       key={teamMember.id}
                       style={{
                         display: "flex",
@@ -433,27 +439,42 @@ These can be viewed by the rest of the organisation, inspiring them to create on
                       }
                       onMouseOut={() => setMemberHover(null)}
                     >
-                      <Avatar color={teamMember.emailAddress} />
-                      <Typography
-                        variant="body1"
-                        style={{ marginLeft: appTheme.spacing(4) }}
+                      <Grid
+                        item
+                        xs={2}
+                        style={{ display: "flex", justifyContent: "center" }}
                       >
-                        {teamMember.emailAddress}
-                      </Typography>
-                      <IconButton
-                        onClick={() => handleRemoveMemberClick(teamMember)}
-                        style={{
-                          marginLeft: "auto",
-                          padding: 0,
-                          visibility:
-                            memberHover === teamMember.emailAddress
-                              ? "visible"
-                              : "hidden",
-                        }}
-                      >
-                        <RemoveUser />
-                      </IconButton>
-                    </Box>
+                        <Avatar />
+                      </Grid>
+                      <Grid item xs={9}>
+                        <Typography
+                          variant="body1"
+                          style={{
+                            marginLeft: appTheme.spacing(4),
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            paddingRight: "5px",
+                          }}
+                        >
+                          {teamMember.emailAddress}
+                        </Typography>
+                      </Grid>
+                      <Grid xs={1}>
+                        <IconButton
+                          onClick={() => handleRemoveMemberClick(teamMember)}
+                          style={{
+                            marginLeft: "auto",
+                            padding: 0,
+                            visibility:
+                              memberHover === teamMember.emailAddress
+                                ? "visible"
+                                : "hidden",
+                          }}
+                        >
+                          <RemoveUser />
+                        </IconButton>
+                      </Grid>
+                    </Grid>
                   );
                 })}
             </Box>
@@ -464,7 +485,7 @@ These can be viewed by the rest of the organisation, inspiring them to create on
         open={helpModal}
         icon={true}
         title="Create new ritual"
-        message="Let your team agree on rituals which you want to do regularly. You can update, delete or create a new one depend on what works for your team."
+        message="Let your team agree on rituals which you want to do regularly. You can update, delete or create a new one depending on what works for your team."
         buttonTitle="Close"
         onClose={() => setHelpModal(false)}
       />
