@@ -8,6 +8,7 @@ export const confirmAlertPrompts = {
 export const toasterPrompts = {
   titles: {
     success: `Yay, all done`,
+    working: `Yay! Everything worked`,
     warning: `Whoa whoa, slow down`,
     error: `Uh oh, something went wrong`,
   },
@@ -36,6 +37,10 @@ export const toasterPrompts = {
     },
     login: {
       invalidCredentials: `Invalid account credentials.`,
+    },
+    member: {
+      removeMember: `Member removed.`,
+      addMember: `member(s) added.`,
     },
   },
 };
