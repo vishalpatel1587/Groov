@@ -97,6 +97,11 @@ export function* EditTeam(action) {
         type: EDIT_TEAM_SUCCESS,
         payload: response.data,
       });
+      ToasterUtils.toast(
+        toasterPrompts.messages.team.editTeam,
+        "success",
+        toasterPrompts.titles.working
+      );
     } else {
       throw response;
     }

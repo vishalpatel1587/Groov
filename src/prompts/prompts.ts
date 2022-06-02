@@ -42,6 +42,14 @@ export const toasterPrompts = {
       removeMember: `Member removed.`,
       addMember: `member(s) added.`,
     },
+    ritual: {
+      addRitual: `Ritual was added.`,
+      editRitual: `Ritual edited.`,
+      removeRitual: `Ritual removed.`,
+    },
+    team: {
+      editTeam: `Team info was edited.`,
+    },
   },
 };
 
