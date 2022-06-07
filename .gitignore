@@ -62,3 +62,4 @@ src/test/cypress/cucumber-json/
 src/test/cypress/fixtures/
 src/test/cypress/reports/
 src/test/cypress.env.json
+db.json
