@@ -32,7 +32,9 @@ import {
 } from "../../store/actions/actions";
 import appTheme from "../../styling/theme";
 import { formatDate } from "../../utils/dateUtils";
-import {HomePageTestId} from "../../test/constants/homePageTestId"
+import { HomePageTestId } from "../../test/constants/homePageTestId";
+import { features } from "../../services/features";
+import { SHOW_COMPANY_RITUALS_TAB_ON_COMPANY_PAGE } from "../../constants/features";
 interface ParamTypes {
   companyId: string;
 }
@@ -424,7 +426,12 @@ const Teams = () => {
       <Card>
         <Grid container>
           <Grid item lg={12}>
-            <Typography variant="h1" component="h1" gutterBottom data-testid={HomePageTestId.RitualBuilderHeader}>
+            <Typography
+              variant="h1"
+              component="h1"
+              gutterBottom
+              data-testid={HomePageTestId.RitualBuilderHeader}
+            >
               Ritual Builder
             </Typography>
             <Typography
@@ -473,8 +480,11 @@ const Teams = () => {
             <Button
               className={classes.button}
               onClick={() => history.push(`/${companyId}/teams/add`)}
-              variant="contained">
-              <Box data-testid={HomePageTestId.AddNewTeamButton}>Add a new team</Box>
+              variant="contained"
+            >
+              <Box data-testid={HomePageTestId.AddNewTeamButton}>
+                Add a new team
+              </Box>
             </Button>
 
             <Button
@@ -508,11 +518,13 @@ const Teams = () => {
           alignItems="center"
           className={classes.headerMenu}
         >
-          <NavLink to={`/${companyId}/${RoutPath.CompanyRituals}`}>
-            <Typography variant="h4" className={classes.tabBarTitle}>
-              {RitualsHeaderPropts.ritualsHead.companyRituals}
-            </Typography>
-          </NavLink>
+          {features[SHOW_COMPANY_RITUALS_TAB_ON_COMPANY_PAGE] && (
+            <NavLink to={`/${companyId}/${RoutPath.CompanyRituals}`}>
+              <Typography variant="h4" className={classes.tabBarTitle}>
+                {RitualsHeaderPropts.ritualsHead.companyRituals}
+              </Typography>
+            </NavLink>
+          )}
           <NavLink to={`/${companyId}/${RoutPath.TeamRituals}`}>
             <Typography variant="h4" className={classes.tabBarTitle}>
               {RitualsHeaderPropts.ritualsHead.teamRituals}
