@@ -57,6 +57,11 @@ const AddTeamMemberModal: React.FC<Props> = ({
     }
   };
 
+  const onCloseClick = () => {
+    setNewMembers("");
+    onClose();
+  };
+
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmailError("");
     setNewMembers(e.target.value);
@@ -65,12 +70,12 @@ const AddTeamMemberModal: React.FC<Props> = ({
   return (
     <BasicModal
       title={ADD_TEAM_MEMBER}
-      onClose={onClose}
+      onClose={onCloseClick}
       open={open}
       modalSize="md"
       primaryActionTitle="Continue"
       secondaryActionTitle="Cancel"
-      secondaryActionClick={onClose}
+      secondaryActionClick={onCloseClick}
       primaryActionClick={onPrimaryActionClick}
     >
       <Input

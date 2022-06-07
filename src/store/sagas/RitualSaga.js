@@ -17,6 +17,7 @@ import {
 } from "../../services/api";
 import history from "../../utils/history";
 import { ToasterUtils } from "../../components/Toaster/ToasterUtils";
+import { toasterPrompts } from "../../prompts/prompts";
 
 export function* GetRituals(action) {
   try {
@@ -49,6 +50,11 @@ export function* CreateRitual(action) {
     } else {
       throw response;
     }
+    ToasterUtils.toast(
+      toasterPrompts.messages.ritual.addRitual,
+      "success",
+      toasterPrompts.titles.working
+    );
   } catch (error) {
     ToasterUtils.error(error.response?.data.message);
     yield put({
@@ -71,6 +77,11 @@ export function* UpdateRitual(action) {
       if (onClosePageCallback) {
         onClosePageCallback();
       }
+      ToasterUtils.toast(
+        toasterPrompts.messages.ritual.editRitual,
+        "success",
+        toasterPrompts.titles.working
+      );
     } else {
       throw response;
     }
@@ -91,6 +102,11 @@ export function* DeleteRitual(action) {
         type: DELETE_RITUAL_SUCCESS,
         payload: action.payload,
       });
+      ToasterUtils.toast(
+        toasterPrompts.messages.ritual.removeRitual,
+        "success",
+        toasterPrompts.titles.working
+      );
     } else {
       throw response;
     }

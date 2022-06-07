@@ -26,6 +26,7 @@ import {
 } from "../../services/api";
 import { ToasterUtils } from "../../components/Toaster/ToasterUtils";
 import history from "../../utils/history";
+import { toasterPrompts } from "../../prompts/prompts";
 
 export function* TeamsByCompanyId(action) {
   try {
@@ -96,6 +97,11 @@ export function* EditTeam(action) {
         type: EDIT_TEAM_SUCCESS,
         payload: response.data,
       });
+      ToasterUtils.toast(
+        toasterPrompts.messages.team.editTeam,
+        "success",
+        toasterPrompts.titles.working
+      );
     } else {
       throw response;
     }
@@ -139,9 +145,9 @@ export function* CreateTeamMember(action) {
 
       if (response.data.teamMembers) {
         ToasterUtils.toast(
-          `${response.data.teamMembers.length} member(s) added.`,
+          `${response.data.teamMembers.length} ${toasterPrompts.messages.member.addMember}`,
           "success",
-          "Yay! Everything worked"
+          toasterPrompts.titles.working
         );
       }
 
@@ -149,7 +155,7 @@ export function* CreateTeamMember(action) {
         ToasterUtils.toast(
           response.data.failedMessages.duplicate,
           "warning",
-          "Whoa whoa, slow down"
+          toasterPrompts.titles.warning
         );
       }
 
@@ -157,7 +163,7 @@ export function* CreateTeamMember(action) {
         ToasterUtils.toast(
           response.data.failedMessages.generic,
           "default",
-          "Whoa whoa, slow down"
+          toasterPrompts.titles.warning
         );
       }
     } else {
@@ -181,9 +187,9 @@ export function* DeleteTeamMember(action) {
         payload: action.payload,
       });
       ToasterUtils.toast(
-        "Member removed.",
+        toasterPrompts.messages.member.removeMember,
         "success",
-        "Yay! Everything worked"
+        toasterPrompts.titles.working
       );
     } else {
       throw response;
