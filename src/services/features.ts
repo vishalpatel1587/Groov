@@ -1,1 +1,1 @@
-export const features = process.env.REACT_APP_FEATURE_FLAGS ?? "{}";
+export const features = JSON.parse(process.env.REACT_APP_FEATURE_FLAGS ?? "{}");

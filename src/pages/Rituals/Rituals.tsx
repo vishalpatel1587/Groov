@@ -144,7 +144,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Rituals = (props: any): JSX.Element => {
-  const featuresFlags: FeatureFlags = JSON.parse(features);
   const search = props.location.search;
   const params = new URLSearchParams(search);
   const modal = params.get("modal") || "";
@@ -280,7 +279,7 @@ const Rituals = (props: any): JSX.Element => {
       <Grid container spacing={3}>
         <Grid
           item
-          xs={featuresFlags[SHOW_TEAM_MEMBERS_ON_TEAM_RITUAL_PAGE] ? 8 : 12}
+          xs={features[SHOW_TEAM_MEMBERS_ON_TEAM_RITUAL_PAGE] ? 8 : 12}
         >
           <Card>
             <CardHeader
@@ -396,7 +395,7 @@ These can be viewed by the rest of the organisation, inspiring them to create on
             </Grid>
           </Card>
         </Grid>
-        {featuresFlags[SHOW_TEAM_MEMBERS_ON_TEAM_RITUAL_PAGE] && (
+        {features[SHOW_TEAM_MEMBERS_ON_TEAM_RITUAL_PAGE] && (
           <Grid item xs={4}>
             <Card>
               <CardHeader
