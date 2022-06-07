@@ -13,15 +13,37 @@ import { CHECKIN_FREQUENCY } from "../../../../../types/CheckinFrequency";
 import { data } from "cypress/types/jquery";
 import TeamCreatedSuccessfullyPage from "../../../pages/teamCreatedSuccessfullyPage";
 import TeamPage from "../../../pages/teamPage";
+import APIHelper from "../../../helper/apiHelper";
 
 let homePage = new HomePage();
 let commonHelper = new CommonHelper();
 let addANewTeam = new AddANewTeam();
 let teamCreatedSuccessfullyPage = new TeamCreatedSuccessfullyPage();
 let teamPage = new TeamPage();
+let apiHelper = new APIHelper();
+let ritualBuilderAPIUrl: string;
 
 Before(() => {
   cy.visit("/", { failOnStatusCode: false });
+});
+
+Before({ tags: "@DeleteTeamFromDB" }, () => {
+  switch (Cypress.config("baseUrl")) {
+    case constants.ritualBuilderDevUrl || constants.ritualBuilderTestUrl:
+      ritualBuilderAPIUrl = constants.ritualBuilderTestAPIUrl;
+      break;
+    case constants.ritualBuilderPreprodUrl:
+      ritualBuilderAPIUrl = constants.ritualBuilderPreprodAPIUrl;
+      break;
+    default:
+      ritualBuilderAPIUrl = constants.ritualBuilderTestAPIUrl;
+      break;
+  }
+
+  apiHelper.deleteTeamFromRitualBuilder(
+    ritualBuilderAPIUrl,
+    constants.ritualBuilderTeamName
+  );
 });
 
 Given(/^I am on the home page of "([^"]*)"$/, (ritualBuilderHeader) => {
