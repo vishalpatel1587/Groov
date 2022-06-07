@@ -18,6 +18,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import InfoIcon from "@material-ui/icons/Info";
 
 import { Button, Card, Loader, ModalComponent } from "../../components";
+import AdminAccessModal from "../../components/modals/AdminAccessModal";
 import AddTeamMemberModal from "../../components/modals/AddTeamMemberModal";
 import DeleteRitualModal from "../../components/modals/DeleteRitualModal";
 import EditTeamInfoModal from "../../components/modals/EditTeamInfoModal";
@@ -162,6 +163,9 @@ const Rituals = (props: any): JSX.Element => {
   const [teamMemberToRemove, setTeamMemberToRemove] =
     useState<TeamMember | null>(null);
   const [selectedRitualId, setSelectedRitualId] = useState(ritualId);
+  const hasAdminAccess = useSelector(
+    (state: RootStateOrAny) => state.access.admin
+  );
 
   useEffect(() => {
     dispatch(getRituals(teamId));
@@ -183,6 +187,16 @@ const Rituals = (props: any): JSX.Element => {
     if (!selectedRitualId) return;
     toggleContextMenuOpen(null, Menus.RITUALS, false);
     toggleModalOpen(Modals.EDIT_RITUAL, true);
+  };
+
+  const onCreateRitualClick = (): void => {
+    if (hasAdminAccess) {
+      setSelectedRitualId("");
+      toggleModalOpen(Modals.EDIT_RITUAL, true);
+      return;
+    }
+
+    toggleModalOpen(Modals.ADMIN_ACCESS, true);
   };
 
   const handleDelete = () => {
@@ -209,10 +223,15 @@ const Rituals = (props: any): JSX.Element => {
     menuName: string,
     open: boolean
   ) => {
-    setAnchors((prevState) => ({
-      ...prevState,
-      [menuName]: open ? event.currentTarget : null,
-    }));
+    if (hasAdminAccess) {
+      setAnchors((prevState) => ({
+        ...prevState,
+        [menuName]: open ? event.currentTarget : null,
+      }));
+      return;
+    }
+
+    toggleModalOpen(Modals.ADMIN_ACCESS, true);
   };
 
   const toggleModalOpen = (modalName: string, open: boolean): void => {
@@ -331,10 +350,7 @@ These can be viewed by the rest of the organisation, inspiring them to create on
               <Button
                 variant="contained"
                 className={classes.button}
-                onClick={() => {
-                  setSelectedRitualId("");
-                  toggleModalOpen(Modals.EDIT_RITUAL, true);
-                }}
+                onClick={onCreateRitualClick}
               >
                 Create a new ritual
               </Button>
@@ -425,6 +441,9 @@ These can be viewed by the rest of the organisation, inspiring them to create on
             <Box>
               {rituals?.data?.teamMembers &&
                 rituals?.data?.teamMembers.map((teamMember: TeamMember) => {
+                  const memberName = hasAdminAccess
+                    ? teamMember.emailAddress
+                    : "******";
                   return (
                     <Grid
                       container
@@ -456,7 +475,7 @@ These can be viewed by the rest of the organisation, inspiring them to create on
                             paddingRight: "5px",
                           }}
                         >
-                          {teamMember.emailAddress}
+                          {memberName}
                         </Typography>
                       </Grid>
                       <Grid xs={1}>
@@ -466,6 +485,7 @@ These can be viewed by the rest of the organisation, inspiring them to create on
                             marginLeft: "auto",
                             padding: 0,
                             visibility:
+                              hasAdminAccess &&
                               memberHover === teamMember.emailAddress
                                 ? "visible"
                                 : "hidden",
@@ -527,6 +547,12 @@ These can be viewed by the rest of the organisation, inspiring them to create on
         onClose={() => {
           toggleModalOpen(Modals.EDIT_RITUAL, false);
         }}
+      />
+
+      <AdminAccessModal
+        open={Boolean(openModals[Modals.ADMIN_ACCESS])}
+        onClose={() => toggleModalOpen(Modals.ADMIN_ACCESS, false)}
+        teamId={rituals?.data?.id}
       />
     </RootDiv>
   );

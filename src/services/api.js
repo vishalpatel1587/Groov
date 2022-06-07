@@ -140,3 +140,11 @@ export const DeleteRitualApi = async (data) => {
   const result = await ApiRequest(config);
   return result;
 };
+
+export const VerifyAdminAccessApi = async (data) => {
+  const config = {
+    url: `/team/${data.teamId}/members?emailAddress=${data.emailAddress}`,
+    method: "GET",
+  };
+  return ApiRequest(config);
+};

@@ -15,7 +15,6 @@ import {
   GetRitualsApi,
   UpdateRitualApi,
 } from "../../services/api";
-import history from "../../utils/history";
 import { ToasterUtils } from "../../components/Toaster/ToasterUtils";
 
 export function* GetRituals(action) {

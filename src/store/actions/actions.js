@@ -53,6 +53,8 @@ export const GET_COMPANY_RITUAL_BY_COMPANY_ID_SUCCESS =
 export const GET_COMPANY_RITUAL_BY_COMPANY_ID_FAILURE =
   "GET_COMPANY_RITUAL_BY_COMPANY_ID_FAILURE";
 
+export const TOGGLE_USER_ADMIN_ACCESS = "TOGGLE_USER_ADMIN_ACCESS";
+
 export const resetStore = () => ({
   type: RESET_STORE,
 });
@@ -119,4 +121,9 @@ export const updateRitual = (data, id, onClosePageCallback) => ({
 export const deleteRitual = (id) => ({
   type: DELETE_RITUAL_BEGIN,
   payload: { id },
+});
+
+export const ToggleUserAdminAccess = (hasAdminAccess) => ({
+  type: TOGGLE_USER_ADMIN_ACCESS,
+  payload: { hasAdminAccess },
 });
