@@ -47,7 +47,7 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
-.env
+
 build
 
 # Automation testing related files
@@ -62,3 +62,5 @@ src/test/cypress/cucumber-json/
 src/test/cypress/fixtures/
 src/test/cypress/reports/
 src/test/cypress.env.json
+db.json
+.env.local
