@@ -42,6 +42,9 @@ import { TeamPageTestId } from "../../test/constants/teamPageTestId";
 import AddRitualModal from "../../components/modals/AddRitualModal";
 import { LightTooltip } from "../../components/LightTooltip";
 import { TeamMember } from "../../types/Team";
+import { features } from "../../services/features";
+import { FeatureFlags } from "../../types/FeatureFlags";
+import { SHOW_TEAM_MEMBERS_ON_TEAM_RITUAL_PAGE } from "../../constants/features";
 
 interface ParamTypes {
   companyId: string;
@@ -274,7 +277,10 @@ const Rituals = (props: any): JSX.Element => {
   return (
     <RootDiv>
       <Grid container spacing={3}>
-        <Grid item xs={8}>
+        <Grid
+          item
+          xs={features[SHOW_TEAM_MEMBERS_ON_TEAM_RITUAL_PAGE] ? 8 : 12}
+        >
           <Card>
             <CardHeader
               style={{ padding: 0 }}
@@ -389,97 +395,99 @@ These can be viewed by the rest of the organisation, inspiring them to create on
             </Grid>
           </Card>
         </Grid>
-        <Grid item xs={4}>
-          <Card>
-            <CardHeader
-              style={{ padding: 0 }}
-              action={
-                <div>
-                  <IconButton
-                    onClick={(e) =>
-                      toggleContextMenuOpen(e, Menus.MEMBERS, true)
-                    }
-                  >
-                    <MoreVertIcon className={classes.menu} />
-                  </IconButton>
-                  <Menu
-                    id="simple-menu"
-                    anchorEl={menuAnchors[Menus.MEMBERS]}
-                    open={Boolean(menuAnchors[Menus.MEMBERS])}
-                    onClose={(e) =>
-                      toggleContextMenuOpen(e, Menus.MEMBERS, false)
-                    }
-                  >
-                    <MenuItem onClick={handleAddMemberClick}>
-                      {"Add team member"}
-                    </MenuItem>
-                  </Menu>
-                </div>
-              }
-              title={
-                <Typography variant="h2" gutterBottom>
-                  Members
-                </Typography>
-              }
-            />
-            <Box>
-              {rituals?.data?.teamMembers &&
-                rituals?.data?.teamMembers.map((teamMember: TeamMember) => {
-                  return (
-                    <Grid
-                      container
-                      key={teamMember.id}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        marginBottom: appTheme.spacing(3),
-                      }}
-                      onMouseOver={() =>
-                        setMemberHover(teamMember.emailAddress)
+        {features[SHOW_TEAM_MEMBERS_ON_TEAM_RITUAL_PAGE] && (
+          <Grid item xs={4}>
+            <Card>
+              <CardHeader
+                style={{ padding: 0 }}
+                action={
+                  <div>
+                    <IconButton
+                      onClick={(e) =>
+                        toggleContextMenuOpen(e, Menus.MEMBERS, true)
                       }
-                      onMouseOut={() => setMemberHover(null)}
                     >
+                      <MoreVertIcon className={classes.menu} />
+                    </IconButton>
+                    <Menu
+                      id="simple-menu"
+                      anchorEl={menuAnchors[Menus.MEMBERS]}
+                      open={Boolean(menuAnchors[Menus.MEMBERS])}
+                      onClose={(e) =>
+                        toggleContextMenuOpen(e, Menus.MEMBERS, false)
+                      }
+                    >
+                      <MenuItem onClick={handleAddMemberClick}>
+                        {"Add team member"}
+                      </MenuItem>
+                    </Menu>
+                  </div>
+                }
+                title={
+                  <Typography variant="h2" gutterBottom>
+                    Members
+                  </Typography>
+                }
+              />
+              <Box>
+                {rituals?.data?.teamMembers &&
+                  rituals?.data?.teamMembers.map((teamMember: TeamMember) => {
+                    return (
                       <Grid
-                        item
-                        xs={2}
-                        style={{ display: "flex", justifyContent: "center" }}
+                        container
+                        key={teamMember.id}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          marginBottom: appTheme.spacing(3),
+                        }}
+                        onMouseOver={() =>
+                          setMemberHover(teamMember.emailAddress)
+                        }
+                        onMouseOut={() => setMemberHover(null)}
                       >
-                        <Avatar />
-                      </Grid>
-                      <Grid item xs={9}>
-                        <Typography
-                          variant="body1"
-                          style={{
-                            marginLeft: appTheme.spacing(4),
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            paddingRight: "5px",
-                          }}
+                        <Grid
+                          item
+                          xs={2}
+                          style={{ display: "flex", justifyContent: "center" }}
                         >
-                          {teamMember.emailAddress}
-                        </Typography>
+                          <Avatar />
+                        </Grid>
+                        <Grid item xs={9}>
+                          <Typography
+                            variant="body1"
+                            style={{
+                              marginLeft: appTheme.spacing(4),
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              paddingRight: "5px",
+                            }}
+                          >
+                            {teamMember.emailAddress}
+                          </Typography>
+                        </Grid>
+                        <Grid xs={1}>
+                          <IconButton
+                            onClick={() => handleRemoveMemberClick(teamMember)}
+                            style={{
+                              marginLeft: "auto",
+                              padding: 0,
+                              visibility:
+                                memberHover === teamMember.emailAddress
+                                  ? "visible"
+                                  : "hidden",
+                            }}
+                          >
+                            <RemoveUser />
+                          </IconButton>
+                        </Grid>
                       </Grid>
-                      <Grid xs={1}>
-                        <IconButton
-                          onClick={() => handleRemoveMemberClick(teamMember)}
-                          style={{
-                            marginLeft: "auto",
-                            padding: 0,
-                            visibility:
-                              memberHover === teamMember.emailAddress
-                                ? "visible"
-                                : "hidden",
-                          }}
-                        >
-                          <RemoveUser />
-                        </IconButton>
-                      </Grid>
-                    </Grid>
-                  );
-                })}
-            </Box>
-          </Card>
-        </Grid>
+                    );
+                  })}
+              </Box>
+            </Card>
+          </Grid>
+        )}
       </Grid>
       <ModalComponent
         open={helpModal}
