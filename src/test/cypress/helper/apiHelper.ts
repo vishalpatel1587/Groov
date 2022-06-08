@@ -1,6 +1,6 @@
 ///<reference types="cypress"/>
 
-class APIHelper {
+class ApiHelper {
   public deleteTeamFromRitualBuilder(
     ritualBuilderUrl: string,
     teamName: string
@@ -10,4 +10,4 @@ class APIHelper {
     });
   }
 }
-export default APIHelper;
+export default ApiHelper;

@@ -1,5 +1,5 @@
 Feature: Create and verify team details
-@DeleteTeamFromDB
+@DeleteTeamFromDb
     Scenario: Verify a team can be created by giving all the details
         Given I am on the home page of "Ritual Builder"
         When I click on Add a new team

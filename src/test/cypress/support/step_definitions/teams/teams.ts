@@ -13,35 +13,35 @@ import { CHECKIN_FREQUENCY } from "../../../../../types/CheckinFrequency";
 import { data } from "cypress/types/jquery";
 import TeamCreatedSuccessfullyPage from "../../../pages/teamCreatedSuccessfullyPage";
 import TeamPage from "../../../pages/teamPage";
-import APIHelper from "../../../helper/apiHelper";
+import ApiHelper from "../../../helper/apiHelper";
 
-let homePage = new HomePage();
-let commonHelper = new CommonHelper();
-let addANewTeam = new AddANewTeam();
-let teamCreatedSuccessfullyPage = new TeamCreatedSuccessfullyPage();
-let teamPage = new TeamPage();
-let apiHelper = new APIHelper();
-let ritualBuilderAPIUrl: string;
+const homePage = new HomePage();
+const commonHelper = new CommonHelper();
+const addANewTeam = new AddANewTeam();
+const teamCreatedSuccessfullyPage = new TeamCreatedSuccessfullyPage();
+const teamPage = new TeamPage();
+const apiHelper = new ApiHelper();
+let ritualBuilderApiUrl: string;
 
 Before(() => {
   cy.visit("/", { failOnStatusCode: false });
 });
 
-Before({ tags: "@DeleteTeamFromDB" }, () => {
+Before({ tags: "@DeleteTeamFromDb" }, () => {
   switch (Cypress.config("baseUrl")) {
     case constants.ritualBuilderDevUrl || constants.ritualBuilderTestUrl:
-      ritualBuilderAPIUrl = constants.ritualBuilderTestAPIUrl;
+      ritualBuilderApiUrl = constants.ritualBuilderTestApiUrl;
       break;
     case constants.ritualBuilderPreprodUrl:
-      ritualBuilderAPIUrl = constants.ritualBuilderPreprodAPIUrl;
+      ritualBuilderApiUrl = constants.ritualBuilderPreprodApiUrl;
       break;
     default:
-      ritualBuilderAPIUrl = constants.ritualBuilderTestAPIUrl;
+      ritualBuilderApiUrl = constants.ritualBuilderTestApiUrl;
       break;
   }
 
   apiHelper.deleteTeamFromRitualBuilder(
-    ritualBuilderAPIUrl,
+    ritualBuilderApiUrl,
     constants.ritualBuilderTeamName
   );
 });
