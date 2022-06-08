@@ -13,7 +13,7 @@ const AccessReducer = (state: AccessState = initialState, action: any) => {
     case TOGGLE_USER_ADMIN_ACCESS:
       return {
         ...state,
-        admin: !!action?.payload?.hasAdminAccess,
+        admin: Boolean(action?.payload?.hasAdminAccess),
       };
     default:
       return state;
