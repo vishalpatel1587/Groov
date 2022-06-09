@@ -64,7 +64,7 @@ export const instructions = {
     register and associate their account with your workplace.`,
   },
   helpPage: {
-    needAssistance: `Here you will find some helpful resources. If you have any questions, or you’re having trouble getting set up, please don’t hesitate to contact us at support@mentemia.com.`,
+    needAssistance: `Here you will find some helpful resources. If you have any questions, or you’re having trouble getting set up, please don’t hesitate to contact us at support@groovnow.com.`,
   },
 };
 
