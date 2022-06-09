@@ -26,7 +26,7 @@ const Footer = () => {
       className={`${classes.footer} ${classes.withLink}`}
     >
       If you need any help, please get in touch with our
-      <Link href="mailto:support@mentemia.com">
+      <Link href="mailto:support@groovnow.com">
         <Typography variant="h4" className={classes.link}>
           support team.
         </Typography>
