@@ -170,11 +170,14 @@ const Rituals = (props: any): JSX.Element => {
   const hasAdminAccess = useSelector(
     (state: RootStateOrAny) => state.access.admin
   );
+  const userEmailAddress = useSelector(
+    (state: RootStateOrAny) => state.access.emailAddress
+  );
 
   useEffect(() => {
     const oldTeamId = rituals?.data?.id;
     if (oldTeamId !== teamId) {
-      dispatch(ToggleUserAdminAccess(false));
+      dispatch(ToggleUserAdminAccess(false, ""));
     }
   }, [teamId, dispatch]);
 
@@ -222,7 +225,12 @@ const Rituals = (props: any): JSX.Element => {
       };
     });
 
-    dispatch(createTeamMember(teamId, { teamMembers: newTeamMembers }));
+    dispatch(
+      createTeamMember(teamId, {
+        teamMembers: newTeamMembers,
+        addedBy: userEmailAddress,
+      })
+    );
   };
 
   const handleRemoveTeamMember = (memberId: string) => {

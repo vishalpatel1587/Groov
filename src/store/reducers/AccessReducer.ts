@@ -14,6 +14,7 @@ const AccessReducer = (state: AccessState = initialState, action: any) => {
       return {
         ...state,
         admin: Boolean(action?.payload?.hasAdminAccess),
+        emailAddress: action?.payload?.emailAddress,
       };
     default:
       return state;
