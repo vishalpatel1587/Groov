@@ -123,7 +123,7 @@ export const deleteRitual = (id) => ({
   payload: { id },
 });
 
-export const ToggleUserAdminAccess = (hasAdminAccess) => ({
+export const ToggleUserAdminAccess = (hasAdminAccess, emailAddress) => ({
   type: TOGGLE_USER_ADMIN_ACCESS,
-  payload: { hasAdminAccess },
+  payload: { hasAdminAccess, emailAddress },
 });
