@@ -35,6 +35,7 @@ import { formatDate } from "../../utils/dateUtils";
 import { HomePageTestId } from "../../test/constants/homePageTestId";
 import { features } from "../../services/features";
 import { SHOW_COMPANY_RITUALS_TAB_ON_COMPANY_PAGE } from "../../constants/features";
+import { RITUAL_IDEAS } from "../../constants/links";
 interface ParamTypes {
   companyId: string;
 }
@@ -446,7 +447,10 @@ const Teams = () => {
               becomes an automatic part of every day.
             </Typography>
             <Box className={classes.descriptionWithLink}>
-              <Link href={`/${companyId}/ideas`} className={classes.link}>
+              <Link
+                onClick={() => window.open(RITUAL_IDEAS)}
+                className={classes.link}
+              >
                 <Typography variant="body1" className={classes.link}>
                   Click here
                 </Typography>
