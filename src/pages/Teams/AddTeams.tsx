@@ -18,7 +18,8 @@ import { createTeam } from "../../store/actions/actions";
 import { validateEmail, validateName } from "../../utils/validation";
 import theme from "../../styling/theme";
 import { CHECKIN_FREQUENCY } from "../../types/CheckinFrequency";
-import {AddANewTeamPageTestId} from "../../test/constants/addANewTeamPageTestId"
+import { AddANewTeamPageTestId } from "../../test/constants/addANewTeamPageTestId";
+import { RITUAL_IDEAS } from "../../constants/links";
 interface ParamTypes {
   companyId: string;
 }
@@ -111,7 +112,11 @@ const AddTeams = () => {
   return (
     <RootDiv>
       <Card className={classes.card}>
-        <Typography variant="h2" gutterBottom data-testid={AddANewTeamPageTestId.AddANewTeamHeader}>
+        <Typography
+          variant="h2"
+          gutterBottom
+          data-testid={AddANewTeamPageTestId.AddANewTeamHeader}
+        >
           Add a new team
         </Typography>
         <Typography
@@ -138,7 +143,10 @@ const AddTeams = () => {
           gutterBottom
           className={classes.description}
         >
-          <Link href={`/${companyId}/ideas`} className={classes.link}>
+          <Link
+            onClick={() => window.open(RITUAL_IDEAS)}
+            className={classes.link}
+          >
             <Typography variant="body1">Click here</Typography>
           </Link>{" "}
           to spark ideas about triggers and actions suitable for your team.
@@ -147,7 +155,7 @@ const AddTeams = () => {
           Team information
         </Typography>
         <Input
-          data-testid = {AddANewTeamPageTestId.TeamNameTextBox}
+          data-testid={AddANewTeamPageTestId.TeamNameTextBox}
           fullWidth={true}
           name="name"
           value={name}
@@ -157,7 +165,7 @@ const AddTeams = () => {
           placeholder="Team name"
         />
         <Input
-          data-testid = {AddANewTeamPageTestId.TeamDescriptionTextBox}
+          data-testid={AddANewTeamPageTestId.TeamDescriptionTextBox}
           fullWidth={true}
           name="team_description"
           value={teamDescription}
@@ -167,7 +175,7 @@ const AddTeams = () => {
           placeholder="Team description (optional)"
         />
         <Input
-          data-testid = {AddANewTeamPageTestId.EmailTextBox}
+          data-testid={AddANewTeamPageTestId.EmailTextBox}
           fullWidth={true}
           name="leader_email"
           value={leaderEmail}
@@ -177,7 +185,7 @@ const AddTeams = () => {
           placeholder="Your email"
         />
         <Input
-          data-testid = {AddANewTeamPageTestId.ConfirmEmailTextBox}
+          data-testid={AddANewTeamPageTestId.ConfirmEmailTextBox}
           fullWidth={true}
           name="confirm_leader_email"
           value={confirmLeaderEmail}
@@ -187,7 +195,7 @@ const AddTeams = () => {
           placeholder="Confirm your email"
         />
         <Box mt={theme.spacing(2)}>
-          <Typography variant="h2" gutterBottom >
+          <Typography variant="h2" gutterBottom>
             Your team ritual
           </Typography>
         </Box>
@@ -197,7 +205,7 @@ const AddTeams = () => {
           </Typography>
         </InputDiv>
         <Input
-          data-testid = {AddANewTeamPageTestId.ActionTextBox}
+          data-testid={AddANewTeamPageTestId.ActionTextBox}
           fullWidth={true}
           className={classes.input}
           name="trigger"
@@ -212,8 +220,8 @@ const AddTeams = () => {
             Action
           </Typography>
         </InputDiv>
-        <Input 
-          data-testid = {AddANewTeamPageTestId.TriggerTextBox}
+        <Input
+          data-testid={AddANewTeamPageTestId.TriggerTextBox}
           fullWidth={true}
           className={classes.input}
           name="action"
@@ -255,7 +263,7 @@ const AddTeams = () => {
         )}
         <Button className={classes.linkButton} onClick={history.goBack}>
           <Typography variant="body1" className={classes.link}>
-          <Box data-testid = {AddANewTeamPageTestId.CancelButton}> Cancel</Box>
+            <Box data-testid={AddANewTeamPageTestId.CancelButton}> Cancel</Box>
           </Typography>
         </Button>
         <Button
@@ -263,7 +271,9 @@ const AddTeams = () => {
           onClick={handleSubmit}
           variant="contained"
         >
-          <Box data-testid = {AddANewTeamPageTestId.CommitButton}>{team?.createTeam?.loading ? <Loader /> : `Commit`}</Box>
+          <Box data-testid={AddANewTeamPageTestId.CommitButton}>
+            {team?.createTeam?.loading ? <Loader /> : `Commit`}
+          </Box>
         </Button>
       </Card>
     </RootDiv>
