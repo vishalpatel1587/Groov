@@ -2,10 +2,12 @@ import { TOGGLE_USER_ADMIN_ACCESS } from "../actions/actions";
 
 interface AccessState {
   admin: boolean;
+  emailAddress: string;
 }
 
 const initialState: AccessState = {
   admin: false,
+  emailAddress: "",
 };
 
 const AccessReducer = (state: AccessState = initialState, action: any) => {
@@ -14,6 +16,7 @@ const AccessReducer = (state: AccessState = initialState, action: any) => {
       return {
         ...state,
         admin: Boolean(action?.payload?.hasAdminAccess),
+        emailAddress: action?.payload?.emailAddress,
       };
     default:
       return state;

@@ -19,6 +19,7 @@ import { validateEmail, validateName } from "../../utils/validation";
 import theme from "../../styling/theme";
 import { CHECKIN_FREQUENCY } from "../../types/CheckinFrequency";
 import { AddANewTeamPageTestId } from "../../test/constants/addANewTeamPageTestId";
+import { RITUAL_IDEAS } from "../../constants/links";
 interface ParamTypes {
   companyId: string;
 }
@@ -142,7 +143,10 @@ const AddTeams = () => {
           gutterBottom
           className={classes.description}
         >
-          <Link href={`/${companyId}/ideas`} className={classes.link}>
+          <Link
+            onClick={() => window.open(RITUAL_IDEAS)}
+            className={classes.link}
+          >
             <Typography variant="body1">Click here</Typography>
           </Link>{" "}
           to spark ideas about triggers and actions suitable for your team.

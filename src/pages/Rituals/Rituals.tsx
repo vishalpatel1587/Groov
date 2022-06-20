@@ -35,6 +35,7 @@ import {
   editTeam,
   getRituals,
   getTeamMembers,
+  ToggleUserAdminAccess,
 } from "../../store/actions/actions";
 import { colors } from "../../styling/styles/colors";
 import appTheme from "../../styling/theme";
@@ -169,6 +170,16 @@ const Rituals = (props: any): JSX.Element => {
   const hasAdminAccess = useSelector(
     (state: RootStateOrAny) => state.access.admin
   );
+  const userEmailAddress = useSelector(
+    (state: RootStateOrAny) => state.access.emailAddress
+  );
+
+  useEffect(() => {
+    const oldTeamId = rituals?.data?.id;
+    if (oldTeamId !== teamId) {
+      dispatch(ToggleUserAdminAccess(false, ""));
+    }
+  }, [teamId, dispatch]);
 
   useEffect(() => {
     dispatch(getRituals(teamId));
@@ -214,7 +225,12 @@ const Rituals = (props: any): JSX.Element => {
       };
     });
 
-    dispatch(createTeamMember(teamId, { teamMembers: newTeamMembers }));
+    dispatch(
+      createTeamMember(teamId, {
+        teamMembers: newTeamMembers,
+        addedBy: userEmailAddress,
+      })
+    );
   };
 
   const handleRemoveTeamMember = (memberId: string) => {

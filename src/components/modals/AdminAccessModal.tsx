@@ -46,7 +46,7 @@ const AdminAccessModal: React.FC<Props> = ({ open, onClose, teamId }) => {
 
     VerifyAdminAccessApi({ teamId, emailAddress }).then((response) => {
       if (response.data.teamMembers.length) {
-        dispatch(ToggleUserAdminAccess(true));
+        dispatch(ToggleUserAdminAccess(true, emailAddress));
         setEmailAddress("");
         onClose();
       } else {
