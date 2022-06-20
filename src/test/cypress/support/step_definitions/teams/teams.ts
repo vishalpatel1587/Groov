@@ -14,6 +14,7 @@ import { data } from "cypress/types/jquery";
 import TeamCreatedSuccessfullyPage from "../../../pages/teamCreatedSuccessfullyPage";
 import TeamPage from "../../../pages/teamPage";
 import ApiHelper from "../../../helper/apiHelper";
+import CreateANewRitualPage from "../../../pages/createANewRitualPage";
 
 const homePage = new HomePage();
 const commonHelper = new CommonHelper();
@@ -21,13 +22,12 @@ const addANewTeam = new AddANewTeam();
 const teamCreatedSuccessfullyPage = new TeamCreatedSuccessfullyPage();
 const teamPage = new TeamPage();
 const apiHelper = new ApiHelper();
+const createANewRitualPage = new CreateANewRitualPage();
 let ritualBuilderApiUrl: string;
+let addNewRitualDataTable: any;
 
 Before(() => {
-  cy.visit("/", { failOnStatusCode: false });
-});
-
-Before({ tags: "@DeleteTeamFromDb" }, () => {
+  cy.visit("/teams", { failOnStatusCode: false });
   switch (Cypress.config("baseUrl")) {
     case constants.ritualBuilderDevUrl || constants.ritualBuilderTestUrl:
       ritualBuilderApiUrl = constants.ritualBuilderTestApiUrl;
@@ -39,7 +39,9 @@ Before({ tags: "@DeleteTeamFromDb" }, () => {
       ritualBuilderApiUrl = constants.ritualBuilderTestApiUrl;
       break;
   }
+});
 
+Before({ tags: "@DeleteTeamFromDb" }, () => {
   apiHelper.deleteTeamFromRitualBuilder(
     ritualBuilderApiUrl,
     constants.ritualBuilderTeamName
@@ -68,7 +70,6 @@ Then(/^I am able to provide all the values$/, (datatable) => {
   addANewTeam.populateTrigger(datatable);
   addANewTeam.selectCheckinFrequency(datatable);
   addANewTeam.clickCommit();
-  cy.wrap(datatable).as("datatable");
 });
 
 Then(/^create a team$/, function (this: any) {
@@ -79,5 +80,31 @@ Then(/^create a team$/, function (this: any) {
     constants.teamAddedSuccessfullyMessage
   );
   teamCreatedSuccessfullyPage.clickOnGoToTeamPageButton();
-  teamPage.verifyTeamPageHeader(this.datatable.hashes()[0]["TeamName"]);
+  teamPage.verifyTeamPageHeader(constants.ritualBuilderTeamName);
+});
+
+Given(/^I am on the team page$/, () => {
+  teamPage
+    .getTeamId(ritualBuilderApiUrl, constants.ritualBuilderTeamName)
+    .then((teamId) => {
+      cy.visit(`/${teamId}/rituals`);
+      teamPage.verifyTeamPageHeader(constants.ritualBuilderTeamName);
+    });
+});
+
+When(/^I add a new ritual$/, (datatable) => {
+  addNewRitualDataTable = datatable;
+  teamPage.clickCreateANewRitualButton();
+  createANewRitualPage.verifyCreateANewRitualModalOpen(
+    constants.createANewRitualGuideText
+  );
+  createANewRitualPage.populateTrigger(datatable);
+  createANewRitualPage.populateAction(datatable);
+  createANewRitualPage.populateCheckinFrequency(datatable);
+  createANewRitualPage.clickCreate();
+});
+
+Then(/^The ritual should be added successfully$/, () => {
+  teamPage.verifyToasterMessage(constants.ritualAddedSuccessfullyToasterMsg);
+  teamPage.verifyRitualPresentOnTeamPage(addNewRitualDataTable);
 });

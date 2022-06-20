@@ -1,3 +1,5 @@
 export const TeamPageTestId = {
-  TeamNameHeader: "TeamNameHeader"
+  TeamNameHeader: "TeamNameHeader",
+  CreateANewRitualButton: "AddANewRitualButton",
+  RitualTileHeader: "RitualTileHeader",
 };

@@ -358,7 +358,9 @@ These can be viewed by the rest of the organisation, inspiring them to create on
                 className={classes.button}
                 onClick={onCreateRitualClick}
               >
-                Create a new ritual
+                <Box data-testid={TeamPageTestId.CreateANewRitualButton}>
+                  Create a new ritual
+                </Box>
               </Button>
               <Button
                 className={classes.buttonMore}

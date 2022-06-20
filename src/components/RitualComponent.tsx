@@ -5,6 +5,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { colors } from "../styling/styles/colors";
 
 import appTheme from "../styling/theme";
+import { TeamPageTestId } from "../test/constants/teamPageTestId";
 import { Ritual } from "../types/Ritual";
 import { getCheckinFrequencylabel } from "../utils/commonUtils";
 import { formatDate } from "../utils/dateUtils";
@@ -52,6 +53,7 @@ const RitualComponent: React.FC<Props> = ({
   return (
     <Card className={classes.container}>
       <CardHeader
+        data-testid={TeamPageTestId.RitualTileHeader}
         className={classes.cardHeader}
         title={<Typography variant="h5">{ritual.trigger}</Typography>}
         action={

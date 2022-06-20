@@ -15,6 +15,8 @@ import { FullSelectMenu } from "../Menu";
 import { Input } from "../TextInput";
 import { ToasterUtils } from "../Toaster";
 import { createRitual, updateRitual } from "../../store/actions/actions";
+import { GeneralTestId } from "../../test/constants/generalTestId";
+import { CreateANewRitualPageTestId } from "../../test/constants/createANewRitualPageTestId";
 
 const GUIDE = {
   edit: `Update this ritual to make it work better for your team`,
@@ -126,7 +128,11 @@ const AddRitualModal: React.FC<Props> = ({
       secondaryActionClick={onClose}
       primaryActionLoading={ritualsRoot?.loading}
     >
-      <Typography variant="body1" className={classes.inputRowText}>
+      <Typography
+        variant="body1"
+        className={classes.inputRowText}
+        data-testid={GeneralTestId.AddorEditRitualGuideText}
+      >
         {guideText}
       </Typography>
       <Link
@@ -146,6 +152,7 @@ const AddRitualModal: React.FC<Props> = ({
         Trigger
       </Typography>
       <Input
+        data-testid={CreateANewRitualPageTestId.TriggerTextBox}
         fullWidth={true}
         name="triggers"
         value={trigger}
@@ -162,6 +169,7 @@ const AddRitualModal: React.FC<Props> = ({
         Action
       </Typography>
       <Input
+        data-testid={CreateANewRitualPageTestId.ActionTextBox}
         fullWidth={true}
         name="actions"
         multiline
@@ -182,6 +190,7 @@ const AddRitualModal: React.FC<Props> = ({
       </Typography>
 
       <FullSelectMenu
+        data-testid={CreateANewRitualPageTestId.CheckInFrequencyDropDown}
         value={checkinFrequency}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setCheckinFrequency(e.target.value)

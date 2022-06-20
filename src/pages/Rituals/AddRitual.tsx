@@ -18,6 +18,7 @@ import {
 } from "../../components";
 import { colors } from "../../styling/styles/colors";
 import { GetRitualByIdApi } from "../../services/api";
+import { AddANewTeamPageTestId } from "../../test/constants/addANewTeamPageTestId";
 
 interface ParamTypes {
   id: string;
@@ -218,6 +219,7 @@ const AddRitual = () => {
           </Typography>
         </InputDiv>
         <FullSelectMenu
+          data-testid={AddANewTeamPageTestId.SelectDropDown}
           value={checkinFrequency}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setFrequency(e.target.value)
