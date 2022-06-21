@@ -1,4 +1,5 @@
 import { RootStateOrAny, useSelector } from "react-redux";
+import { RemoveRitualModalTestId } from "../../test/constants/removeRitualModalTestId";
 import { Ritual } from "../../types/Ritual";
 import BasicModal from "../BasicModal";
 import RitualComponent from "../RitualComponent";
@@ -25,6 +26,7 @@ const DeleteRitualModal: React.FC<Props> = ({
   return (
     <BasicModal
       open={open}
+      data-testid={RemoveRitualModalTestId.RemoveRitualModalHeader}
       title={"Remove ritual"}
       primaryActionTitle="Remove"
       secondaryActionTitle="Cancel"

@@ -11,7 +11,15 @@ Feature: Create and verify team details
 
     Scenario: Verify the user can add ritual
         Given I am on the team page
-        When I add a new ritual
+        When I click on Create a New Ritual button and confirm my access by entering my "vishal.patel@groovnow.com"
+        Then I add a new ritual
             | Trigger               | Action             | CheckinFrequency |
             | When I Add 2nd Ritual | It should be added | Every 2 months   |
         Then The ritual should be added successfully
+
+
+    Scenario: Verify the user can remove ritual
+        Given I am on the team page
+        When I click on the edit add or remove ritual menu for "When I Add 2nd Ritual" ritual and confirm my access by entering my "vishal.patel@groovnow.com"
+        Then I remove "When I Add 2nd Ritual" ritual
+        And The "When I Add 2nd Ritual" ritual should be removed successfully

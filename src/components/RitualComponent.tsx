@@ -60,6 +60,7 @@ const RitualComponent: React.FC<Props> = ({
           <>
             {showContextMenu && (
               <IconButton
+                data-testid={TeamPageTestId.EditOrRemoveRitualMenuButton}
                 aria-label="more"
                 onClick={(e) => {
                   if (onContextMenuClick) onContextMenuClick(e, ritual);
@@ -74,8 +75,18 @@ const RitualComponent: React.FC<Props> = ({
               open={Boolean(anchor)}
               onClose={onCloseMenu}
             >
-              <MenuItem onClick={onEditRitualClick}>Edit ritual</MenuItem>
-              <MenuItem onClick={onRemoveRitualClick}>Remove ritual</MenuItem>
+              <MenuItem
+                data-testid={TeamPageTestId.EditRitualLink}
+                onClick={onEditRitualClick}
+              >
+                Edit ritual
+              </MenuItem>
+              <MenuItem
+                data-testid={TeamPageTestId.RemoveRitualLink}
+                onClick={onRemoveRitualClick}
+              >
+                Remove ritual
+              </MenuItem>
             </Menu>
           </>
         }

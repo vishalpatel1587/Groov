@@ -9,12 +9,12 @@ import HomePage from "../../../pages/homePage";
 import CommonHelper from "../../../helper/commonHelper";
 import * as constants from "../../../datamodel/constants";
 import AddANewTeam from "../../../pages/addANewTeam";
-import { CHECKIN_FREQUENCY } from "../../../../../types/CheckinFrequency";
-import { data } from "cypress/types/jquery";
 import TeamCreatedSuccessfullyPage from "../../../pages/teamCreatedSuccessfullyPage";
 import TeamPage from "../../../pages/teamPage";
 import ApiHelper from "../../../helper/apiHelper";
 import CreateANewRitualPage from "../../../pages/createANewRitualPage";
+import AdminAccessModalPage from "../../../pages/adminAccessModalPage";
+import RemoveRitualModalPage from "../../../pages/removeRitualModalPage";
 
 const homePage = new HomePage();
 const commonHelper = new CommonHelper();
@@ -23,6 +23,9 @@ const teamCreatedSuccessfullyPage = new TeamCreatedSuccessfullyPage();
 const teamPage = new TeamPage();
 const apiHelper = new ApiHelper();
 const createANewRitualPage = new CreateANewRitualPage();
+const adminAccessModalPage = new AdminAccessModalPage();
+const removeRitualModalPage = new RemoveRitualModalPage();
+
 let ritualBuilderApiUrl: string;
 let addNewRitualDataTable: any;
 
@@ -83,28 +86,43 @@ Then(/^create a team$/, function (this: any) {
   teamPage.verifyTeamPageHeader(constants.ritualBuilderTeamName);
 });
 
-Given(/^I am on the team page$/, () => {
-  teamPage
-    .getTeamId(ritualBuilderApiUrl, constants.ritualBuilderTeamName)
-    .then((teamId) => {
-      cy.visit(`/${teamId}/rituals`);
-      teamPage.verifyTeamPageHeader(constants.ritualBuilderTeamName);
-    });
-});
-
-When(/^I add a new ritual$/, (datatable) => {
-  addNewRitualDataTable = datatable;
+Then(/^I add a new ritual$/, (dataTable) => {
+  addNewRitualDataTable = dataTable;
   teamPage.clickCreateANewRitualButton();
   createANewRitualPage.verifyCreateANewRitualModalOpen(
     constants.createANewRitualGuideText
   );
-  createANewRitualPage.populateTrigger(datatable);
-  createANewRitualPage.populateAction(datatable);
-  createANewRitualPage.populateCheckinFrequency(datatable);
+  createANewRitualPage.populateTrigger(dataTable);
+  createANewRitualPage.populateAction(dataTable);
+  createANewRitualPage.populateCheckinFrequency(dataTable);
   createANewRitualPage.clickCreate();
 });
 
 Then(/^The ritual should be added successfully$/, () => {
   teamPage.verifyToasterMessage(constants.ritualAddedSuccessfullyToasterMsg);
   teamPage.verifyRitualPresentOnTeamPage(addNewRitualDataTable);
+});
+
+When(
+  /^I click on the edit add or remove ritual menu for "([^"]*)" ritual and confirm my access by entering my "([^"]*)"$/,
+  (ritualName, emailAddress) => {
+    teamPage.clickOnEditOrRemoveRitualMenuButtonForARitual(ritualName);
+    adminAccessModalPage.verifyEnterYourEMailAddressModalOpen();
+    adminAccessModalPage.enterEmailAddress(emailAddress);
+    adminAccessModalPage.clickCreate();
+  }
+);
+
+Then(/^I remove "([^"]*)" ritual$/, (ritualName) => {
+  teamPage.clickOnEditOrRemoveRitualMenuButtonForARitual(ritualName);
+  teamPage.clickOnRemoveRitualLink();
+  removeRitualModalPage.verifyRemoveRitualModalOpen(
+    constants.removeRitualModalHeader
+  );
+  removeRitualModalPage.clickRemove();
+});
+
+Then(/^The "([^"]*)" ritual should be removed successfully$/, (ritualName) => {
+  teamPage.verifyToasterMessage(constants.ritualRemovedSuccessfullyToasterMsg);
+  teamPage.verifyRitualWithNameDeletedSuccessfully(ritualName);
 });
