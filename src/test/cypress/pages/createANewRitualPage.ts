@@ -2,7 +2,7 @@ import { CreateANewRitualPageTestId } from "../../constants/createANewRitualPage
 import { GeneralTestId } from "../../constants/generalTestId";
 import CommonHelper from "../helper/commonHelper";
 
-let commonHelper = new CommonHelper();
+const commonHelper = new CommonHelper();
 class CreateANewRitualPage {
   private triggerTextBox: string;
   private actionTextBox: string;

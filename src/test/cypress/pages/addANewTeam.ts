@@ -1,7 +1,7 @@
-import common = require("mocha/lib/interfaces/common");
 import { AddANewTeamPageTestId } from "../../constants/addANewTeamPageTestId";
 import CommonHelper from "../helper/commonHelper";
-let commonHelper = new CommonHelper();
+
+const commonHelper = new CommonHelper();
 
 class AddANewTeam {
   private addANewTeamHeader: string;
