@@ -21,7 +21,6 @@ interface Props {
   secondaryActionClick?: VoidFunction;
   children: JSX.Element | JSX.Element[];
   primaryActionLoading?: boolean;
-  "data-testid"?: string;
 }
 
 const useStyles = (style: string, size: string) =>
@@ -77,13 +76,12 @@ const BasicModal = ({
   modalStyle: style = "blue",
   modalSize: size,
   primaryActionLoading,
-  ...rest
 }: Props) => {
   const classes = useStyles(style, size)();
   return (
     <Modal open={open} onClose={onClose} className={classes.modal}>
       <Box className={classes.container}>
-        <Typography data-testid={rest["data-testid"]} variant="h3">
+        <Typography data-testid={GeneralTestId.Header} variant="h3">
           {title}
         </Typography>
         <IconButton

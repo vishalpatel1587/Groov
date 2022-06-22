@@ -31,11 +31,11 @@ const Button: React.FC<ButtonProps> = ({
   style,
   onClick,
   iconComponent,
-  ...rest
+  "data-testid": dataTestId,
 }) => {
   return (
     <CustomButton
-      data-testid={rest["data-testid"]}
+      data-testid={dataTestId}
       className={className}
       disableElevation
       color="primary"
