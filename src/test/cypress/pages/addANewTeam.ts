@@ -1,4 +1,7 @@
 import { AddANewTeamPageTestId } from "../../constants/addANewTeamPageTestId";
+import CommonHelper from "../helper/commonHelper";
+
+const commonHelper = new CommonHelper();
 
 class AddANewTeam {
   private addANewTeamHeader: string;
@@ -32,10 +35,10 @@ class AddANewTeam {
   public selectCheckinFrequency(dataTable: {
     hashes: () => { [x: string]: any }[];
   }) {
-    cy.get(this.checkInFrequencyDropdown)
-      .click()
-      .get(`[data-value="${dataTable.hashes()[0]["CheckinFrequency"]}"]`)
-      .click();
+    commonHelper.selectCheckinFrequency(
+      this.checkInFrequencyDropdown,
+      dataTable.hashes()[0]["CheckinFrequency"]
+    );
   }
 
   public populateTeamName(dataTable: {

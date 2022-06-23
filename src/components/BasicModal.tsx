@@ -5,6 +5,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import CloseIcon from "@material-ui/icons/Close";
 
 import { colors } from "../styling/styles/colors";
+import { GeneralTestId } from "../test/constants/generalTestId";
 import { Button } from "./Button";
 import { Loader } from "./Loader";
 
@@ -80,7 +81,9 @@ const BasicModal = ({
   return (
     <Modal open={open} onClose={onClose} className={classes.modal}>
       <Box className={classes.container}>
-        <Typography variant="h3">{title}</Typography>
+        <Typography data-testid={GeneralTestId.Header} variant="h3">
+          {title}
+        </Typography>
         <IconButton
           className={classes.closeButton}
           aria-label="close"
@@ -92,12 +95,14 @@ const BasicModal = ({
         <Box className={classes.childrenContainer}>{children}</Box>
         <Box className={classes.actions}>
           <Button
+            data-testid={GeneralTestId.CancelButton}
             onClick={secondaryActionClick}
             className={classes.secondaryAction}
           >
             {secondaryActionTitle}
           </Button>
           <Button
+            data-testid={GeneralTestId.ConfirmActionButton}
             onClick={primaryActionClick}
             className={classes.primaryAction}
             variant="contained"

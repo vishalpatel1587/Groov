@@ -8,6 +8,16 @@ class CommonHelper {
   public verifyTitleOfPage(pageTitle: string) {
     cy.title().should("eq", pageTitle);
   }
+
+  public selectCheckinFrequency(
+    cypressElement: string,
+    checkInFrequencyValue: string
+  ) {
+    cy.get(cypressElement)
+      .click()
+      .get(`[data-value="${checkInFrequencyValue}"]`)
+      .click();
+  }
 }
 
 export default CommonHelper;

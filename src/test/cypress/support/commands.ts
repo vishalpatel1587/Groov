@@ -5,11 +5,8 @@ Cypress.Commands.add("getTeamId", (ritualBuilderUrl, teamName) => {
   }).then((response) => {
     let teamid: string;
     response.body.teams.forEach((element: any) => {
-      //cy.log(element.name)
       if (element.name == teamName) {
-        cy.log(element.rituals[0].teamId);
         teamid = element.rituals[0].teamId;
-
         return cy.wrap(teamid).as("teamid");
       }
     });

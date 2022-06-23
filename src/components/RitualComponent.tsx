@@ -5,6 +5,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { colors } from "../styling/styles/colors";
 
 import appTheme from "../styling/theme";
+import { TeamPageTestId } from "../test/constants/teamPageTestId";
 import { Ritual } from "../types/Ritual";
 import { getCheckinFrequencylabel } from "../utils/commonUtils";
 import { formatDate } from "../utils/dateUtils";
@@ -52,12 +53,14 @@ const RitualComponent: React.FC<Props> = ({
   return (
     <Card className={classes.container}>
       <CardHeader
+        data-testid={TeamPageTestId.RitualTileHeader}
         className={classes.cardHeader}
         title={<Typography variant="h5">{ritual.trigger}</Typography>}
         action={
           <>
             {showContextMenu && (
               <IconButton
+                data-testid={TeamPageTestId.EditOrRemoveRitualMenuButton}
                 aria-label="more"
                 onClick={(e) => {
                   if (onContextMenuClick) onContextMenuClick(e, ritual);
@@ -72,8 +75,18 @@ const RitualComponent: React.FC<Props> = ({
               open={Boolean(anchor)}
               onClose={onCloseMenu}
             >
-              <MenuItem onClick={onEditRitualClick}>Edit ritual</MenuItem>
-              <MenuItem onClick={onRemoveRitualClick}>Remove ritual</MenuItem>
+              <MenuItem
+                data-testid={TeamPageTestId.EditRitualLink}
+                onClick={onEditRitualClick}
+              >
+                Edit ritual
+              </MenuItem>
+              <MenuItem
+                data-testid={TeamPageTestId.RemoveRitualLink}
+                onClick={onRemoveRitualClick}
+              >
+                Remove ritual
+              </MenuItem>
             </Menu>
           </>
         }

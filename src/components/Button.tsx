@@ -10,6 +10,7 @@ interface ButtonProps {
   variant?: "outlined" | "contained";
   style?: any;
   iconComponent?: JSX.Element;
+  "data-testid"?: string;
 }
 
 const CustomButton = withStyles((theme) => ({
@@ -30,9 +31,11 @@ const Button: React.FC<ButtonProps> = ({
   style,
   onClick,
   iconComponent,
+  "data-testid": dataTestId,
 }) => {
   return (
     <CustomButton
+      data-testid={dataTestId}
       className={className}
       disableElevation
       color="primary"

@@ -12,6 +12,7 @@ import { validateEmail } from "../../utils/validation";
 import BasicModal from "../BasicModal";
 import Person from "../svg/Person";
 import { Input } from "../TextInput";
+import { AdminAccessModalTestId } from "../../test/constants/adminAccessModalTestId";
 
 const ENTER_EMAIL_ADDRESS = "Enter your email address to make changes";
 
@@ -79,6 +80,7 @@ const AdminAccessModal: React.FC<Props> = ({ open, onClose, teamId }) => {
       primaryActionClick={onPrimaryActionClick}
     >
       <Input
+        data-testid={AdminAccessModalTestId.EmailAddressTextBox}
         fullWidth={true}
         name="emailAddress"
         type="email"

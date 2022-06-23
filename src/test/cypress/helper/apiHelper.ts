@@ -5,8 +5,8 @@ class ApiHelper {
     ritualBuilderUrl: string,
     teamName: string
   ) {
-    cy.getTeamId(ritualBuilderUrl, teamName).then((teamid) => {
-      cy.deleteTeam(ritualBuilderUrl, teamid.toString())
+    cy.getTeamId(ritualBuilderUrl, teamName).then((teamId) => {
+      cy.deleteTeam(ritualBuilderUrl, teamId.toString())
     });
   }
 }

@@ -322,6 +322,7 @@ const Rituals = (props: any): JSX.Element => {
               action={
                 <>
                   <IconButton
+                    data-testid={TeamPageTestId.EditTeamInfoMenuButton}
                     aria-label="menu"
                     onClick={(e) =>
                       toggleContextMenuOpen(e, Menus.TEAM_INFO, true)
@@ -337,7 +338,10 @@ const Rituals = (props: any): JSX.Element => {
                       toggleContextMenuOpen(e, Menus.TEAM_INFO, false)
                     }
                   >
-                    <MenuItem onClick={handleEditTeamInfoClick}>
+                    <MenuItem
+                      data-testid={TeamPageTestId.EditTeamInfoLink}
+                      onClick={handleEditTeamInfoClick}
+                    >
                       Edit team info
                     </MenuItem>
                   </Menu>
@@ -374,7 +378,9 @@ These can be viewed by the rest of the organisation, inspiring them to create on
                 className={classes.button}
                 onClick={onCreateRitualClick}
               >
-                Create a new ritual
+                <Box data-testid={TeamPageTestId.CreateANewRitualButton}>
+                  Create a new ritual
+                </Box>
               </Button>
               <Button
                 className={classes.buttonMore}
@@ -435,6 +441,7 @@ These can be viewed by the rest of the organisation, inspiring them to create on
                 action={
                   <div>
                     <IconButton
+                      data-testid={TeamPageTestId.EditTeamMemberMenuButton}
                       onClick={(e) =>
                         toggleContextMenuOpen(e, Menus.MEMBERS, true)
                       }
@@ -449,7 +456,10 @@ These can be viewed by the rest of the organisation, inspiring them to create on
                         toggleContextMenuOpen(e, Menus.MEMBERS, false)
                       }
                     >
-                      <MenuItem onClick={handleAddMemberClick}>
+                      <MenuItem
+                        data-testid={TeamPageTestId.AddTeamMemberLink}
+                        onClick={handleAddMemberClick}
+                      >
                         {"Add team member"}
                       </MenuItem>
                     </Menu>

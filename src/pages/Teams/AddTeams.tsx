@@ -243,6 +243,7 @@ const AddTeams = () => {
           </Typography>
         </InputDiv>
         <FullSelectMenu
+          data-testid={AddANewTeamPageTestId.SelectDropDown}
           value={checkinFrequency}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setFrequency(e.target.value)
