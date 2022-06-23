@@ -6,8 +6,8 @@ const nodemailer = require("nodemailer");
 
 async function main() {
   let hostname = "smtp.gmail.com";
-  let username = enviornmentVariable.gmailAppUsername; //Cypress.env('gmailAppUsername');
-  let password = enviornmentVariable.gmailAppPassword; //Cypress.env('gmailAppPassword');
+  let username = enviornmentVariable.gmailAppUsername; 
+  let password = enviornmentVariable.gmailAppPassword;
 
   let transporter = nodemailer.createTransport({
     host: hostname,
@@ -30,7 +30,7 @@ async function main() {
       {
         // file on disk as an attachment
         filename: "Test_Report.html",
-        path: "cypress/reports/cucumber-htmlreport.html/index.html", // stream this file
+        path: "src/test/cypress/reports/cucumber-htmlreport.html/index.html", // stream this file
       },
     ],
     text: "Hello world?",
