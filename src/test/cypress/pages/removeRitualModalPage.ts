@@ -1,4 +1,3 @@
-import { RemoveRitualModalTestId } from "../../constants/removeRitualModalTestId";
 import { GeneralTestId } from "../../constants/generalTestId";
 
 class RemoveRitualModalPage {
@@ -6,7 +5,7 @@ class RemoveRitualModalPage {
   private removeButton: string;
 
   constructor() {
-    this.removeRitualModalHeader = `[data-testid="${RemoveRitualModalTestId.RemoveRitualModalHeader}"]`;
+    this.removeRitualModalHeader = `[data-testid="${GeneralTestId.Header}"]`;
     this.removeButton = `[data-testid="${GeneralTestId.ConfirmActionButton}"]`;
   }
 
