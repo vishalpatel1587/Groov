@@ -7,5 +7,7 @@
   "testFiles": "**/*.feature",
   "defaultCommandTimeout": 20000,
   "commonPath": "cypress/support/step_definitions/common",
-  "baseUrl": "http://localhost:3006/the-wellbeing-company/"
+  "baseUrl": "http://localhost:3006/the-wellbeing-company/",
+  "video": false,
+  "videoUploadOnPasses": false
 }
