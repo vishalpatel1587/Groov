@@ -4,7 +4,6 @@ import {
   useHistory,
   useParams,
   useLocation,
-  useRouteMatch,
   Switch,
   Route,
   Redirect,
@@ -33,9 +32,8 @@ import {
 import appTheme from "../../styling/theme";
 import { formatDate } from "../../utils/dateUtils";
 import { HomePageTestId } from "../../test/constants/homePageTestId";
-import { features } from "../../services/features";
-import { SHOW_COMPANY_RITUALS_TAB_ON_COMPANY_PAGE } from "../../constants/features";
 import { RITUAL_IDEAS } from "../../constants/links";
+
 interface ParamTypes {
   companyId: string;
 }
@@ -522,13 +520,11 @@ const Teams = () => {
           alignItems="center"
           className={classes.headerMenu}
         >
-          {features[SHOW_COMPANY_RITUALS_TAB_ON_COMPANY_PAGE] && (
-            <NavLink to={`/${companyId}/${RoutPath.CompanyRituals}`}>
-              <Typography variant="h4" className={classes.tabBarTitle}>
-                {RitualsHeaderPropts.ritualsHead.companyRituals}
-              </Typography>
-            </NavLink>
-          )}
+          <NavLink to={`/${companyId}/${RoutPath.CompanyRituals}`}>
+            <Typography variant="h4" className={classes.tabBarTitle}>
+              {RitualsHeaderPropts.ritualsHead.companyRituals}
+            </Typography>
+          </NavLink>
           <NavLink to={`/${companyId}/${RoutPath.TeamRituals}`}>
             <Typography variant="h4" className={classes.tabBarTitle}>
               {RitualsHeaderPropts.ritualsHead.teamRituals}
