@@ -3,8 +3,6 @@
 const enviornmentVariable = require("../cypress.env.json");
 ("use strict");
 const nodemailer = require("nodemailer");
-
-console.log(fileContents);
 async function main() {
   let hostname = "smtp.gmail.com";
   let username = enviornmentVariable.gmailAppUsername;
