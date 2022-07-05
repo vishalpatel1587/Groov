@@ -23,9 +23,14 @@ async function main() {
   // send mail with defined transport object
   let info = await transporter.sendMail({
     from: '"Vishal Patel" <vishal.patel@groovnow.com>',
-    to: "aaaafnar66b7nt4bwzx7cqlpyu@groovnow.slack.com",
-    subject: "Ritual Builder Test Results <number> of <number> failed",
+    to: "team-renegade-aaaafgroz625h7wbrql57orsni@groovnow.slack.com",
+    subject:
+      process.argv[3] == "PASSED"
+        ? "🟢Ritual Builder Test Results " + process.argv[3] + " 🟢"
+        : "⛔Ritual Builder Test Results " + process.argv[3] + " ⛔",
+    text: process.argv[2],
     html: '<a href="' + process.argv[2] + '">Link to Test Report</a>',
+    text: "Link to Test Report",
   });
 
   console.log("Message sent: %s", info.response);
