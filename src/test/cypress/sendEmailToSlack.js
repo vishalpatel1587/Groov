@@ -25,8 +25,7 @@ async function main() {
     from: '"Vishal Patel" <vishal.patel@groovnow.com>',
     to: "aaaafnar66b7nt4bwzx7cqlpyu@groovnow.slack.com",
     subject: "Ritual Builder Test Results <number> of <number> failed",
-    text: "Hello world?",
-    html: '<p><a href="' + process.argv[2] + '">Link to Test Report</a></p>',
+    html: '<a href="' + process.argv[2] + '">Link to Test Report</a>',
   });
 
   console.log("Message sent: %s", info.response);
